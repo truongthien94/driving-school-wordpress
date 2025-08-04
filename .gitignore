@@ -1,0 +1,17 @@
+# Ignore WordPress core files
+/wp-admin/
+/wp-includes/
+
+# Ignore OS files
+.DS_Store
+
+# Ignore uploads
+wp-content/uploads/
+
+# Ignore database exports
+*.sql
+*.sql.gz
+
+# Composer, Node
+/vendor/
+/node_modules/

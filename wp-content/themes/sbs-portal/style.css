@@ -1,0 +1,15 @@
+/*
+Theme Name: SBS Portal
+Description: Custom WordPress theme for SBS Driving School Portal with responsive design and interactive features.
+Author: SBS Development Team
+Version: 1.0.0
+Text Domain: sbs-portal
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+/* Import main styles */
+@import url('assets/css/main.css');

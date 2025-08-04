@@ -1,0 +1,384 @@
+{
+    "portal_services": [
+        {
+            "id": 1,
+            "title": "SBSドライビングスクール姉崎",
+            "description": "Add description",
+            "icon": "bus",
+            "link": "/anesaki",
+            "type": "school"
+        },
+        {
+            "id": 2,
+            "title": "SBSドライビングスクール稲毛",
+            "description": "Add description",
+            "icon": "bus",
+            "link": "/inage",
+            "type": "school"
+        },
+        {
+            "id": 3,
+            "title": "SBS自動車",
+            "description": "Add description",
+            "icon": "bus",
+            "link": "/auto",
+            "type": "auto"
+        },
+        {
+            "id": 4,
+            "title": "姉崎詳細",
+            "description": "Add description",
+            "icon": "building",
+            "link": "/anesaki-detail",
+            "type": "detail"
+        },
+        {
+            "id": 5,
+            "title": "稲毛詳細",
+            "description": "Add description",
+            "icon": "building",
+            "link": "/inage-detail",
+            "type": "detail"
+        },
+        {
+            "id": 6,
+            "title": "予約システム",
+            "description": "教習、宿泊の予約",
+            "icon": "calendar",
+            "link": "/reservation",
+            "type": "system"
+        },
+        {
+            "id": 7,
+            "title": "マッチングシステム",
+            "description": "求人情報投稿",
+            "icon": "briefcase",
+            "link": "/matching",
+            "type": "system"
+        }
+    ],
+    "navigation": {
+        "main": [
+            {
+                "title": "ごあいさつ",
+                "link": "/greeting"
+            },
+            {
+                "title": "企業情報",
+                "link": "/company"
+            },
+            {
+                "title": "SBSグループについて",
+                "link": "/group"
+            }
+        ],
+        "language": {
+            "current": "日本語",
+            "options": [
+                "日本語",
+                "English",
+                "中文",
+                "한국어"
+            ]
+        }
+    },
+    "blog_posts": [
+        {
+            "id": 1,
+            "title": "敬愛学園女子バレー部敬愛学園女子バレー部",
+            "excerpt": "皆さんこんにちは！久しぶりの投稿となってしましました。この度、ＳＢＳ自動車学校は敬愛学園女子バレーボール部のスポンサーに就任いたしました！",
+            "content": "皆さんこんにちは！久しぶりの投稿となってしましました。この度、ＳＢＳ自動車学校は敬愛学園女子バレーボール部のスポンサーに就任いたしました！. 皆さんこんにちは！久しぶりの投稿となってしましました。この度、ＳＢＳ自動車学校は敬愛学園女子バレーボール部のスポンサーに就任いたしました！",
+            "featured_image": "blog-featured-1.jpg",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        },
+        {
+            "id": 2,
+            "title": "富士山ツーリング",
+            "excerpt": "皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。",
+            "content": "皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。皆様、こんにちは。ヨッシーです。",
+            "featured_image": "blog-featured-1.jpg",
+            "date": "2025-28-06",
+            "category": "NEWS",
+            "status": "published"
+        },
+        {
+            "id": 3,
+            "title": "奥多摩ツーリング",
+            "excerpt": "皆さんこんにちは！ヨッシーです！更新が全然できていませんでしたが、ツーリングには行っていました！",
+            "content": "皆さんこんにちは！ヨッシーです！更新が全然できていませんでしたが、ツーリングには行っていました！皆さんこんにちは！ヨッシーです！更新が全然できていませんでしたが、ツーリングには行っていました！",
+            "featured_image": "blog-featured-1.jpg",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        }
+    ],
+    "faq_groups": [
+        {
+            "id": 1,
+            "title": "これから免許を取る方",
+            "color": "#DD1F01",
+            "expanded": true,
+            "questions": [
+                {
+                    "id": 1,
+                    "question": "入学から卒業までの流れをざっと教えて欲しいのですが…",
+                    "answer": "教習料金のページに各車種の「教習の流れ」の図がございます。",
+                    "detail": "教習料金のページより、各車種の卒業までのフロー図を掲載致しておりますのでご覧頂けます。また、実際に教習所にお越し頂き、説明をさせて頂く事も出来ますので、お気軽にご来所下さい。",
+                    "expanded": true
+                },
+                {
+                    "id": 2,
+                    "question": "入所前に一度どんなところか見ておきたいのですが、見学は出来ますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 3,
+                    "question": "教習の教程はどれくらいの期間内に修了しないといけないのでしょうか？有効期限などありますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 4,
+                    "question": "17歳だけど…普通車の免許を取れますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 5,
+                    "question": "運動音痴なので、きっと運転もうまく出来ないと思うんですが、こんな私でも運転できるようになりますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 6,
+                    "question": "オンライン学科教習について、どのようなものでしょうか。",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 7,
+                    "question": "高速教習は、実車とシミュレーターどちらで行ないますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 8,
+                    "question": "限定解除はありますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "女性・小さなお子様のいる方",
+            "color": "#DD1F01",
+            "expanded": false,
+            "questions": [
+                {
+                    "id": 9,
+                    "question": "小さな子供がいるのですが、預かって頂く事はできますでしょうか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 10,
+                    "question": "女性で全く車の知識が無いんだけど、問題は無いでしょうか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "中型免許を習得したい方",
+            "color": "#DD1F01",
+            "expanded": false,
+            "questions": [
+                {
+                    "id": 11,
+                    "question": "8t限定中型免許を持っていて、中型の免許を取りたいけど行っていますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 12,
+                    "question": "正直言って自動車の運転はあまり得意じゃないけど、それでも中型免許ってとれるんでしょうか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "title": "外国籍の方",
+            "color": "#DD1F01",
+            "expanded": false,
+            "questions": [
+                {
+                    "id": 13,
+                    "question": "外国人ですが、教習所に通うことはできますか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 14,
+                    "question": "初めて免許をとります…入所する際には何が必要ですか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "title": "ペーパードライバーの方",
+            "color": "#DD1F01",
+            "expanded": false,
+            "questions": [
+                {
+                    "id": 15,
+                    "question": "随分長い間、運転をしていないので、このまま運転を再開するのは不安なんですが…",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 16,
+                    "question": "ペーパードライバー教習は、いつ申し込めばいいですか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                },
+                {
+                    "id": 17,
+                    "question": "ペーパードライバー講習料金は、分割払いは可能でしょうか？",
+                    "answer": "",
+                    "detail": "",
+                    "expanded": false
+                }
+            ]
+        }
+    ],
+    "footer": {
+        "logo": {
+            "text": "楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してまいりました。"
+        },
+        "columns": [
+            {
+                "title": "探索",
+                "links": [
+                    {
+                        "text": "ごあいさつ",
+                        "url": "/greeting"
+                    },
+                    {
+                        "text": "企業情報",
+                        "url": "/company"
+                    },
+                    {
+                        "text": "ニュース",
+                        "url": "/news"
+                    },
+                    {
+                        "text": "SBSグループについて",
+                        "url": "/group"
+                    },
+                    {
+                        "text": "採用",
+                        "url": "/careers"
+                    }
+                ]
+            },
+            {
+                "title": "その他のサービス",
+                "links": [
+                    {
+                        "text": "予約システム",
+                        "url": "/reservation"
+                    },
+                    {
+                        "text": "マッチングシステム",
+                        "url": "/matching"
+                    }
+                ]
+            },
+            {
+                "title": "SBS School",
+                "links": [
+                    {
+                        "text": "SBSドライビングスクール稲毛",
+                        "url": "/inage"
+                    },
+                    {
+                        "text": "SBSドライビングスクール姉崎",
+                        "url": "/anesaki"
+                    }
+                ]
+            }
+        ],
+        "contact": [
+            {
+                "school": "SBSドライビングスクール稲毛",
+                "phone": "Tel: 043-259-6371"
+            },
+            {
+                "school": "SBSドライビングスクール姉崎",
+                "phone": "Tel: 0436-61-1131"
+            }
+        ],
+        "legal": [
+            {
+                "text": "利用規約",
+                "url": "/terms"
+            },
+            {
+                "text": "プライバシー",
+                "url": "/privacy"
+            }
+        ],
+        "copyright": "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+    },
+    "company_info": {
+        "schools": [
+            {
+                "name": "SBSドライビングスクール稲毛",
+                "phone": "043-259-6371",
+                "address": "千葉県千葉市稲毛区",
+                "features": [
+                    "普通車",
+                    "自動二輪",
+                    "大型二輪"
+                ],
+                "established": "1965年"
+            },
+            {
+                "name": "SBSドライビングスクール姉崎",
+                "phone": "0436-61-1131",
+                "address": "千葉県市原市姉崎",
+                "features": [
+                    "普通車",
+                    "中型車",
+                    "大型車",
+                    "自動二輪"
+                ],
+                "established": "1970年"
+            }
+        ]
+    }
+}
