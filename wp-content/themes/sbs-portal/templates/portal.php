@@ -21,21 +21,49 @@ if (!defined('ABSPATH')) {
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
-        <!-- Main Container với 2 cột layout -->
+        <!-- ROW 1: Hero Container - 50/50 Split -->
         <div class="hero-container">
-            <!-- Left Column: Logo & Images + School Services -->
+            <!-- Left Column (50%) - Logo & Brand Message -->
             <div class="hero-left-column">
-                <!-- Logo & Images Section (2/3 của left column) -->
-                <div class="hero-logo-section">
+                <div class="hero-images-section">
+                    <!-- Circle Image (408x408px) -->
                     <div class="hero-circle-image floating-animation">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="Hero Circle" />
                     </div>
+
+                    <!-- Logo Strip (492x92px) -->
                     <div class="hero-logo-strip">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.jpg" alt="SBS Logo Strip" />
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png" alt="SBS Logo Strip" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column (50%) - Navigation + Services -->
+            <div class="hero-right-column">
+                <!-- Navigation Menu -->
+                <div class="navigation-section">
+                    <?php get_template_part('parts/portal-navigation'); ?>
+                </div>
+
+                <!-- Main Auto Service Box -->
+                <div class="auto-service-section">
+                    <div class="portal-box auto-box">
+                        <div class="portal-box-content">
+                            <div class="box-header">
+                                <div class="box-icon">
+                                    <?php echo sbs_get_icon('bus'); ?>
+                                </div>
+                                <div class="box-info">
+                                    <h3 class="box-title">SBS自動車</h3>
+                                    <p class="box-description">Add description</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-line"></div>
                     </div>
                 </div>
 
-                <!-- School Services Section (1/3 của left column) -->
+                <!-- Two School Service Boxes -->
                 <div class="school-services-section">
                     <div class="portal-box school-box">
                         <div class="portal-box-content">
@@ -68,93 +96,73 @@ if (!defined('ABSPATH')) {
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Right Column: Navigation + Services -->
-            <div class="hero-right-column">
-                <!-- Navigation Section -->
-                <div class="navigation-section">
-                    <?php get_template_part('parts/portal-navigation'); ?>
+        <!-- ROW 2: Detail Services Section - 4 Columns Grid -->
+        <div class="detail-services-main-section">
+            <div class="detail-services-grid">
+                <!-- Box 1: 姉崎詳細 -->
+                <div class="portal-box detail-box">
+                    <div class="portal-box-content">
+                        <div class="box-header">
+                            <div class="box-icon">
+                                <?php echo sbs_get_icon('building'); ?>
+                            </div>
+                            <div class="box-info">
+                                <h3 class="box-title">姉崎詳細</h3>
+                                <p class="box-description">Add description</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-line"></div>
                 </div>
 
-                <!-- Auto Service Section (Full width trong right column) -->
-                <div class="auto-service-section">
-                    <div class="portal-box auto-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
-                                    <?php echo sbs_get_icon('bus'); ?>
-                                </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">SBS自動車</h3>
-                                    <p class="box-description">Add description</p>
-                                </div>
+                <!-- Box 2: 稲毛詳細 -->
+                <div class="portal-box detail-box">
+                    <div class="portal-box-content">
+                        <div class="box-header">
+                            <div class="box-icon">
+                                <?php echo sbs_get_icon('building'); ?>
+                            </div>
+                            <div class="box-info">
+                                <h3 class="box-title">稲毛詳細</h3>
+                                <p class="box-description">Add description</p>
                             </div>
                         </div>
-                        <div class="box-line"></div>
                     </div>
+                    <div class="box-line"></div>
                 </div>
 
-                <!-- Detail Services Section (4 items grid) -->
-                <div class="detail-services-section">
-                    <div class="portal-box detail-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
-                                    <?php echo sbs_get_icon('building'); ?>
-                                </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">姉崎詳細</h3>
-                                    <p class="box-description">Add description</p>
-                                </div>
+                <!-- Box 3: 予約システム -->
+                <div class="portal-box system-box">
+                    <div class="portal-box-content">
+                        <div class="box-header">
+                            <div class="box-icon">
+                                <?php echo sbs_get_icon('calendar'); ?>
+                            </div>
+                            <div class="box-info">
+                                <h3 class="box-title">予約システム</h3>
+                                <p class="box-description">教習、宿泊の予約</p>
                             </div>
                         </div>
-                        <div class="box-line"></div>
                     </div>
+                    <div class="box-line"></div>
+                </div>
 
-                    <div class="portal-box detail-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
-                                    <?php echo sbs_get_icon('building'); ?>
-                                </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">稲毛詳細</h3>
-                                    <p class="box-description">Add description</p>
-                                </div>
+                <!-- Box 4: マッチングシステム -->
+                <div class="portal-box system-box">
+                    <div class="portal-box-content">
+                        <div class="box-header">
+                            <div class="box-icon">
+                                <?php echo sbs_get_icon('briefcase'); ?>
+                            </div>
+                            <div class="box-info">
+                                <h3 class="box-title">マッチングシステム</h3>
+                                <p class="box-description">求人情報投稿</p>
                             </div>
                         </div>
-                        <div class="box-line"></div>
                     </div>
-
-                    <div class="portal-box system-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
-                                    <?php echo sbs_get_icon('calendar'); ?>
-                                </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">予約システム</h3>
-                                    <p class="box-description">教習、宿泊の予約</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-line"></div>
-                    </div>
-
-                    <div class="portal-box system-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
-                                    <?php echo sbs_get_icon('briefcase'); ?>
-                                </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">マッチングシステム</h3>
-                                    <p class="box-description">求人情報投稿</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-line"></div>
-                    </div>
+                    <div class="box-line"></div>
                 </div>
             </div>
         </div>
