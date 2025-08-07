@@ -26,17 +26,17 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
 
 <div class="faq-item <?php echo esc_attr($expanded_class); ?>" data-question-id="<?php echo esc_attr($question['id']); ?>">
     <!-- Question -->
-    <div class="faq-question">
-        <div class="question-content">
-            <h4 class="question-text"><?php echo esc_html($question['question']); ?></h4>
-            <div class="question-toggle">
+    <div class="faq-question user-select-none" style="cursor: pointer;">
+        <div class="question-content d-flex justify-content-between align-items-center gap-2 py-3">
+            <h4 class="question-text mb-0 flex-grow-1"><?php echo esc_html($question['question']); ?></h4>
+            <div class="question-toggle d-flex align-items-center justify-content-center">
                 <?php if ($question['expanded']): ?>
-                    <div class="icon-container expanded">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" />
+                    <div class="icon-container expanded d-flex align-items-center justify-content-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" class="img-fluid" />
                     </div>
                 <?php else: ?>
-                    <div class="icon-container collapsed">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" />
+                    <div class="icon-container collapsed d-flex align-items-center justify-content-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" class="img-fluid" />
                     </div>
                 <?php endif; ?>
             </div>
@@ -45,7 +45,7 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
 
     <!-- Answer -->
     <?php if (!empty($question['answer']) || !empty($question['detail'])): ?>
-        <div class="faq-answer">
+        <div class="faq-answer pt-3 d-flex flex-column gap-2">
             <?php if (!empty($question['answer'])): ?>
                 <div class="answer-brief">
                     <?php echo esc_html($question['answer']); ?>
@@ -61,5 +61,5 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
     <?php endif; ?>
 
     <!-- Divider -->
-    <div class="faq-divider"></div>
+    <div class="faq-divider border-bottom pb-3 mb-3"></div>
 </div>

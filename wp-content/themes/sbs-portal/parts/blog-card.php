@@ -3,7 +3,7 @@
 /**
  * Blog Card Component
  * 
- * Individual blog post card
+ * Individual blog post card - Enhanced with Bootstrap
  *
  * @package SBS_Portal
  * @version 1.0.0
@@ -22,7 +22,7 @@ if (!$post) {
 }
 ?>
 
-<article class="blog-card">
+<article class="blog-card h-100">
     <!-- Featured Image -->
     <div class="blog-card-image">
         <?php
@@ -30,26 +30,26 @@ if (!$post) {
         $image_file = ($post['id'] == 1 || $post['id'] == 3) ? 'blog-featured-1-66030e.jpg' : 'blog-featured-2.jpg';
         ?>
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo $image_file; ?>"
-            alt="<?php echo esc_attr($post['title']); ?>" />
+            alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
     </div>
 
     <!-- Card Content -->
-    <div class="blog-card-content">
+    <div class="blog-card-content d-flex flex-column h-100">
         <!-- Title -->
         <h3 class="blog-card-title">
-            <a href="/blog/<?php echo esc_attr($post['id']); ?>">
+            <a href="/blog/<?php echo esc_attr($post['id']); ?>" class="text-decoration-none">
                 <?php echo esc_html($post['title']); ?>
             </a>
         </h3>
 
         <!-- Excerpt -->
-        <div class="blog-card-excerpt">
+        <div class="blog-card-excerpt flex-grow-1">
             <?php echo esc_html($post['excerpt']); ?>
         </div>
 
         <!-- Meta Information -->
-        <div class="blog-card-meta">
-            <div class="meta-tags">
+        <div class="blog-card-meta mt-auto">
+            <div class="meta-tags d-flex gap-1">
                 <span class="category-tag category-<?php echo strtolower($post['category']); ?>">
                     <?php echo esc_html($post['category']); ?>
                 </span>

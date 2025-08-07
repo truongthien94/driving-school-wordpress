@@ -2,15 +2,10 @@
 Theme Name: SBS Portal
 Description: Custom WordPress theme for SBS Driving School Portal
 Version: 1.0.0
+Optimized for Bootstrap 5 integration
 */
 
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Base Styles - Essential only */
 body {
     font-family: 'Inter', 'Noto Sans JP', sans-serif;
     line-height: 1.6;
@@ -18,10 +13,9 @@ body {
     background-color: #F7F7F7;
 }
 
+/* Override Bootstrap container max-width */
 .container {
     max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 40px;
 }
 
 /* SBS Portal Styles */
@@ -169,16 +163,7 @@ body {
 /* Right Column (50%) - Navigation + Services */
 .hero-right-column {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
     height: 100%;
-}
-
-/* School Services Section - Two boxes horizontal */
-.school-services-section {
-    display: flex;
-    gap: 24px;
 }
 
 /* Navigation Section */
@@ -199,11 +184,8 @@ body {
     margin-top: auto;
 }
 
-/* Detail Services Grid - 4 Columns */
+/* Detail Services Grid - Bootstrap Enhanced */
 .detail-services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
     max-width: 1500px;
     margin: 0 auto;
     padding: 0 40px;
@@ -263,28 +245,10 @@ body {
     justify-content: center;
 }
 
-.portal-box-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    flex: 1;
-}
-
-/* Smaller gap for detail service boxes */
-.detail-services-section .portal-box-content {
-    gap: 12px;
-}
-
-.box-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
-
+/* Box content and header - now using Bootstrap classes in template */
 .box-icon {
     width: 24px;
     height: 24px;
-    flex-shrink: 0;
     transition: color 0.3s ease;
 }
 
@@ -294,33 +258,18 @@ body {
     transition: all 0.3s ease;
 }
 
-.box-info {
-    flex: 1;
-}
-
-.box-info h3 {
+.box-title {
     font-size: 24px;
     font-weight: 600;
     line-height: 1.5;
     color: #262626;
-    margin-bottom: 4px;
     transition: color 0.3s ease;
 }
 
-.box-info p {
+.box-description {
     font-size: 16px;
     color: #777E90;
     line-height: 1.5;
-    margin: 0;
-}
-
-/* Same text size as other service boxes */
-.detail-services-section .box-info h3 {
-    font-size: 24px;
-}
-
-.detail-services-section .box-info p {
-    font-size: 16px;
 }
 
 .box-line {
@@ -604,25 +553,6 @@ body {
     margin-bottom: 100px;
 }
 
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 24px;
-}
-
-.header-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.header-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
 .logo-icon {
     width: 53px;
     height: 25px;
@@ -675,11 +605,7 @@ body {
     color: #DD1F01;
 }
 
-.blog-posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(437px, 1fr));
-    gap: 24px;
-}
+/* Blog posts grid - now handled by Bootstrap */
 
 /* Blog Card */
 .blog-card {
@@ -754,13 +680,7 @@ body {
     overflow: hidden;
 }
 
-.blog-card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-}
-
+/* Blog card meta - simplified for Bootstrap */
 .meta-tags {
     display: flex;
     gap: 4px;
@@ -1369,7 +1289,7 @@ body {
     transform: translateY(-5px) scale(1.02);
 }
 
-/* Responsive Design */
+/* Responsive Design - Optimized for Bootstrap */
 @media (max-width: 1200px) {
     .sbs-hero-section {
         min-height: 90vh;
@@ -1377,7 +1297,6 @@ body {
 
     .hero-container {
         padding: 30px;
-        gap: 30px;
         min-height: 50vh;
     }
 
@@ -1400,7 +1319,6 @@ body {
 
     .detail-services-grid {
         padding: 0 30px;
-        gap: 20px;
     }
 
     .sbs-hero-section .detail-services-main-section {
@@ -1409,10 +1327,6 @@ body {
 }
 
 @media (max-width: 1024px) {
-    .container {
-        padding: 0 20px;
-    }
-
     .sbs-hero-section {
         min-height: auto;
     }
@@ -1420,7 +1334,6 @@ body {
     /* Hero Section - Stack columns vertically */
     .hero-container {
         padding: 20px;
-        gap: 30px;
         flex-direction: column;
         min-height: auto;
     }
@@ -1463,16 +1376,7 @@ body {
         bottom: 20px;
     }
 
-    /* School services stack vertically on tablet */
-    .school-services-section {
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    /* Detail services - 2 columns on tablet */
     .detail-services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
         padding: 0 20px;
     }
 
@@ -1486,12 +1390,6 @@ body {
 
     .nav-links {
         gap: 20px;
-    }
-
-    /* Blog Section Responsive */
-    .blog-posts-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
     }
 
     .blog-card {
@@ -1634,16 +1532,8 @@ body {
         bottom: 10px;
     }
 
-    /* School services - single column on mobile */
-    .school-services-section {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    /* Detail services - single column on mobile */
+    /* Detail services - single column handled by Bootstrap */
     .detail-services-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
         padding: 0 15px;
     }
 

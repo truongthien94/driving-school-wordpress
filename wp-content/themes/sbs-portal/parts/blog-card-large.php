@@ -4,6 +4,7 @@
  * Blog Card Large Component
  * 
  * Larger blog post card for blog list page
+ * Enhanced with Bootstrap compatibility
  *
  * @package SBS_Portal
  * @version 1.0.0
@@ -30,29 +31,29 @@ if (!empty($post['featured_image']) && filter_var($post['featured_image'], FILTE
 }
 ?>
 
-<article class="blog-card-large">
+<article class="blog-card-large h-100">
     <!-- Featured Image -->
     <div class="blog-card-large-image">
-        <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($post['title']); ?>" />
+        <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
     </div>
 
     <!-- Card Content -->
-    <div class="blog-card-large-content">
+    <div class="blog-card-large-content d-flex flex-column h-100">
         <!-- Title -->
         <h3 class="blog-card-large-title">
-            <a href="<?php echo get_permalink($post['id']); ?>">
+            <a href="<?php echo get_permalink($post['id']); ?>" class="text-decoration-none">
                 <?php echo esc_html($post['title']); ?>
             </a>
         </h3>
 
         <!-- Excerpt -->
-        <div class="blog-card-large-excerpt">
+        <div class="blog-card-large-excerpt flex-grow-1">
             <?php echo esc_html($post['excerpt']); ?>
         </div>
 
         <!-- Meta Information -->
-        <div class="blog-card-large-meta">
-            <div class="meta-tags">
+        <div class="blog-card-large-meta mt-auto">
+            <div class="meta-tags d-flex gap-1">
                 <span class="category-tag category-<?php echo strtolower($post['category']); ?>">
                     <?php echo esc_html($post['category']); ?>
                 </span>

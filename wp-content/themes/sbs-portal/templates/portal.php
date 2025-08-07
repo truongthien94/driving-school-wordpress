@@ -25,21 +25,21 @@ if (!defined('ABSPATH')) {
         <div class="hero-container">
             <!-- Left Column (50%) - Logo & Brand Message -->
             <div class="hero-left-column">
-                <div class="hero-images-section">
+                <div class="hero-images-section position-relative">
                     <!-- Circle Image (408x408px) -->
-                    <div class="hero-circle-image floating-animation">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="Hero Circle" />
+                    <div class="hero-circle-image floating-animation position-absolute">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="Hero Circle" class="img-fluid rounded-circle" />
                     </div>
 
                     <!-- Logo Strip (492x92px) -->
-                    <div class="hero-logo-strip">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png" alt="SBS Logo Strip" />
+                    <div class="hero-logo-strip position-absolute">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png" alt="SBS Logo Strip" class="img-fluid" />
                     </div>
                 </div>
             </div>
 
             <!-- Right Column (50%) - Navigation + Services -->
-            <div class="hero-right-column">
+            <div class="hero-right-column d-flex flex-column gap-3">
                 <!-- Navigation Menu -->
                 <div class="navigation-section">
                     <?php get_template_part('parts/portal-navigation'); ?>
@@ -47,52 +47,52 @@ if (!defined('ABSPATH')) {
 
                 <!-- Main Auto Service Box -->
                 <div class="auto-service-section">
-                    <div class="portal-box auto-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
+                    <div class="portal-box auto-box h-100">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
                                     <?php echo sbs_get_icon('bus'); ?>
                                 </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">SBS自動車</h3>
-                                    <p class="box-description">自動車整備・販売サービス</p>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">SBS自動車</h3>
+                                    <p class="box-description mb-0">自動車整備・販売サービス</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="box-line"></div>
+                        <div class="box-line position-absolute"></div>
                     </div>
                 </div>
 
                 <!-- Two School Service Boxes -->
-                <div class="school-services-section">
-                    <div class="portal-box school-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
+                <div class="school-services-section d-flex gap-3">
+                    <div class="portal-box school-box flex-fill">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
                                     <?php echo sbs_get_icon('bus'); ?>
                                 </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">SBSドライビングスクール姉崎</h3>
-                                    <p class="box-description">運転免許取得をサポート</p>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">SBSドライビングスクール姉崎</h3>
+                                    <p class="box-description mb-0">運転免許取得をサポート</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="box-line"></div>
+                        <div class="box-line position-absolute"></div>
                     </div>
 
-                    <div class="portal-box school-box">
-                        <div class="portal-box-content">
-                            <div class="box-header">
-                                <div class="box-icon">
+                    <div class="portal-box school-box flex-fill">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
                                     <?php echo sbs_get_icon('bus'); ?>
                                 </div>
-                                <div class="box-info">
-                                    <h3 class="box-title">SBSドライビングスクール稲毛</h3>
-                                    <p class="box-description">運転免許取得をサポート</p>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">SBSドライビングスクール稲毛</h3>
+                                    <p class="box-description mb-0">運転免許取得をサポート</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="box-line"></div>
+                        <div class="box-line position-absolute"></div>
                     </div>
                 </div>
             </div>
@@ -100,69 +100,77 @@ if (!defined('ABSPATH')) {
 
         <!-- Detail Services Grid - 4 Columns -->
         <div class="detail-services-main-section">
-            <div class="detail-services-grid">
+            <div class="detail-services-grid row g-3">
                 <!-- Box 1: 姉崎詳細 -->
-                <div class="portal-box detail-box">
-                    <div class="portal-box-content">
-                        <div class="box-header">
-                            <div class="box-icon">
-                                <?php echo sbs_get_icon('building'); ?>
-                            </div>
-                            <div class="box-info">
-                                <h3 class="box-title">姉崎詳細</h3>
-                                <p class="box-description">スクール詳細情報</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="portal-box detail-box h-100">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon('building'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">姉崎詳細</h3>
+                                    <p class="box-description mb-0">スクール詳細情報</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="box-line position-absolute"></div>
                     </div>
-                    <div class="box-line"></div>
                 </div>
 
                 <!-- Box 2: 稲毛詳細 -->
-                <div class="portal-box detail-box">
-                    <div class="portal-box-content">
-                        <div class="box-header">
-                            <div class="box-icon">
-                                <?php echo sbs_get_icon('building'); ?>
-                            </div>
-                            <div class="box-info">
-                                <h3 class="box-title">稲毛詳細</h3>
-                                <p class="box-description">スクール詳細情報</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="portal-box detail-box h-100">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon('building'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">稲毛詳細</h3>
+                                    <p class="box-description mb-0">スクール詳細情報</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="box-line position-absolute"></div>
                     </div>
-                    <div class="box-line"></div>
                 </div>
 
                 <!-- Box 3: 予約システム -->
-                <div class="portal-box system-box">
-                    <div class="portal-box-content">
-                        <div class="box-header">
-                            <div class="box-icon">
-                                <?php echo sbs_get_icon('calendar'); ?>
-                            </div>
-                            <div class="box-info">
-                                <h3 class="box-title">予約システム</h3>
-                                <p class="box-description">教習、宿泊の予約</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="portal-box system-box h-100">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon('calendar'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">予約システム</h3>
+                                    <p class="box-description mb-0">教習、宿泊の予約</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="box-line position-absolute"></div>
                     </div>
-                    <div class="box-line"></div>
                 </div>
 
                 <!-- Box 4: マッチングシステム -->
-                <div class="portal-box system-box">
-                    <div class="portal-box-content">
-                        <div class="box-header">
-                            <div class="box-icon">
-                                <?php echo sbs_get_icon('briefcase'); ?>
-                            </div>
-                            <div class="box-info">
-                                <h3 class="box-title">マッチングシステム</h3>
-                                <p class="box-description">求人情報投稿</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="portal-box system-box h-100">
+                        <div class="portal-box-content d-flex flex-column gap-3 h-100 justify-content-center">
+                            <div class="box-header d-flex align-items-start gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon('briefcase'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">マッチングシステム</h3>
+                                    <p class="box-description mb-0">求人情報投稿</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="box-line position-absolute"></div>
                     </div>
-                    <div class="box-line"></div>
                 </div>
             </div>
         </div>

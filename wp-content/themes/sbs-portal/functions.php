@@ -46,8 +46,10 @@ add_action('after_setup_theme', 'sbs_setup');
  */
 function sbs_enqueue_scripts()
 {
-    // Enqueue main styles
-    wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), '1.0.0');
+    // Enqueue Bootstrap 5 (CSS & JS)
+    wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3');
+    // Main style depends on Bootstrap
+    wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array('bootstrap-css'), '1.0.0');
 
     // Enqueue blog list specific stylesheet
     if (
@@ -59,8 +61,10 @@ function sbs_enqueue_scripts()
         wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
     }
 
-    // Enqueue scripts
-    wp_enqueue_script('sbs-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
+    // Enqueue Bootstrap JS (bundle includes Popper)
+    wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.3', true);
+    // Enqueue theme JS
+    wp_enqueue_script('sbs-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap-js'), '1.0.0', true);
 
     // Localize script for AJAX
     wp_localize_script('sbs-script', 'sbs_ajax', array(

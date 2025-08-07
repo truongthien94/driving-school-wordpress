@@ -1,6 +1,7 @@
 /*
 Blog List Page Styles
 Separate CSS file for blog list page to avoid conflicts
+Optimized for Bootstrap 5 integration
 */
 
 /* ===================================
@@ -183,20 +184,8 @@ Separate CSS file for blog list page to avoid conflicts
     position: relative;
 }
 
-.blog-posts-main-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.blog-posts-row {
-    display: flex;
-    gap: 24px;
-}
-
-/* Blog Card Large */
+/* Blog Card Large - Enhanced with Bootstrap compatibility */
 .blog-card-large {
-    flex: 1;
     background: linear-gradient(135deg, rgba(252, 252, 253, 1) 0%, rgba(252, 252, 253, 0.83) 100%);
     border: 1px solid #FCFCFD;
     border-radius: 8px;
@@ -204,6 +193,7 @@ Separate CSS file for blog list page to avoid conflicts
     backdrop-filter: blur(32px);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
 }
 
 .blog-card-large:hover {
@@ -233,6 +223,7 @@ Separate CSS file for blog list page to avoid conflicts
     display: flex;
     flex-direction: column;
     gap: 8px;
+    height: calc(100% - 230px);
 }
 
 .blog-card-large-title {
@@ -265,12 +256,14 @@ Separate CSS file for blog list page to avoid conflicts
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
+    flex-grow: 1;
 }
 
 .blog-card-large-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
 }
 
 .meta-tags {
@@ -297,37 +290,10 @@ Separate CSS file for blog list page to avoid conflicts
     color: #8E8E8E;
 }
 
-/* Pagination Section */
+/* Pagination Section - Enhanced with Bootstrap */
 .blog-pagination-section {
     margin-top: 40px;
     padding: 2px 0;
-}
-
-.pagination-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 64px;
-}
-
-.pagination-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.page-info {
-    font-family: Noto Sans JP, sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #262626;
-}
-
-.pagination-controls {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
 }
 
 .pagination-btn {
@@ -342,11 +308,13 @@ Separate CSS file for blog list page to avoid conflicts
     color: #262626;
     cursor: pointer;
     transition: all 0.2s ease;
+    padding: 0;
 }
 
 .pagination-btn:hover:not(.disabled) {
     background: #F8F9FA;
     border-color: #CFD4DA;
+    transform: scale(1.05);
 }
 
 .pagination-btn.disabled {
@@ -454,17 +422,6 @@ Separate CSS file for blog list page to avoid conflicts
     z-index: 10;
 }
 
-.breadcrumb-list {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.breadcrumb-item {
-    display: flex;
-    align-items: center;
-}
-
 .breadcrumb-link {
     font-family: Inter, sans-serif;
     font-weight: 600;
@@ -517,12 +474,6 @@ Separate CSS file for blog list page to avoid conflicts
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-}
-
-.nav-menu-items {
-    display: flex;
-    align-items: center;
-    gap: 40px;
 }
 
 .nav-menu-item {
@@ -578,12 +529,6 @@ Separate CSS file for blog list page to avoid conflicts
 }
 
 /* No Posts Message */
-.no-blog-posts {
-    text-align: center;
-    padding: 60px 20px;
-    color: #666;
-}
-
 .no-blog-posts p {
     font-family: Noto Sans JP, sans-serif;
     font-size: 16px;
@@ -750,7 +695,7 @@ Separate CSS file for blog list page to avoid conflicts
     }
 }
 
-/* Responsive Design */
+/* Responsive Design - Optimized for Bootstrap */
 @media (max-width: 1200px) {
     .blog-list-header {
         width: 100%;
@@ -778,14 +723,6 @@ Separate CSS file for blog list page to avoid conflicts
 
     .blog-header-title-frame {
         left: 20px;
-    }
-
-    .blog-posts-row {
-        flex-wrap: wrap;
-    }
-
-    .blog-card-large {
-        min-width: 300px;
     }
 }
 
@@ -843,20 +780,6 @@ Separate CSS file for blog list page to avoid conflicts
         height: 200px;
     }
 
-    .blog-posts-row {
-        flex-direction: column;
-    }
-
-    .pagination-wrapper {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .pagination-controls {
-        justify-content: center;
-    }
-
     .blog-list-floating-elements {
         right: 20px;
         bottom: 20px;
@@ -872,10 +795,6 @@ Separate CSS file for blog list page to avoid conflicts
         height: 36px;
     }
 
-    .breadcrumb-list {
-        flex-wrap: wrap;
-    }
-
     /* Adjust breadcrumbs for mobile with banner carousel */
     .blog-breadcrumbs {
         top: 478px;
@@ -886,5 +805,22 @@ Separate CSS file for blog list page to avoid conflicts
     .blog-list-content {
         min-height: calc(100vh - 200px - 240px);
         /* Mobile header + banner carousel */
+    }
+}
+
+/* Bootstrap Override for Blog Cards */
+@media (max-width: 768px) {
+    .blog-card-large {
+        margin-bottom: 1rem;
+    }
+
+    .blog-card-large-content {
+        height: auto;
+        min-height: 200px;
+    }
+
+    .blog-card-large-excerpt {
+        height: auto;
+        -webkit-line-clamp: 3;
     }
 }

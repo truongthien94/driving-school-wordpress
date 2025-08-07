@@ -19,32 +19,36 @@ $blog_posts = sbs_get_latest_blog_posts(3);
 
 <div class="blog-section">
     <!-- Section Header -->
-    <div class="section-header">
-        <div class="header-content">
-            <div class="header-title">
-                <div class="logo-icon">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" />
+    <div class="section-header d-flex justify-content-between align-items-end mb-4">
+        <div class="header-content d-flex flex-column gap-2">
+            <div class="header-title d-flex align-items-center gap-3">
+                <div class="logo-icon d-flex align-items-center justify-content-center">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" class="img-fluid" />
                 </div>
-                <h2 class="section-title">ブログ</h2>
+                <h2 class="section-title mb-0">ブログ</h2>
             </div>
-            <p class="section-subtitle">BLOG and NEWS</p>
+            <p class="section-subtitle mb-0">BLOG and NEWS</p>
         </div>
         <div class="header-action">
-            <a href="<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>" class="view-all-button">
+            <a href="<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>" class="view-all-button btn btn-outline-secondary btn-sm">
                 すべて表示
             </a>
         </div>
     </div>
 
     <!-- Blog Posts Grid -->
-    <div class="blog-posts-grid">
+    <div class="blog-posts-grid row g-3">
         <?php if (!empty($blog_posts)): ?>
             <?php foreach ($blog_posts as $post): ?>
-                <?php get_template_part('parts/blog-card', null, array('post' => $post)); ?>
+                <div class="col-lg-4 col-md-6">
+                    <?php get_template_part('parts/blog-card', null, array('post' => $post)); ?>
+                </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <div class="no-posts">
-                <p>No blog posts available yet.</p>
+            <div class="col-12">
+                <div class="no-posts text-center py-5">
+                    <p class="text-muted mb-0">No blog posts available yet.</p>
+                </div>
             </div>
         <?php endif; ?>
     </div>
