@@ -30,7 +30,7 @@ $blog_posts = sbs_get_latest_blog_posts(3);
             <p class="section-subtitle">BLOG and NEWS</p>
         </div>
         <div class="header-action">
-            <a href="/blog" class="view-all-button">
+            <a href="<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>" class="view-all-button">
                 すべて表示
             </a>
         </div>

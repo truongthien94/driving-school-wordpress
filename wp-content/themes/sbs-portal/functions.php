@@ -46,8 +46,18 @@ add_action('after_setup_theme', 'sbs_setup');
  */
 function sbs_enqueue_scripts()
 {
-    // Enqueue styles
+    // Enqueue main styles
     wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), '1.0.0');
+
+    // Enqueue blog list specific stylesheet
+    if (
+        is_page_template('page-blog.php') ||
+        (get_query_var('sbs_page') === 'blog-list') ||
+        is_post_type_archive('blog') ||
+        (is_page() && get_page_template_slug() === 'page-blog.php')
+    ) {
+        wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
+    }
 
     // Enqueue scripts
     wp_enqueue_script('sbs-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
@@ -310,6 +320,101 @@ function sbs_get_footer_data()
 {
     $mock_data = sbs_get_mock_data();
     return isset($mock_data['footer']) ? $mock_data['footer'] : array();
+}
+
+/**
+ * Add custom rewrite rules for blog list page
+ */
+function sbs_add_rewrite_rules()
+{
+    add_rewrite_rule(
+        '^blog-list/?$',
+        'index.php?sbs_page=blog-list',
+        'top'
+    );
+}
+add_action('init', 'sbs_add_rewrite_rules');
+
+/**
+ * Add custom query vars
+ */
+function sbs_add_query_vars($vars)
+{
+    $vars[] = 'sbs_page';
+    return $vars;
+}
+add_filter('query_vars', 'sbs_add_query_vars');
+
+/**
+ * Handle custom page templates
+ */
+function sbs_template_redirect()
+{
+    $sbs_page = get_query_var('sbs_page');
+
+    if ($sbs_page === 'blog-list') {
+        // Load the blog list template
+        get_header();
+        get_template_part('templates/blog-list');
+        get_footer();
+        exit;
+    }
+}
+add_action('template_redirect', 'sbs_template_redirect');
+
+/**
+ * Flush rewrite rules on theme activation
+ */
+function sbs_flush_rewrite_rules()
+{
+    sbs_add_rewrite_rules();
+    flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, 'sbs_flush_rewrite_rules');
+
+/**
+ * Add admin menu to flush rewrite rules manually
+ */
+function sbs_add_admin_menu()
+{
+    add_management_page(
+        'SBS Rewrite Rules',
+        'SBS Rewrite Rules',
+        'manage_options',
+        'sbs-rewrite-rules',
+        'sbs_rewrite_rules_page'
+    );
+}
+add_action('admin_menu', 'sbs_add_admin_menu');
+
+/**
+ * Admin page to flush rewrite rules
+ */
+function sbs_rewrite_rules_page()
+{
+    if (isset($_POST['flush_rules']) && wp_verify_nonce($_POST['_wpnonce'], 'sbs_flush_rules')) {
+        sbs_add_rewrite_rules();
+        flush_rewrite_rules();
+        echo '<div class="notice notice-success"><p>Rewrite rules flushed successfully!</p></div>';
+    }
+
+?>
+    <div class="wrap">
+        <h1>SBS Rewrite Rules</h1>
+        <p>Click the button below to flush rewrite rules and make the blog-list URL work.</p>
+
+        <form method="post">
+            <?php wp_nonce_field('sbs_flush_rules'); ?>
+            <input type="submit" name="flush_rules" class="button-primary" value="Flush Rewrite Rules" />
+        </form>
+
+        <h3>Current Blog URLs:</h3>
+        <ul>
+            <li><strong>Blog Archive:</strong> <a href="<?php echo get_post_type_archive_link('blog'); ?>" target="_blank"><?php echo get_post_type_archive_link('blog'); ?></a></li>
+            <li><strong>Blog List:</strong> <a href="<?php echo home_url('/blog-list/'); ?>" target="_blank"><?php echo home_url('/blog-list/'); ?></a></li>
+        </ul>
+    </div>
+<?php
 }
 
 /**

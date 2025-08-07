@@ -626,4 +626,89 @@
         });
     }
 
+    // Blog List Page Specific Functionality
+    if ($('.sbs-blog-list').length > 0) {
+        // Float buttons functionality
+        $('.float-chat').on('click', function () {
+            // Add chat functionality here
+            console.log('Chat button clicked');
+        });
+
+        $('.float-contact').on('click', function () {
+            // Add contact functionality here  
+            console.log('Contact button clicked');
+        });
+
+        // Enhanced back to top for blog list
+        $('.blog-list-back-to-top').on('click', function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // Pagination button hover effects
+        $('.pagination-btn:not(.disabled)').hover(
+            function () {
+                $(this).css('transform', 'scale(1.05)');
+            },
+            function () {
+                $(this).css('transform', 'scale(1)');
+            }
+        );
+
+        // Blog card enhanced hover effects
+        $('.blog-card-large').hover(
+            function () {
+                $(this).css({
+                    'transform': 'translateY(-4px)',
+                    'box-shadow': '0px 60px 100px -50px rgba(15, 15, 15, 0.2)'
+                });
+            },
+            function () {
+                $(this).css({
+                    'transform': 'translateY(-2px)',
+                    'box-shadow': '0px 50px 80px -40px rgba(15, 15, 15, 0.15)'
+                });
+            }
+        );
+
+        // Show/hide floating elements on scroll
+        $(window).scroll(function () {
+            const scrollTop = $(this).scrollTop();
+
+            if (scrollTop > 300) {
+                $('.blog-list-floating-elements').addClass('visible');
+            } else {
+                $('.blog-list-floating-elements').removeClass('visible');
+            }
+        });
+
+        // Smooth scroll for breadcrumb links
+        $('.breadcrumb-link').on('click', function (e) {
+            const href = $(this).attr('href');
+            if (href === '/' || href.includes('home')) {
+                // Let it navigate normally to home page
+                return true;
+            }
+        });
+
+        // Banner carousel functionality for blog list
+        $('.banner-item').on('click', function () {
+            $(this).addClass('clicked');
+            setTimeout(() => {
+                $(this).removeClass('clicked');
+            }, 100);
+        });
+
+        // Pause carousel on hover
+        $('.banner-carousel-track').hover(
+            function () {
+                $(this).css('animation-play-state', 'paused');
+            },
+            function () {
+                $(this).css('animation-play-state', 'running');
+            }
+        );
+    }
+
 })(jQuery);
