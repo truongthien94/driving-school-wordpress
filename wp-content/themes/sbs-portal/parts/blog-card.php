@@ -25,7 +25,11 @@ if (!$post) {
 <article class="blog-card">
     <!-- Featured Image -->
     <div class="blog-card-image">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo esc_attr($post['featured_image']); ?>"
+        <?php
+        // Use different images based on post ID for variety
+        $image_file = ($post['id'] == 1 || $post['id'] == 3) ? 'blog-featured-1-66030e.jpg' : 'blog-featured-2.jpg';
+        ?>
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo $image_file; ?>"
             alt="<?php echo esc_attr($post['title']); ?>" />
     </div>
 

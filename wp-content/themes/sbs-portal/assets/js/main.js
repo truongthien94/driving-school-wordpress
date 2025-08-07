@@ -19,26 +19,50 @@
         initPortalEffects();
         initFloatingAnimation();
         initFormValidation();
+        initBannerCarousel();
     });
 
     /**
      * Initialize FAQ Accordion
      */
     function initFAQAccordion() {
+        // Initialize expanded groups on page load (headers are expanded by default)
+        $('.faq-group.expanded').each(function () {
+            const $group = $(this);
+            const $content = $group.find('.faq-group-content');
+
+            // Show content for expanded groups
+            $content.show();
+        });
+
+        // Initialize collapsed items on page load (items are collapsed by default)
+        $('.faq-item:not(.expanded)').each(function () {
+            const $item = $(this);
+            const $answer = $item.find('.faq-answer');
+
+            // Hide answer for collapsed items
+            $answer.hide();
+        });
+
         // FAQ Group Toggle
         $('.faq-group-header').on('click', function () {
             const $group = $(this).closest('.faq-group');
             const $content = $group.find('.faq-group-content');
-            const $icon = $group.find('.group-toggle .toggle-icon');
+            const $iconContainer = $group.find('.group-toggle .icon-container');
 
             // Toggle expanded state
             $group.toggleClass('expanded');
 
-            // Update icon
+            // Show/hide content
+            $content.slideToggle(300);
+
+            // Update icon container
             if ($group.hasClass('expanded')) {
-                $icon.html(getIcon('minus'));
+                $iconContainer.removeClass('collapsed').addClass('expanded');
+                $iconContainer.html('<img src="' + getTemplateDirectoryUri() + '/assets/images/icons/icon-minus.svg" alt="Minus" />');
             } else {
-                $icon.html(getIcon('plus'));
+                $iconContainer.removeClass('expanded').addClass('collapsed');
+                $iconContainer.html('<img src="' + getTemplateDirectoryUri() + '/assets/images/icons/icon-plus.svg" alt="Plus" />');
             }
         });
 
@@ -46,7 +70,7 @@
         $('.faq-question').on('click', function () {
             const $item = $(this).closest('.faq-item');
             const $answer = $item.find('.faq-answer');
-            const $icon = $item.find('.question-toggle');
+            const $iconContainer = $item.find('.question-toggle .icon-container');
 
             // Toggle expanded state
             $item.toggleClass('expanded');
@@ -54,11 +78,13 @@
             // Show/hide answer
             $answer.slideToggle(300);
 
-            // Update icon
+            // Update icon container
             if ($item.hasClass('expanded')) {
-                $icon.html(getIcon('minus'));
+                $iconContainer.removeClass('collapsed').addClass('expanded');
+                $iconContainer.html('<img src="' + getTemplateDirectoryUri() + '/assets/images/icons/icon-minus.svg" alt="Minus" />');
             } else {
-                $icon.html(getIcon('plus'));
+                $iconContainer.removeClass('expanded').addClass('collapsed');
+                $iconContainer.html('<img src="' + getTemplateDirectoryUri() + '/assets/images/icons/icon-plus.svg" alt="Plus" />');
             }
         });
     }
@@ -261,31 +287,62 @@
             if (target.length) {
                 $('html, body').animate({
                     scrollTop: target.offset().top - 100
-                }, 800);
+                }, 1000, 'easeInOutCubic');
             }
         });
 
-        // Parallax effect for hero section
+        // Enhanced scroll events with throttling
+        let scrollTimeout;
         $(window).on('scroll', function () {
-            const scrollTop = $(this).scrollTop();
-            const parallaxSpeed = 0.5;
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
 
-            $('.sbs-hero-section').css({
-                'transform': `translateY(${scrollTop * parallaxSpeed}px)`
-            });
+            scrollTimeout = setTimeout(function () {
+                handleScrollEffects();
+            }, 10);
+        });
+
+        function handleScrollEffects() {
+            const scrollTop = $(window).scrollTop();
+
+            // Remove parallax effect to prevent section overlapping
+            // $('.sbs-hero-section').css({
+            //     'transform': `translateY(${scrollTop * parallaxSpeed}px)`
+            // });
 
             // Portal boxes entrance animation
-            $('.portal-box').each(function () {
-                const elementTop = $(this).offset().top;
-                const elementBottom = elementTop + $(this).outerHeight();
-                const viewportTop = $(window).scrollTop();
-                const viewportBottom = viewportTop + $(window).height();
-
-                if (elementBottom > viewportTop && elementTop < viewportBottom) {
+            $('.portal-box:not(.in-view)').each(function () {
+                if (isElementInViewport($(this), 0.3)) {
                     $(this).addClass('in-view');
                 }
             });
-        });
+
+            // Sections entrance animation
+            $('.sbs-gallery-section:not(.in-view), .sbs-blog-section:not(.in-view), .sbs-faq-section:not(.in-view)').each(function () {
+                if (isElementInViewport($(this), 0.2)) {
+                    $(this).addClass('in-view');
+                }
+            });
+
+            // Gallery items staggered animation
+            $('.gallery-item:not(.in-view)').each(function () {
+                if (isElementInViewport($(this), 0.4)) {
+                    $(this).addClass('in-view');
+                }
+            });
+        }
+
+        // Helper function to check if element is in viewport
+        function isElementInViewport($element, threshold = 0.3) {
+            const elementTop = $element.offset().top;
+            const elementBottom = elementTop + $element.outerHeight();
+            const viewportTop = $(window).scrollTop();
+            const viewportBottom = viewportTop + $(window).height();
+            const triggerPoint = viewportBottom - ($(window).height() * threshold);
+
+            return elementTop < triggerPoint && elementBottom > viewportTop;
+        }
 
         // Fade in animation for elements
         function checkFadeIn() {
@@ -303,6 +360,13 @@
 
         $(window).on('scroll', checkFadeIn);
         checkFadeIn(); // Check on load
+    }
+
+    /**
+     * Get Template Directory URI
+     */
+    function getTemplateDirectoryUri() {
+        return window.sbsThemeData ? window.sbsThemeData.templateDirectoryUri : '/wp-content/themes/sbs-portal';
     }
 
     /**
@@ -357,6 +421,123 @@
                 }
             });
         });
+    }
+
+    /**
+     * Initialize Banner Carousel
+     */
+    function initBannerCarousel() {
+        const $carousel = $('.banner-carousel-track');
+        const $bannerItems = $('.banner-item');
+
+        if ($carousel.length === 0) return;
+
+        // Pause animation on hover
+        $carousel.on('mouseenter', function () {
+            $(this).css('animation-play-state', 'paused');
+        });
+
+        $carousel.on('mouseleave', function () {
+            $(this).css('animation-play-state', 'running');
+        });
+
+        // Banner item click handlers
+        $bannerItems.on('click', function () {
+            const $item = $(this);
+
+            // Add click animation
+            $item.addClass('clicked');
+            setTimeout(() => {
+                $item.removeClass('clicked');
+            }, 200);
+
+            // Handle different banner actions
+            const bannerIndex = $item.index() % 3; // Get original banner index (0, 1, or 2)
+
+            switch (bannerIndex) {
+                case 0: // Gallery Image 1
+                    console.log('Opening gallery image 1 details');
+                    // Add your gallery popup or navigation logic here
+                    break;
+                case 1: // Gallery Image 2
+                    console.log('Opening gallery image 2 details');
+                    // Add navigation to gallery image 2 page
+                    break;
+                case 2: // Gallery Image 3
+                    console.log('Opening gallery image 3 details');
+                    // Add navigation to gallery image 3 page
+                    break;
+            }
+        });
+
+        // Add touch/swipe support for mobile
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        $carousel.on('touchstart', function (e) {
+            startX = e.originalEvent.touches[0].clientX;
+            isDragging = true;
+            $(this).css('animation-play-state', 'paused');
+        });
+
+        $carousel.on('touchmove', function (e) {
+            if (!isDragging) return;
+            currentX = e.originalEvent.touches[0].clientX;
+            const diff = startX - currentX;
+
+            if (Math.abs(diff) > 50) {
+                // Swipe detected
+                if (diff > 0) {
+                    // Swipe left - speed up animation
+                    $(this).css('animation-duration', '15s');
+                } else {
+                    // Swipe right - slow down animation
+                    $(this).css('animation-duration', '45s');
+                }
+            }
+        });
+
+        $carousel.on('touchend', function () {
+            isDragging = false;
+            setTimeout(() => {
+                $(this).css('animation-play-state', 'running');
+                $(this).css('animation-duration', '30s');
+            }, 1000);
+        });
+
+        // Add keyboard navigation
+        $(document).on('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                $carousel.css('animation-play-state', 'paused');
+                setTimeout(() => {
+                    $carousel.css('animation-play-state', 'running');
+                }, 2000);
+            } else if (e.key === 'ArrowRight') {
+                $carousel.css('animation-duration', '15s');
+                setTimeout(() => {
+                    $carousel.css('animation-duration', '30s');
+                }, 1000);
+            }
+        });
+
+        // Performance optimization: Reduce animation on mobile
+        if (window.innerWidth <= 768) {
+            $carousel.css('animation-duration', '45s');
+        }
+
+        // Add intersection observer for performance
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe($carousel[0]);
     }
 
     /**

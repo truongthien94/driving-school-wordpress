@@ -3,10 +3,10 @@
 /**
  * Portal Template
  * 
- * Main template for the SBS Portal homepage
+ * Main template for the SBS Portal homepage - Restructured into 4 clear sections
  *
  * @package SBS_Portal
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 // Prevent direct access
@@ -16,12 +16,12 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="sbs-portal">
-    <!-- Hero Section -->
+    <!-- SECTION 1: Hero Section -->
     <section class="sbs-hero-section" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/hero-bg-main-f14c9b.jpg');">
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
-        <!-- ROW 1: Hero Container - 50/50 Split -->
+        <!-- Hero Container - 50/50 Split Layout -->
         <div class="hero-container">
             <!-- Left Column (50%) - Logo & Brand Message -->
             <div class="hero-left-column">
@@ -55,7 +55,7 @@ if (!defined('ABSPATH')) {
                                 </div>
                                 <div class="box-info">
                                     <h3 class="box-title">SBS自動車</h3>
-                                    <p class="box-description">Add description</p>
+                                    <p class="box-description">自動車整備・販売サービス</p>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@ if (!defined('ABSPATH')) {
                                 </div>
                                 <div class="box-info">
                                     <h3 class="box-title">SBSドライビングスクール姉崎</h3>
-                                    <p class="box-description">Add description</p>
+                                    <p class="box-description">運転免許取得をサポート</p>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ if (!defined('ABSPATH')) {
                                 </div>
                                 <div class="box-info">
                                     <h3 class="box-title">SBSドライビングスクール稲毛</h3>
-                                    <p class="box-description">Add description</p>
+                                    <p class="box-description">運転免許取得をサポート</p>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <!-- ROW 2: Detail Services Section - 4 Columns Grid -->
+        <!-- Detail Services Grid - 4 Columns -->
         <div class="detail-services-main-section">
             <div class="detail-services-grid">
                 <!-- Box 1: 姉崎詳細 -->
@@ -110,7 +110,7 @@ if (!defined('ABSPATH')) {
                             </div>
                             <div class="box-info">
                                 <h3 class="box-title">姉崎詳細</h3>
-                                <p class="box-description">Add description</p>
+                                <p class="box-description">スクール詳細情報</p>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ if (!defined('ABSPATH')) {
                             </div>
                             <div class="box-info">
                                 <h3 class="box-title">稲毛詳細</h3>
-                                <p class="box-description">Add description</p>
+                                <p class="box-description">スクール詳細情報</p>
                             </div>
                         </div>
                     </div>
@@ -168,27 +168,55 @@ if (!defined('ABSPATH')) {
         </div>
     </section>
 
-    <!-- Content Section -->
-    <section class="sbs-content-section">
-        <div class="container">
-            <!-- Gallery Images -->
-            <div class="gallery-section">
-                <div class="gallery-images">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="Gallery 1" />
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="Gallery 2" />
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="Gallery 3" />
+    <!-- SECTION 2: Banner Carousel Section -->
+    <section class="sbs-banner-carousel-section">
+        <div class="banner-carousel-container">
+            <div class="banner-carousel-track">
+                <!-- Banner 1: Gallery Image 1 -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
+                </div>
+
+                <!-- Banner 2: Gallery Image 2 -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
+                </div>
+
+                <!-- Banner 3: Gallery Image 3 -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
+                </div>
+
+                <!-- Duplicate banners for seamless loop -->
+                <!-- Banner 1 Duplicate -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
+                </div>
+
+                <!-- Banner 2 Duplicate -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
+                </div>
+
+                <!-- Banner 3 Duplicate -->
+                <div class="banner-item">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Blog Section -->
-            <div class="blog-section">
-                <?php get_template_part('parts/blog-section'); ?>
-            </div>
+    <!-- SECTION 3: Blog Section -->
+    <section class="sbs-blog-section">
+        <div class="container">
+            <?php get_template_part('parts/blog-section'); ?>
+        </div>
+    </section>
 
-            <!-- FAQ Section -->
-            <div class="faq-section">
-                <?php get_template_part('parts/faq-section'); ?>
-            </div>
+    <!-- SECTION 4: FAQ Section -->
+    <section class="sbs-faq-section">
+        <div class="container">
+            <?php get_template_part('parts/faq-section'); ?>
         </div>
     </section>
 

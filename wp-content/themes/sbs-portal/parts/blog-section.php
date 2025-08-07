@@ -23,15 +23,15 @@ $blog_posts = sbs_get_latest_blog_posts(3);
         <div class="header-content">
             <div class="header-title">
                 <div class="logo-icon">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.svg" alt="SBS Logo" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" />
                 </div>
-                <h2 class="section-title">Blog</h2>
+                <h2 class="section-title">ブログ</h2>
             </div>
             <p class="section-subtitle">BLOG and NEWS</p>
         </div>
         <div class="header-action">
             <a href="/blog" class="view-all-button">
-                View All
+                すべて表示
             </a>
         </div>
     </div>

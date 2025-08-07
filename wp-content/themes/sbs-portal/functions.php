@@ -57,6 +57,11 @@ function sbs_enqueue_scripts()
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('sbs_nonce'),
     ));
+
+    // Localize theme data
+    wp_localize_script('sbs-script', 'sbsThemeData', array(
+        'templateDirectoryUri' => get_template_directory_uri(),
+    ));
 }
 add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts');
 

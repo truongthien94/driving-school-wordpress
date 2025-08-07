@@ -33,9 +33,13 @@ $expanded_class = $group['expanded'] ? 'expanded' : '';
             <div class="group-toggle">
                 <div class="toggle-icon">
                     <?php if ($group['expanded']): ?>
-                        <?php echo sbs_get_icon('minus'); ?>
+                        <div class="icon-container expanded">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" />
+                        </div>
                     <?php else: ?>
-                        <?php echo sbs_get_icon('plus'); ?>
+                        <div class="icon-container collapsed">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" />
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

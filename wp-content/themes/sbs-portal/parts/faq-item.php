@@ -31,16 +31,20 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
             <h4 class="question-text"><?php echo esc_html($question['question']); ?></h4>
             <div class="question-toggle">
                 <?php if ($question['expanded']): ?>
-                    <?php echo sbs_get_icon('minus'); ?>
+                    <div class="icon-container expanded">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" />
+                    </div>
                 <?php else: ?>
-                    <?php echo sbs_get_icon('plus'); ?>
+                    <div class="icon-container collapsed">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" />
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
     <!-- Answer -->
-    <?php if ($question['expanded'] && (!empty($question['answer']) || !empty($question['detail']))): ?>
+    <?php if (!empty($question['answer']) || !empty($question['detail'])): ?>
         <div class="faq-answer">
             <?php if (!empty($question['answer'])): ?>
                 <div class="answer-brief">
