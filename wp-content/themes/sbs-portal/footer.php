@@ -25,49 +25,67 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-company">
                 <div class="company-logo">
                     <!-- Logo would go here -->
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/sbs-logo-dark.png"
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png"
                         alt="SBS Driving School" />
                 </div>
-                <?php if (isset($footer_data['logo']['text'])): ?>
+                <div class="company-info">
+                    <h2 class="company-name">SBS 自動車学校</h2>
+                    <p class="company-slogan">For Your Dreams.</p>
                     <p class="company-description">
-                        <?php echo esc_html($footer_data['logo']['text']); ?>
+                        楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してまいりました。
                     </p>
-                <?php endif; ?>
+                </div>
             </div>
 
             <!-- Footer Columns -->
             <div class="footer-columns">
-                <?php if (isset($footer_data['columns'])): ?>
-                    <?php foreach ($footer_data['columns'] as $column): ?>
-                        <div class="footer-column">
-                            <h3 class="column-title"><?php echo esc_html($column['title']); ?></h3>
-                            <ul class="column-links">
-                                <?php foreach ($column['links'] as $link): ?>
-                                    <li>
-                                        <a href="<?php echo esc_url($link['url']); ?>">
-                                            <?php echo esc_html($link['text']); ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <!-- Column 1: 探索 -->
+                <div class="footer-column">
+                    <h3 class="column-title">探索</h3>
+                    <ul class="column-links">
+                        <li><a href="/about">ごあいさつ</a></li>
+                        <li><a href="/company">企業情報</a></li>
+                        <li><a href="/news">ニュース</a></li>
+                        <li><a href="/group">SBSグループについて</a></li>
+                        <li><a href="/recruitment">採用</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: その他のサービス -->
+                <div class="footer-column">
+                    <h3 class="column-title">その他のサービス</h3>
+                    <ul class="column-links">
+                        <li><a href="/reservation">予約システム</a></li>
+                        <li><a href="/matching">マッチングシステム</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: SBS自動車学校 -->
+                <div class="footer-column">
+                    <h3 class="column-title">SBS自動車学校</h3>
+                    <ul class="column-links">
+                        <li><a href="/school/inage">SBSドライビングスクール稲毛</a></li>
+                        <li><a href="/school/anegasaki">SBSドライビングスクール姉崎</a></li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Contact Information -->
             <div class="footer-contact">
-                <?php if (isset($footer_data['contact'])): ?>
-                    <?php foreach ($footer_data['contact'] as $contact): ?>
-                        <div class="contact-item">
-                            <h4><?php echo esc_html($contact['school']); ?></h4>
-                            <p><?php echo esc_html($contact['phone']); ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <div class="contact-button">
-                    <a href="/contact" class="btn btn-primary">お問い合わせ</a>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>SBSドライビングスクール稲毛</h4>
+                        <p>Tel: 043-259-6371</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>SBSドライビングスクール姉崎</h4>
+                        <p>Tel: 0436-61-1131</p>
+                    </div>
+                </div>
+                <div class="contact-button-wrapper">
+                    <a href="/contact" class="contact-button">
+                        <span>お問い合わせ</span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -220,31 +220,44 @@ if (!defined('ABSPATH')) {
         </div>
     </section>
 
-    <!-- Popup/Modal -->
-    <div class="sbs-popup-overlay" id="sbs-popup">
-        <div class="popup-content">
-            <button class="popup-close" id="popup-close">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-close.svg" alt="Close" />
-            </button>
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/popup-image-7b3887.jpg" alt="Popup Image" />
+    <!-- Popup -->
+    <div class="sbs-popup" id="sbs-popup">
+        <div class="popup-content" id="draggable-popup">
+            <!-- Popup Header -->
+            <div class="popup-header">
+                <button class="popup-close" id="popup-close">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-close.svg" alt="Close" />
+                </button>
+            </div>
+
+            <!-- Popup Content -->
+            <div class="popup-body">
+                <!-- Background Image -->
+                <div class="popup-background">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS Background" />
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Float Buttons -->
     <div class="float-buttons">
-        <div class="float-button float-chat">
-            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                <path d="M37 7H7C4.79 7 3 8.79 3 11V25C3 27.21 4.79 29 7 29H33L41 37V11C41 8.79 39.21 7 37 7Z" fill="white" />
-            </svg>
+        <!-- Chat Button -->
+        <div class="float-button float-chat" id="float-chat">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-chat.svg" alt="Chat" />
         </div>
-        <div class="float-button float-contact">
-            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                <path d="M22 2C12.6 2 5 9.6 5 19C5 22.4 6.1 25.5 8 28.1L5 39L16.2 36.2C18.7 37.9 21.8 39 25 39C34.4 39 42 31.4 42 22C42 12.6 34.4 2 22 2Z" fill="white" />
-            </svg>
+
+        <!-- Contact Button -->
+        <div class="float-button float-contact" id="float-contact">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-mail.svg" alt="Contact" />
         </div>
+
+        <!-- Back to Top Button -->
         <div class="back-to-top" id="back-to-top">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-arrow-up.svg" alt="Back to top" />
-            <span>Page top</span>
+            <div class="back-to-top-content">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-arrow-up.svg" alt="Back to top" />
+                <span>Page top</span>
+            </div>
         </div>
     </div>
 </div>

@@ -123,64 +123,111 @@
      * Initialize Float Buttons
      */
     function initFloatButtons() {
-        // Back to top button
-        $('#back-to-top, .back-to-top').on('click', function (e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: 0
-            }, 800);
-        });
+        const $backToTop = $('#back-to-top');
+        const $floatButtons = $('.float-buttons');
+        const $floatChat = $('#float-chat');
+        const $floatContact = $('#float-contact');
 
-        // Show/hide back to top based on scroll
+        // Show/hide back to top and adjust float buttons and popup position
         $(window).on('scroll', function () {
-            if ($(this).scrollTop() > 500) {
-                $('.back-to-top').fadeIn();
+            const scrollTop = $(this).scrollTop();
+
+            if (scrollTop > 300) {
+                // Show back to top and push float buttons up
+                $backToTop.addClass('visible');
+                $floatButtons.addClass('back-to-top-visible').removeClass('back-to-top-hidden');
+                $('#sbs-popup').addClass('back-to-top-visible').removeClass('back-to-top-hidden');
             } else {
-                $('.back-to-top').fadeOut();
+                // Hide back to top and push float buttons down
+                $backToTop.removeClass('visible');
+                $floatButtons.addClass('back-to-top-hidden').removeClass('back-to-top-visible');
+                $('#sbs-popup').addClass('back-to-top-hidden').removeClass('back-to-top-visible');
             }
         });
 
+        // Back to top functionality
+        $backToTop.on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, 600);
+        });
+
         // Float chat button
-        $('.float-chat').on('click', function () {
+        $floatChat.on('click', function () {
             // Add chat functionality here
             console.log('Chat button clicked');
+            // You can open a chat widget or redirect to chat page
         });
 
         // Float contact button
-        $('.float-contact').on('click', function () {
+        $floatContact.on('click', function () {
             // Add contact functionality here
-            window.location.href = '/contact';
+            console.log('Contact button clicked');
+            // You can open contact form or redirect to contact page
         });
     }
 
     /**
-     * Initialize Popup/Modal
-     */
+ * Initialize Popup
+ */
     function initPopup() {
-        // Show popup (you can trigger this based on conditions)
-        function showPopup() {
-            $('#sbs-popup').fadeIn(300);
-            $('body').addClass('popup-open');
-        }
+        const $popup = $('#sbs-popup');
+        const $popupContent = $('#draggable-popup');
+        const $popupClose = $('#popup-close');
+        const $popupTabs = $('.popup-tab');
+
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+
+        // Show popup after 3 seconds
+        setTimeout(function () {
+            $popup.fadeIn(300);
+        }, 3000);
+
+        // Draggable functionality
+        $popupContent.on('mousedown', function (e) {
+            if (e.target.closest('.popup-close, .popup-tab')) return;
+
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = parseInt($popupContent.css('left')) || 0;
+            startTop = parseInt($popupContent.css('top')) || 0;
+
+            $popupContent.addClass('dragging');
+            e.preventDefault();
+        });
+
+        $(document).on('mousemove', function (e) {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+
+            $popupContent.css({
+                left: startLeft + deltaX + 'px',
+                top: startTop + deltaY + 'px'
+            });
+        });
+
+        $(document).on('mouseup', function () {
+            if (isDragging) {
+                isDragging = false;
+                $popupContent.removeClass('dragging');
+            }
+        });
 
         // Close popup
-        $('#popup-close, .sbs-popup-overlay').on('click', function (e) {
-            if (e.target === this) {
-                $('#sbs-popup').fadeOut(300);
-                $('body').removeClass('popup-open');
-            }
+        $popupClose.on('click', function () {
+            $popup.fadeOut(300);
         });
 
-        // Escape key to close popup
-        $(document).on('keydown', function (e) {
-            if (e.key === 'Escape') {
-                $('#sbs-popup').fadeOut(300);
-                $('body').removeClass('popup-open');
-            }
+        // Tab switching
+        $popupTabs.on('click', function () {
+            $popupTabs.removeClass('active');
+            $(this).addClass('active');
         });
-
-        // Auto show popup after 5 seconds (example)
-        // setTimeout(showPopup, 5000);
     }
 
     /**
