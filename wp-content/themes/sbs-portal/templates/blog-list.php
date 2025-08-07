@@ -15,51 +15,31 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="sbs-blog-list">
-    <!-- Blog List Header Section -->
-    <section class="sbs-banner-carousel-section">
-        <div class="banner-carousel-container">
-            <!-- Frame 1948758074 - Main Container -->
-            <div class="blog-header-main-frame position-relative">
-
-                <!-- Frame 1948758070 - Title Section -->
-                <div class="blog-header-title-frame position-absolute">
-                    <!-- Frame 1948758069 - Title Container with gap -->
-                    <div class="blog-header-title-container d-flex align-items-center gap-3">
-                        <h1 class="blog-header-title text-white mb-0">ブログ</h1>
-                    </div>
-                    <p class="blog-header-subtitle text-white mb-0">BLOG and NEWS</p>
+<div class="sbs-blog-list ">
+    <section class="header-section">
+        <div class="header-section-container">
+            <div class="header-section-left">
+                <div class="header-section-logo">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/sbs-logo-header.png" alt="header" />
                 </div>
-
-                <!-- Mega Search Box -->
-                <div class="blog-header-search-box position-absolute">
-                    <div class="blog-search-logo">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/sbs-logo-dark.png" alt="SBS Logo" class="img-fluid" />
-                    </div>
+                <div class="header-section-title">
+                    <h4>ブログ</h4>
+                    <h1 class="fst-italic">BLOG and NEWS</h1>
                 </div>
             </div>
+            <div class="header-section-right">
+                <div class="navigation-section-blog-list">
+                    <?php get_template_part('parts/portal-navigation'); ?>
+                </div>
+                <div>
+                    <img class="hero-circle" src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="header" />
+                    <img class="hero-circle-2" src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="header" />
+                </div>
 
-            <!-- Top Navigation Bar (positioned absolute) -->
-            <div class="blog-top-navigation position-absolute d-flex align-items-center justify-content-between">
-                <div class="nav-menu-items d-flex align-items-center gap-4">
-                    <a href="<?php echo home_url('/about/'); ?>" class="nav-menu-item text-decoration-none">ごあいさつ</a>
-                    <a href="<?php echo home_url('/company/'); ?>" class="nav-menu-item text-decoration-none">企業情報</a>
-                    <a href="<?php echo home_url('/group/'); ?>" class="nav-menu-item text-decoration-none">SBSグループについて</a>
-                    <div class="nav-language-selector d-flex align-items-center gap-1">
-                        <span>日本語</span>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M4 6L8 10L12 6" stroke="currentColor" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="nav-menu-button d-flex align-items-center gap-1">
-                    <span>Menu</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.5" />
-                    </svg>
-                </div>
             </div>
+
         </div>
+
     </section>
 
     <!-- Blog Content Section -->

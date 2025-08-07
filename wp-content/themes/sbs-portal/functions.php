@@ -52,6 +52,9 @@ function sbs_enqueue_scripts()
     wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array('bootstrap-css'), '1.0.0');
 
     // Enqueue blog list specific stylesheet
+    wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
+
+    // Enqueue blog list specific stylesheet
     if (
         is_page_template('page-blog.php') ||
         (get_query_var('sbs_page') === 'blog-list') ||
