@@ -54,6 +54,9 @@ function sbs_enqueue_scripts()
     // Enqueue blog list specific stylesheet
     wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
 
+    // Enqueue blog detail specific stylesheet
+    wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
+
     // Enqueue blog list specific stylesheet
     if (
         is_page_template('page-blog.php') ||
@@ -62,6 +65,11 @@ function sbs_enqueue_scripts()
         (is_page() && get_page_template_slug() === 'page-blog.php')
     ) {
         wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
+    }
+
+    // Enqueue blog detail stylesheet only on single blog posts
+    if (is_singular('blog')) {
+        wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
     }
 
     // Enqueue Bootstrap JS (bundle includes Popper)

@@ -44,7 +44,23 @@ if (!defined('ABSPATH')) {
 
     <!-- Blog Content Section -->
     <section class="blog-list-content">
+
         <div class="container">
+            <div class="blog-breadcrumbs mb-1">
+                <div class="breadcrumb-list d-flex align-items-center ">
+                    <div class="breadcrumb-item">
+                        <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link text-decoration-none">ポータル</a>
+                    </div>
+                    <div class="breadcrumb-separator d-flex align-items-center justify-content-center">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M6.4 3.2L11.07 8L6.4 12.8" stroke="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="breadcrumb-item">
+                        <span class="breadcrumb-current">ブログ一覧</span>
+                    </div>
+                </div>
+            </div>
             <!-- Blog Posts Grid -->
             <div class="blog-posts-main-grid">
                 <?php
@@ -203,22 +219,6 @@ if (!defined('ABSPATH')) {
     <!-- Floating Elements -->
     <?php get_template_part('parts/float-buttons'); ?>
 
-    <!-- Breadcrumbs -->
-    <div class="blog-breadcrumbs position-absolute">
-        <div class="breadcrumb-list d-flex align-items-center gap-2">
-            <div class="breadcrumb-item">
-                <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link text-decoration-none">ポータル</a>
-            </div>
-            <div class="breadcrumb-separator d-flex align-items-center justify-content-center">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M6.4 3.2L11.07 8L6.4 12.8" stroke="currentColor" />
-                </svg>
-            </div>
-            <div class="breadcrumb-item">
-                <span class="breadcrumb-current">ブログ一覧</span>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Footer Background for Blog List -->

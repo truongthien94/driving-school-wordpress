@@ -169,6 +169,8 @@ Optimized for Bootstrap 5 integration
     padding: 40px;
 }
 
+
+
 .blog-search-logo {
     width: 283px;
     height: 40px;
@@ -432,6 +434,8 @@ Optimized for Bootstrap 5 integration
     line-height: 1.5;
     color: #FFFFFF;
 }
+
+/* Breadcrumbs */
 
 
 .breadcrumb-link {
@@ -870,7 +874,7 @@ Optimized for Bootstrap 5 integration
     }
 
     /* Adjust breadcrumbs for mobile with banner carousel */
-   
+
 
     /* Adjust content height for mobile */
     .blog-list-content {
@@ -894,4 +898,44 @@ Optimized for Bootstrap 5 integration
         height: auto;
         -webkit-line-clamp: 3;
     }
+}
+
+/* Small Outline Button (spec) */
+.sbs-btn-outline-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 93px;
+  height: 36px;
+  padding-right: 12px; /* padding/px-3 */
+  padding-left: 12px;  /* padding/px-3 */
+  background: var(--background, #FFFFFF);
+  border: 1px solid var(--border, #E2E8F0);
+  border-radius: 8px; /* radius-md */
+  color: var(--foreground, #262626);
+  font-size: 14px;
+  line-height: 1;
+  opacity: 1;
+}
+
+.sbs-btn-outline-sm svg {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.sbs-btn-outline-sm:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+.sbs-btn-outline-sm:active {
+  background: #EEF2F6;
+  border-color: #B6C2CF;
+}
+
+.sbs-btn-outline-sm:disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }

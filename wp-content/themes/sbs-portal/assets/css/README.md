@@ -58,6 +58,9 @@ if (is_page_template('page-blog.php') ||
     wp_enqueue_style('sbs-blog-list-style', 
         get_stylesheet_directory_uri() . '/assets/css/blog-list.css', 
         array('sbs-style'), '1.0.0');
+     wp_enqueue_style('sbs-blog-list-style', 
+        get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', 
+        array('sbs-style'), '1.0.0');
 }
 ```
 
