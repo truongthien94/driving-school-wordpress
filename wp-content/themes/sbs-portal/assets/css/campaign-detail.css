@@ -15,6 +15,18 @@ Optimized for Bootstrap 5 integration
     background-color: #F7F7F7;
 }
 
+.blog-detail-sidebar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.campaign-detail-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* Header Section - Following Figma Design Exactly */
 .blog-list-header {
     position: relative;
@@ -697,24 +709,31 @@ Optimized for Bootstrap 5 integration
 
 .header-section-title {
     color: #FFFFFF;
-    margin: 34px 0 0 30px;
+    margin: 34px 0 0 40px;
+
 }
 
 .header-section-title h4 {
     display: inline;
 }
 
-/* .header-section-right .hero-circle-2 {
+.header-section-right .hero-circle-2 {
     width: 233px;
     height: 233px;
+    position: absolute;
+    top: 0;
+    right: 0;
     margin: 62px 68px 11px 0;
 }
 
 .header-section-right .hero-circle {
     width: 95px;
     height: 95px;
-    margin-top: 140px;
-} */
+    position: absolute;
+    top: 0;
+    right: 250px;
+    margin: 160px 68px 11px 0;
+}
 
 /* Pause animation on hover */
 .banner-carousel-track:hover {
@@ -901,40 +920,43 @@ Optimized for Bootstrap 5 integration
 
 /* Small Outline Button (spec) */
 .sbs-btn-outline-sm {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-width: 93px;
-  height: 36px;
-  padding-right: 12px; /* padding/px-3 */
-  padding-left: 12px;  /* padding/px-3 */
-  background: var(--background, #FFFFFF);
-  border: 1px solid var(--border, #E2E8F0);
-  border-radius: 8px; /* radius-md */
-  color: var(--foreground, #262626);
-  font-size: 14px;
-  line-height: 1;
-  opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 93px;
+    height: 36px;
+    padding-right: 12px;
+    /* padding/px-3 */
+    padding-left: 12px;
+    /* padding/px-3 */
+    background: var(--background, #FFFFFF);
+    border: 1px solid var(--border, #E2E8F0);
+    border-radius: 8px;
+    /* radius-md */
+    color: var(--foreground, #262626);
+    font-size: 14px;
+    line-height: 1;
+    opacity: 1;
 }
 
 .sbs-btn-outline-sm svg {
-  width: 16px;
-  height: 16px;
-  color: currentColor;
+    width: 16px;
+    height: 16px;
+    color: currentColor;
 }
 
 .sbs-btn-outline-sm:hover {
-  background: #F8FAFC;
-  border-color: #CBD5E1;
+    background: #F8FAFC;
+    border-color: #CBD5E1;
 }
 
 .sbs-btn-outline-sm:active {
-  background: #EEF2F6;
-  border-color: #B6C2CF;
+    background: #EEF2F6;
+    border-color: #B6C2CF;
 }
 
 .sbs-btn-outline-sm:disabled {
-  opacity: 0.6;
-  pointer-events: none;
+    opacity: 0.6;
+    pointer-events: none;
 }

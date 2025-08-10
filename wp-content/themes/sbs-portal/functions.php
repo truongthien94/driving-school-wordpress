@@ -57,6 +57,9 @@ function sbs_enqueue_scripts()
     // Enqueue blog detail specific stylesheet
     wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
 
+    // Enqueue campaign detail specific stylesheet
+    wp_enqueue_style('sbs-campaign-detail-style', get_stylesheet_directory_uri() . '/assets/css/campaign-detail.css', array('sbs-style'), '1.0.0');
+
     // Enqueue blog list specific stylesheet
     if (
         is_page_template('page-blog.php') ||
@@ -70,6 +73,11 @@ function sbs_enqueue_scripts()
     // Enqueue blog detail stylesheet only on single blog posts
     if (is_singular('blog')) {
         wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
+    }
+
+    // Enqueue campaign detail stylesheet only on single campaign posts
+    if (is_singular('campaign')) {
+        wp_enqueue_style('sbs-campaign-detail-style', get_stylesheet_directory_uri() . '/assets/css/campaign-detail.css', array('sbs-style'), '1.0.0');
     }
 
     // Enqueue Bootstrap JS (bundle includes Popper)
@@ -320,6 +328,18 @@ function sbs_get_latest_blog_posts($count = 3)
 }
 
 /**
+ * Helper function to get latest campaign posts
+/**
+ * Helper function to get latest campaign posts
+ */
+function sbs_get_latest_campaign_posts($count = 4)
+{
+    $mock_data = sbs_get_mock_data();
+    $posts = isset($mock_data['campaign_posts']) ? $mock_data['campaign_posts'] : array();
+    return array_slice($posts, 0, $count);
+}
+
+/**
  * Helper function to get FAQ groups
  */
 function sbs_get_faq_groups()
@@ -497,6 +517,8 @@ function sbs_get_icon($icon_name)
         'calendar' => 'icon-calendar.svg',
         'briefcase' => 'icon-briefcase.svg',
         'chevron-down' => 'icon-chevron-down.svg',
+        'align-justify' => 'icon-align-justify.svg',
+        'icon-x' => 'icon-x.svg',
     );
 
     if (isset($icon_map[$icon_name])) {

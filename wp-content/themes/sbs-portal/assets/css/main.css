@@ -18,21 +18,31 @@ body {
     max-width: 1500px;
 }
 
-/* SBS Portal Styles */
-.sbs-portal {
-    min-height: 100vh;
+.nav-section {
+    background-color: #FFFFFF;
+    border-radius: 8px;
 }
+
+/* SBS Portal Styles */
+
 
 /* Hero Section - Combined ROW 1 & ROW 2 */
 .sbs-hero-section {
     position: relative;
-    min-height: 100vh;
+    
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+.portal-box-container{
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 100px;
 }
 
 .hero-overlay {
@@ -48,17 +58,10 @@ body {
 
 /* ROW 1: Hero Container - 50/50 Split Layout */
 .hero-container {
-    position: relative;
-    display: flex;
-    width: 100%;
-    flex: 1;
+    z-index: 2;
     max-width: 1500px;
     margin: 0 auto;
-    padding: 40px;
-    gap: 40px;
-    z-index: 2;
-    align-items: stretch;
-    min-height: 60vh;
+    width: 100%;
 }
 
 /* Left Column (50%) - Logo & Brand Message */
@@ -67,7 +70,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 100%;
+    min-height: 300px;
 }
 
 /* Hero Images Section */
@@ -81,14 +84,20 @@ body {
 
 /* Circle Image - Figma specs: 408x408px at (158, 35) */
 .hero-circle-image {
-    position: absolute;
-    top: 25px;
-    left: 158px;
-    width: 408px;
-    height: 408px;
+    max-width: 408px;
+    max-height: 408px;
     border-radius: 50%;
     overflow: hidden;
+    position: relative;
     z-index: 3;
+}
+
+.hero-navigation {
+    z-index: 10000;
+    max-width: 1500px;
+    width: 100%;
+    float: right;
+    margin: 0 auto;
 }
 
 .hero-circle-image img {
@@ -100,8 +109,9 @@ body {
 /* Logo Strip - Figma specs: 492x92px at (116, 359) */
 .hero-logo-strip {
     position: absolute;
-    top: 349px;
-    left: 116px;
+    left: 50%;
+    top: 240px;
+    transform: translateX(-50%);
     width: 492px;
     height: 92px;
     z-index: 3;
@@ -111,6 +121,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.container-fluid .btn-custom-nav {
+    background-color: #DD1F01;
+    color: #FFFFFF;
 }
 
 /* Brand Message - Position below images */
@@ -148,15 +163,15 @@ body {
 
 @keyframes float {
     0% {
-        transform: translateY(0px);
+        transform: translateY(-50px);
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-70px);
     }
 
     100% {
-        transform: translateY(0px);
+        transform: translateY(-50px);
     }
 }
 
@@ -202,7 +217,9 @@ body {
     overflow: hidden;
     transition: all 0.3s ease;
     cursor: pointer;
-    padding: 40px;
+    height: 160px;
+    display: flex;
+    padding: 0 40px;
 }
 
 .portal-box:hover {
@@ -275,11 +292,12 @@ body {
 .box-line {
     position: absolute;
     left: 0;
-    top: 50px;
+    top: 50%;
     width: 0;
     height: 60px;
     border-left: 6px solid #DD1F01;
     opacity: 0.6;
+    transform: translateY(-50%);
 }
 
 /* Portal Navigation */
@@ -737,7 +755,6 @@ body {
     color: white;
     margin: 0;
     align-self: flex-start;
-    margin-left: 20px;
 }
 
 .faq-vertical-text {
@@ -746,29 +763,12 @@ body {
     line-height: 1;
     color: white;
     opacity: 0.3;
-    text-align: center;
-    align-self: flex-end;
-    margin-right: 20px;
-    margin-bottom: 20px;
 }
 
 .faq-content-container {
     position: relative;
     margin-left: 220px;
     min-height: 760px;
-}
-
-.faq-groups {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 /* FAQ Group */
@@ -1291,26 +1291,26 @@ body {
 
 /* Responsive Design - Optimized for Bootstrap */
 @media (max-width: 1200px) {
-    .sbs-hero-section {
-        min-height: 90vh;
-    }
-
     .hero-container {
-        padding: 30px;
         min-height: 50vh;
     }
 
     .hero-circle-image {
         width: 350px;
         height: 350px;
-        left: 135px;
+    }
+
+    .nav-section {
+        background-color: transparent;
+        border-radius: 0;
     }
 
     .hero-logo-strip {
         width: 420px;
         height: 80px;
-        left: 100px;
-        top: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 200px;
     }
 
     .slogan-main {
@@ -1324,16 +1324,24 @@ body {
     .sbs-hero-section .detail-services-main-section {
         padding: 0 0 60px 0;
     }
+
+    .faq-title-bar {
+        position: relative;
+        width: 100%;
+        height: 120px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
 }
 
 @media (max-width: 1024px) {
-    .sbs-hero-section {
-        min-height: auto;
-    }
+
 
     /* Hero Section - Stack columns vertically */
     .hero-container {
-        padding: 20px;
+        
         flex-direction: column;
         min-height: auto;
     }
@@ -1351,16 +1359,22 @@ body {
     .hero-circle-image {
         width: 300px;
         height: 300px;
-        left: 50%;
-        top: 20px;
-        transform: translateX(-50%);
+    }
+
+    .nav-section {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .portal-box-container{
+        padding: 0;
     }
 
     .hero-logo-strip {
         width: 350px;
         height: 70px;
         left: 50%;
-        top: 240px;
+        top: 200px;
         transform: translateX(-50%);
     }
 
@@ -1404,11 +1418,7 @@ body {
 
     .faq-content-container {
         margin-left: 0;
-        margin-top: 200px;
-    }
-
-    .faq-groups {
-        padding: 20px;
+        margin-top: 20px;
     }
 
     .faq-group {
@@ -1428,28 +1438,13 @@ body {
         padding-left: 12px;
     }
 
-    .faq-title-bar {
-        position: relative;
-        width: 100%;
-        height: 120px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-    }
+  
 
     .faq-main-title {
         margin: 0;
         align-self: center;
         margin-left: 0;
         font-size: 40px;
-    }
-
-    .faq-vertical-text {
-        font-size: 32px;
-        align-self: center;
-        margin-right: 0;
-        margin-bottom: 0;
     }
 
     .faq-logos-section {
@@ -1487,14 +1482,14 @@ body {
     }
 
     .hero-container {
-        padding: 15px;
+        
         gap: 20px;
         flex-direction: column;
         min-height: auto;
     }
 
     .hero-left-column {
-        min-height: 250px;
+        min-height: 200px;
         order: 1;
     }
 
@@ -1507,16 +1502,23 @@ body {
     .hero-circle-image {
         width: 200px;
         height: 200px;
-        left: 50%;
-        top: 10px;
-        transform: translateX(-50%);
     }
+
+    .nav-section {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .portal-box-container{
+        padding: 0;
+    }
+
 
     .hero-logo-strip {
         width: 250px;
         height: 50px;
         left: 50%;
-        top: 180px;
+        top: 120px;
         transform: translateX(-50%);
     }
 
@@ -1669,29 +1671,35 @@ body {
 /* Extra Small Screens */
 @media (max-width: 480px) {
     .hero-container {
-        padding: 10px;
         gap: 15px;
         min-height: 400px;
     }
 
     .hero-left-column {
-        min-height: 200px;
+        min-height: 150px;
     }
 
     /* Hero Images Extra Small */
     .hero-circle-image {
         width: 150px;
         height: 150px;
-        left: 50%;
-        top: 5px;
-        transform: translateX(-50%);
     }
+
+    .nav-section {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .portal-box-container{
+        padding: 0;
+    }
+
 
     .hero-logo-strip {
         width: 200px;
         height: 40px;
         left: 50%;
-        top: 130px;
+        top: 80px;
         transform: translateX(-50%);
     }
 

@@ -19,11 +19,14 @@ $faq_groups = sbs_get_faq_groups();
 
 <div class="faq-section position-relative">
     <!-- FAQ Title Bar -->
-    <div class="faq-title-bar d-flex flex-column justify-content-between align-items-center p-4">
+    <div class="faq-title-bar d-flex align-items-start p-4">
         <div class="faq-main-title">
             FAQ
         </div>
-        <div class="faq-vertical-text text-center">
+        <div class="faq-vertical-text d-xl-none align-self-center">
+            よくある質問
+        </div>
+        <div class="faq-vertical-text d-none d-xl-block align-self-end">
             よ<br>く<br>あ<br>る<br>ご<br>質<br>問
         </div>
     </div>
@@ -31,22 +34,9 @@ $faq_groups = sbs_get_faq_groups();
     <!-- FAQ Content Container -->
     <div class="faq-content-container position-relative">
         <!-- FAQ Logos Section - Positioned in upper right -->
-        <div class="faq-logos-section position-absolute d-flex align-items-center justify-content-center">
-            <div class="logos-container d-flex flex-column align-items-center gap-3">
-                <div class="logo-item d-flex align-items-center justify-content-center">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" class="img-fluid" />
-                </div>
-                <div class="logo-item d-flex align-items-center justify-content-center">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" class="img-fluid" />
-                </div>
-                <div class="logo-item d-flex align-items-center justify-content-center">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" class="img-fluid" />
-                </div>
-            </div>
-        </div>
-
+       
         <!-- FAQ Groups - Overlapping the logos section -->
-        <div class="faq-groups position-relative d-flex flex-column gap-4 p-4">
+        <div class=" position-relative d-flex flex-column gap-4 ">
             <?php if (!empty($faq_groups)): ?>
                 <?php foreach ($faq_groups as $group): ?>
                     <?php get_template_part('parts/faq-group', null, array('group' => $group)); ?>

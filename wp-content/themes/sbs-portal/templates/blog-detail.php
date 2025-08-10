@@ -16,6 +16,11 @@ if (!defined('ABSPATH')) {
 
 <div class="sbs-blog-list">
     <section class="header-section">
+        <div class="hero-navigation row-gap-0 p-0 row py-4 flex justify-content-end">
+            <div class="col-xl-6">
+                <?php get_template_part('parts/portal-navigation'); ?>
+            </div>
+        </div>
         <div class="header-section-container">
             <div class="header-section-left">
                 <div class="header-section-logo">
@@ -23,18 +28,13 @@ if (!defined('ABSPATH')) {
                 </div>
                 <div class="header-section-title">
                     <h4>ブログ</h4>
-                    <h1 class="fst-italic">BLOG and NEWS</h1>
+                    <h1 class="fst-italic" style="white-space: nowrap;">BLOG and NEWS</h1>
                 </div>
             </div>
 
             <div class="header-section-right">
-                <div class="navigation-section-blog-list">
-                    <?php get_template_part('parts/portal-navigation'); ?>
-                </div>
-                <div>
-                    <img class="hero-circle" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
-                    <img class="hero-circle-2" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
-                </div>
+                <img class="hero-circle" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
+                <img class="hero-circle-2" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
             </div>
         </div>
     </section>
@@ -102,7 +102,7 @@ if (!defined('ABSPATH')) {
                 </div>
 
                 <!-- Right: Sidebar -->
-                 
+
                 <aside class="col-md-4 blog-detail-sidebar">
                     <div class="blog-posts-main-grid">
                         <?php

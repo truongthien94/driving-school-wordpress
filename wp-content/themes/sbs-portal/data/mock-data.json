@@ -184,6 +184,45 @@
             "status": "published"
         }
     ],
+
+    "campaign_posts": [
+        {
+            "id": 1,
+            "title": "免許更新講習のご案内",
+            "excerpt": "免許の更新時期が近づいている方を対象とした講習のご案内です。安全運転のポイントや最新の交通ルールについて学習いただけます。",
+            "featured_image": "campaign-1.png",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        },
+        {
+            "id": 2,
+            "title": "免許更新講習のご案内",
+            "excerpt": "免許の更新時期が近づいている方を対象とした講習のご案内です。安全運転のポイントや最新の交通ルールについて学習いただけます。",
+            "featured_image": "campaign-2.png",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        },
+        {
+            "id": 3,
+            "title": "免許更新講習のご案内",
+            "excerpt": "免許の更新時期が近づいている方を対象とした講習のご案内です。安全運転のポイントや最新の交通ルールについて学習いただけます。",
+            "featured_image": "campaign-3.png",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        },
+        {
+            "id": 4,
+            "title": "免許更新講習のご案内",
+            "excerpt": "免許の更新時期が近づいている方を対象とした講習のご案内です。安全運転のポイントや最新の交通ルールについて学習いただけます。",
+            "featured_image": "campaign-4.png",
+            "date": "2025-28-06",
+            "category": "BLOG",
+            "status": "published"
+        }
+    ],
     "faq_groups": [
         {
             "id": 1,
