@@ -29,7 +29,6 @@ $footer_data = sbs_get_footer_data();
                         alt="SBS Driving School" />
                 </div>
                 <div class="company-info">
-                   
                     <p class="company-description">
                         楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してまいりました。
                     </p>

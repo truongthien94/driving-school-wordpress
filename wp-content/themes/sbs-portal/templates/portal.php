@@ -355,18 +355,13 @@ if (!defined('ABSPATH')) {
     <div class="sbs-popup" id="sbs-popup">
         <div class="popup-content" id="draggable-popup">
             <!-- Popup Header -->
-            <div class="popup-header">
-                <button class="popup-close" id="popup-close">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-close.svg" alt="Close" />
-                </button>
-            </div>
+            <button class="popup-close position-absolute" id="popup-close">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-x.svg" alt="Close" class="img-fluid" />
+            </button>
 
             <!-- Popup Content -->
-            <div class="popup-body">
-                <!-- Background Image -->
-                <div class="popup-background">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS Background" />
-                </div>
+            <div class="popup-background">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ads.png" alt="SBS Background" />
             </div>
         </div>
     </div>
