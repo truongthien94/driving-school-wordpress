@@ -789,17 +789,23 @@ Optimized for Bootstrap 5 integration
     display: inline;
 }
 
-/* .header-section-right .hero-circle-2 {
+.header-section-right .hero-circle-2 {
     width: 233px;
     height: 233px;
+    position: absolute;
+    top: 0;
+    right: 0;
     margin: 62px 68px 11px 0;
 }
 
 .header-section-right .hero-circle {
     width: 95px;
     height: 95px;
-    margin-top: 140px;
-} */
+    position: absolute;
+    top: 0;
+    right: 250px;
+    margin: 160px 68px 11px 0;
+}
 
 /* Pause animation on hover */
 .banner-carousel-track:hover {
