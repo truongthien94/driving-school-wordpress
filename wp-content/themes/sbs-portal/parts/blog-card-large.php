@@ -35,19 +35,31 @@ if (!empty($post['featured_image']) && filter_var($post['featured_image'], FILTE
 if (!wp_style_is('sbs-blog-list', 'enqueued')) {
     wp_enqueue_style('sbs-blog-list', get_template_directory_uri() . '/assets/css/blog-list.css', array(), '1.0.0');
 }
+
+// Always redirect to blog-detail.php template
+$permalink = home_url('/blog-detail/');
+if (!empty($post['id'])) {
+    $permalink = add_query_arg('post_id', $post['id'], $permalink);
+} elseif (!empty($post['slug'])) {
+    $permalink = add_query_arg('post_slug', $post['slug'], $permalink);
+} elseif (!empty($post['title'])) {
+    $permalink = add_query_arg('post_title', urlencode($post['title']), $permalink);
+}
 ?>
 
 <article class="blog-card-large h-100">
     <!-- Featured Image -->
     <div class="blog-card-large-image">
-        <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
+        <a href="<?php echo esc_url($permalink); ?>" aria-label="<?php echo esc_attr($post['title']); ?>">
+            <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
+        </a>
     </div>
 
     <!-- Card Content -->
     <div class="blog-card-large-content d-flex flex-column h-100">
         <!-- Title -->
         <h3 class="blog-card-large-title">
-            <a href="<?php echo get_permalink($post['id']); ?>" class="text-decoration-none">
+            <a href="<?php echo esc_url($permalink); ?>" class="text-decoration-none">
                 <?php echo esc_html($post['title']); ?>
             </a>
         </h3>

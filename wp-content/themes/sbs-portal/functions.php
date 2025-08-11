@@ -51,31 +51,15 @@ function sbs_enqueue_scripts()
     // Main style depends on Bootstrap
     wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array('bootstrap-css'), '1.0.0');
 
-    // Enqueue blog list specific stylesheet
+    // Enqueue blog list stylesheet (contains shared blog styles)
     wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
 
-    // Enqueue blog detail specific stylesheet
-    wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
-
-    // Enqueue campaign detail specific stylesheet
-    wp_enqueue_style('sbs-campaign-detail-style', get_stylesheet_directory_uri() . '/assets/css/campaign-detail.css', array('sbs-style'), '1.0.0');
-
-    // Enqueue blog list specific stylesheet
-    if (
-        is_page_template('page-blog.php') ||
-        (get_query_var('sbs_page') === 'blog-list') ||
-        is_post_type_archive('blog') ||
-        (is_page() && get_page_template_slug() === 'page-blog.php')
-    ) {
-        wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
-    }
-
-    // Enqueue blog detail stylesheet only on single blog posts
+    // Enqueue blog detail specific stylesheet only on single blog posts
     if (is_singular('blog')) {
         wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
     }
 
-    // Enqueue campaign detail stylesheet only on single campaign posts
+    // Enqueue campaign detail specific stylesheet only on single campaign posts
     if (is_singular('campaign')) {
         wp_enqueue_style('sbs-campaign-detail-style', get_stylesheet_directory_uri() . '/assets/css/campaign-detail.css', array('sbs-style'), '1.0.0');
     }
@@ -1469,6 +1453,13 @@ function sbs_add_rewrite_rules()
         'index.php?sbs_page=blog-list',
         'top'
     );
+
+    // Add rewrite rule for blog detail page
+    add_rewrite_rule(
+        '^blog-detail/?$',
+        'index.php?sbs_page=blog-detail',
+        'top'
+    );
 }
 add_action('init', 'sbs_add_rewrite_rules');
 
@@ -1489,9 +1480,28 @@ function sbs_template_redirect()
 {
     $sbs_page = get_query_var('sbs_page');
 
+    // Debug: Log the query var
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('SBS Template Redirect - sbs_page: ' . $sbs_page);
+        error_log('SBS Template Redirect - REQUEST_URI: ' . $_SERVER['REQUEST_URI']);
+    }
+
     if ($sbs_page === 'blog-list') {
         // Load the blog list template directly (no header/footer)
         get_template_part('templates/blog-list');
+        exit;
+    }
+
+    if ($sbs_page === 'blog-detail') {
+        // Load the blog detail template directly (no header/footer)
+        get_template_part('templates/blog-detail');
+        exit;
+    }
+
+    // Debug: Check if we're on blog-detail URL but sbs_page is not set
+    if (strpos($_SERVER['REQUEST_URI'], '/blog-detail') !== false && empty($sbs_page)) {
+        // Force load blog-detail template
+        get_template_part('templates/blog-detail');
         exit;
     }
 }
@@ -1502,10 +1512,35 @@ add_action('template_redirect', 'sbs_template_redirect');
  */
 function sbs_flush_rewrite_rules()
 {
-    sbs_add_rewrite_rules();
+    // Add our custom rewrite rules
+    add_rewrite_rule(
+        '^blog-list/?$',
+        'index.php?sbs_page=blog-list',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^blog-detail/?$',
+        'index.php?sbs_page=blog-detail',
+        'top'
+    );
+
+    // Flush rewrite rules
     flush_rewrite_rules();
 }
-register_activation_hook(__FILE__, 'sbs_flush_rewrite_rules');
+add_action('after_switch_theme', 'sbs_flush_rewrite_rules');
+
+/**
+ * Force flush rewrite rules (for development)
+ */
+function sbs_force_flush_rewrite_rules()
+{
+    if (isset($_GET['flush_rules']) && current_user_can('manage_options')) {
+        flush_rewrite_rules();
+        wp_die('Rewrite rules flushed successfully!');
+    }
+}
+add_action('init', 'sbs_force_flush_rewrite_rules');
 
 /**
  * Add admin menu to flush rewrite rules manually

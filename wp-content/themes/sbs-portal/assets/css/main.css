@@ -29,7 +29,7 @@ body {
 /* Hero Section - Combined ROW 1 & ROW 2 */
 .sbs-hero-section {
     position: relative;
-    
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -38,7 +38,7 @@ body {
     flex-direction: column;
 }
 
-.portal-box-container{
+.portal-box-container {
     padding-top: 0;
     padding-left: 0;
     padding-right: 0;
@@ -1202,7 +1202,7 @@ body {
 .footer-bottom {
     text-align: center;
     padding-top: 30px;
-   
+
 }
 
 .legal-links {
@@ -1316,7 +1316,7 @@ body {
 
     /* Hero Section - Stack columns vertically */
     .hero-container {
-        
+
         flex-direction: column;
         min-height: auto;
     }
@@ -1341,7 +1341,7 @@ body {
         border-radius: 0;
     }
 
-    .portal-box-container{
+    .portal-box-container {
         padding: 0;
     }
 
@@ -1413,7 +1413,7 @@ body {
         padding-left: 12px;
     }
 
-  
+
 
     .faq-main-title {
         margin: 0;
@@ -1457,7 +1457,7 @@ body {
     }
 
     .hero-container {
-        
+
         gap: 20px;
         flex-direction: column;
         min-height: auto;
@@ -1484,7 +1484,7 @@ body {
         border-radius: 0;
     }
 
-    .portal-box-container{
+    .portal-box-container {
         padding: 0;
     }
 
@@ -1665,7 +1665,7 @@ body {
         border-radius: 0;
     }
 
-    .portal-box-container{
+    .portal-box-container {
         padding: 0;
     }
 
@@ -2051,6 +2051,7 @@ body {
 .sbs-portal {
     position: relative;
     z-index: 2;
+    background-color: #F5F5F5;
 }
 
 .float-button {
@@ -2084,7 +2085,7 @@ body {
     background: #525252;
     color: white;
     border: none;
-  
+
     padding: 0;
     cursor: pointer;
     z-index: 999;

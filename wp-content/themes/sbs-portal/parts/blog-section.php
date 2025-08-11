@@ -37,19 +37,30 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
         </div>
     </div>
 
-    <!-- Blog Posts Grid -->
-    <div class="blog-posts-grid row g-3">
-        <?php if (!empty($blog_posts)): ?>
-            <?php foreach ($blog_posts as $post): ?>
-                <div class="col-lg-4 col-md-6">
-                    <?php get_template_part('parts/blog-card-large', null, array('post' => $post)); ?>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="col-12">
-                <div class="no-posts text-center py-5">
-                    <p class="text-muted mb-0">No blog posts available yet.</p>
-                </div>
+    <!-- Blog Posts Grid (match blog-list.php structure) -->
+    <div class="blog-posts-main-grid">
+        <?php if (!empty($blog_posts)):
+            $post_count = 0;
+            $total_posts = count($blog_posts);
+            foreach ($blog_posts as $post):
+                $post_count++;
+        ?>
+                <!-- Blog Post Row (every 3 posts) -->
+                <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0): ?>
+                    <div class="row g-3 mb-4">
+                    <?php endif; ?>
+
+                    <div class="col-md-4">
+                        <?php get_template_part('parts/blog-card-large', null, array('post' => $post)); ?>
+                    </div>
+
+                    <?php if ($post_count % 3 === 0 || $post_count === $total_posts): ?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach;
+        else: ?>
+            <div class="no-posts text-center py-5">
+                <p class="text-muted mb-0">No blog posts available yet.</p>
             </div>
         <?php endif; ?>
     </div>

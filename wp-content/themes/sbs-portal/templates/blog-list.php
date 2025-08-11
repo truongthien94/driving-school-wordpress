@@ -131,8 +131,8 @@ if (!$blog_posts->have_posts()) {
 
                         <!-- Pagination Section -->
                         <div class="blog-pagination-section mt-5">
-                            <div class="pagination-wrapper d-flex justify-content-between align-items-center">
-                                <div class="pagination-info d-flex align-items-center gap-2">
+                            <div class="pagination-wrapper d-flex justify-content-center align-items-center">
+                                <div class="pagination-info me-4">
                                     <span class="page-info">
                                         <?php
                                         $max_pages = $use_mock_data ? 1 : ($blog_posts->max_num_pages ?: 1);
@@ -141,14 +141,14 @@ if (!$blog_posts->have_posts()) {
                                     </span>
                                 </div>
 
-                                <div class="pagination-controls d-flex justify-content-center gap-2">
+                                <div class="pagination-controls d-flex gap-2">
                                     <?php
                                     $prev_page = $paged > 1 ? $paged - 1 : null;
                                     $next_page = $paged < $max_pages ? $paged + 1 : null;
                                     ?>
 
-                                    <!-- First Page Button (chevrons-left) -->
-                                    <button class="pagination-btn pagination-first btn btn-outline-secondary <?php echo $paged === 1 ? 'disabled' : ''; ?>"
+                                    <!-- First Page Button (double left arrow) -->
+                                    <button class="pagination-btn pagination-first <?php echo $paged === 1 ? 'disabled' : ''; ?>"
                                         <?php if ($paged > 1): ?>onclick="location.href='<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>'" <?php endif; ?>>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
@@ -156,24 +156,24 @@ if (!$blog_posts->have_posts()) {
                                         </svg>
                                     </button>
 
-                                    <!-- Previous Page Button (chevron-left) -->
-                                    <button class="pagination-btn pagination-prev btn btn-outline-secondary <?php echo !$prev_page ? 'disabled' : ''; ?>"
+                                    <!-- Previous Page Button (single left arrow) -->
+                                    <button class="pagination-btn pagination-prev <?php echo !$prev_page ? 'disabled' : ''; ?>"
                                         <?php if ($prev_page): ?>onclick="location.href='<?php echo get_pagenum_link($prev_page); ?>'" <?php endif; ?>>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M6 4L2 8L6 12" stroke="currentColor" stroke-width="1" />
                                         </svg>
                                     </button>
 
-                                    <!-- Next Page Button (chevron-right) -->
-                                    <button class="pagination-btn pagination-next btn btn-outline-secondary <?php echo !$next_page ? 'disabled' : ''; ?>"
+                                    <!-- Next Page Button (single right arrow) -->
+                                    <button class="pagination-btn pagination-next <?php echo !$next_page ? 'disabled' : ''; ?>"
                                         <?php if ($next_page): ?>onclick="location.href='<?php echo get_pagenum_link($next_page); ?>'" <?php endif; ?>>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
                                         </svg>
                                     </button>
 
-                                    <!-- Last Page Button (chevrons-right) -->
-                                    <button class="pagination-btn pagination-last btn btn-outline-secondary <?php echo $paged === $max_pages ? 'disabled' : ''; ?>"
+                                    <!-- Last Page Button (double right arrow) -->
+                                    <button class="pagination-btn pagination-last <?php echo $paged === $max_pages ? 'disabled' : ''; ?>"
                                         <?php if ($paged < $max_pages): ?>onclick="location.href='<?php echo get_pagenum_link($max_pages); ?>'" <?php endif; ?>>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />

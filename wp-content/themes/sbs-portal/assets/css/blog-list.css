@@ -318,10 +318,35 @@ Optimized for Bootstrap 5 integration
     color: #8E8E8E;
 }
 
-/* Pagination Section - Enhanced with Bootstrap */
+/* Pagination Section - Enhanced with Figma Design */
 .blog-pagination-section {
     margin-top: 40px;
     padding: 2px 0;
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+.pagination-info {
+    margin-right: 16px;
+}
+
+.page-info {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #8E8E8E;
+    line-height: 1.5;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .pagination-btn {
@@ -332,28 +357,83 @@ Optimized for Bootstrap 5 integration
     justify-content: center;
     border: 1px solid #EAECEE;
     border-radius: 6px;
-    background: white;
+    background: #FFFFFF;
     color: #262626;
     cursor: pointer;
     transition: all 0.2s ease;
     padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .pagination-btn:hover:not(.disabled) {
     background: #F8F9FA;
     border-color: #CFD4DA;
-    transform: scale(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-btn:active:not(.disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .pagination-btn.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
-    background: white;
+    background: #F8F9FA;
+    border-color: #E2E8F0;
+    transform: none;
+    box-shadow: none;
 }
 
 .pagination-btn svg {
     width: 16px;
     height: 16px;
+    color: currentColor;
+}
+
+/* Specific button states */
+.pagination-btn.pagination-first,
+.pagination-btn.pagination-last {
+    color: #6B7280;
+}
+
+.pagination-btn.pagination-prev,
+.pagination-btn.pagination-next {
+    color: #374151;
+}
+
+/* Responsive Design for Pagination */
+@media (max-width: 768px) {
+    .pagination-wrapper {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .pagination-info {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+
+    .pagination-controls {
+        gap: 6px;
+    }
+
+    .pagination-btn {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pagination-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .page-info {
+        font-size: 13px;
+    }
 }
 
 /* Floating Elements */
