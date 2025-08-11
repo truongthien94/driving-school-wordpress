@@ -25,19 +25,21 @@ if (!$post) {
 <article class="blog-card h-100">
     <!-- Featured Image -->
     <div class="blog-card-image">
-        <?php
-        // Use different images based on post ID for variety
-        $image_file = ($post['id'] == 1 || $post['id'] == 3) ? 'blog-featured-1-66030e.jpg' : 'blog-featured-2.jpg';
-        ?>
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo $image_file; ?>"
-            alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
+        <?php if (!empty($post['featured_image'])): ?>
+            <img src="<?php echo esc_url($post['featured_image']); ?>"
+                alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
+        <?php else: ?>
+            <!-- Fallback image if no featured image is set -->
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/blog-featured-1.jpg"
+                alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
+        <?php endif; ?>
     </div>
 
     <!-- Card Content -->
     <div class="blog-card-content d-flex flex-column h-100">
         <!-- Title -->
         <h3 class="blog-card-title">
-            <a href="/blog/<?php echo esc_attr($post['id']); ?>" class="text-decoration-none">
+            <a href="<?php echo esc_url($post['permalink']); ?>" class="text-decoration-none">
                 <?php echo esc_html($post['title']); ?>
             </a>
         </h3>

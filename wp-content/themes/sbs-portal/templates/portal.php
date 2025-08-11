@@ -39,117 +39,233 @@ if (!defined('ABSPATH')) {
                 </div>
             </div>
             <div class="col-xl-6">
-                <div class="py-2">
-                    <div class="portal-box">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="box-icon flex-shrink-0">
-                                <?php echo sbs_get_icon('bus'); ?>
-                            </div>
-                            <div class="box-info flex-grow-1">
-                                <h3 class="box-title mb-1">SBS自動車</h3>
-                                <p class="box-description mb-0">Add description</p>
-                            </div>
-                        </div>
-                        <div class="box-line "></div>
-                    </div>
-                </div>
-                <div class="row row-gap-0 p-0">
-                    <div class="col-xl-6 py-2">
+                <?php
+                // Get hero items from database
+                $hero_items = sbs_get_hero_items(7);
+
+                if (!empty($hero_items)) {
+                    // First item (main item) - Hàng 1
+                    $main_item = array_shift($hero_items);
+                ?>
+                    <div class="py-2">
                         <div class="portal-box">
-                            <div class="box-header d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
                                 <div class="box-icon flex-shrink-0">
-                                    <?php echo sbs_get_icon('bus'); ?>
+                                    <?php echo sbs_get_icon($main_item['icon'] ?: 'car'); ?>
                                 </div>
                                 <div class="box-info flex-grow-1">
-                                    <h3 class="box-title mb-1">SBSドライビングスクール姉崎</h3>
+                                    <h3 class="box-title mb-1">
+                                        <?php if ($main_item['link']) : ?>
+                                            <a href="<?php echo esc_url($main_item['link']); ?>" class="text-decoration-none">
+                                                <?php echo esc_html($main_item['title']); ?>
+                                            </a>
+                                        <?php else : ?>
+                                            <?php echo esc_html($main_item['title']); ?>
+                                        <?php endif; ?>
+                                    </h3>
+                                    <p class="box-description mb-0">
+                                        <?php echo esc_html($main_item['description'] ?: 'Add description'); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="box-line"></div>
+                        </div>
+                    </div>
+
+                    <?php if (!empty($hero_items)) : ?>
+                        <!-- Hàng 2: Items 2-3 (2 cột) -->
+                        <div class="row row-gap-0 p-0">
+                            <?php
+                            $row2_items = array_slice($hero_items, 0, 2);
+                            foreach ($row2_items as $item) {
+                            ?>
+                                <div class="col-xl-6 py-2">
+                                    <div class="portal-box">
+                                        <div class="box-header d-flex align-items-center gap-3">
+                                            <div class="box-icon flex-shrink-0">
+                                                <?php echo sbs_get_icon($item['icon'] ?: 'bus'); ?>
+                                            </div>
+                                            <div class="box-info flex-grow-1">
+                                                <h3 class="box-title mb-1">
+                                                    <?php if ($item['link']) : ?>
+                                                        <a href="<?php echo esc_url($item['link']); ?>" class="text-decoration-none">
+                                                            <?php echo esc_html($item['title']); ?>
+                                                        </a>
+                                                    <?php else : ?>
+                                                        <?php echo esc_html($item['title']); ?>
+                                                    <?php endif; ?>
+                                                </h3>
+                                                <p class="box-description mb-0">
+                                                    <?php echo esc_html($item['description'] ?: 'Add description'); ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="box-line position-absolute"></div>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                <?php } else {
+                    // Fallback to static content if no hero items exist
+                ?>
+                    <div class="py-2">
+                        <div class="portal-box">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon('car'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">SBS自動車</h3>
                                     <p class="box-description mb-0">Add description</p>
                                 </div>
                             </div>
-                            <div class="box-line position-absolute"></div>
+                            <div class="box-line"></div>
                         </div>
                     </div>
-                    <div class="col-xl-6 py-2">
-                        <div class="portal-box">
-                            <div class="box-header d-flex align-items-center gap-3">
-                                <div class="box-icon flex-shrink-0">
-                                    <?php echo sbs_get_icon('bus'); ?>
+                    <div class="row row-gap-0 p-0">
+                        <div class="col-xl-6 py-2">
+                            <div class="portal-box">
+                                <div class="box-header d-flex align-items-center gap-3">
+                                    <div class="box-icon flex-shrink-0">
+                                        <?php echo sbs_get_icon('bus'); ?>
+                                    </div>
+                                    <div class="box-info flex-grow-1">
+                                        <h3 class="box-title mb-1">SBSドライビングスクール姉崎</h3>
+                                        <p class="box-description mb-0">Add description</p>
+                                    </div>
                                 </div>
-                                <div class="box-info flex-grow-1">
-                                    <h3 class="box-title mb-1">SBSドライビングスクール姉崎</h3>
-                                    <p class="box-description mb-0">Add description</p>
-                                </div>
+                                <div class="box-line position-absolute"></div>
                             </div>
-                            <div class="box-line position-absolute"></div>
+                        </div>
+                        <div class="col-xl-6 py-2">
+                            <div class="portal-box">
+                                <div class="box-header d-flex align-items-center gap-3">
+                                    <div class="box-icon flex-shrink-0">
+                                        <?php echo sbs_get_icon('bus'); ?>
+                                    </div>
+                                    <div class="box-info flex-grow-1">
+                                        <h3 class="box-title mb-1">SBSドライビングスクール稲毛</h3>
+                                        <p class="box-description mb-0">Add description</p>
+                                    </div>
+                                </div>
+                                <div class="box-line position-absolute"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
 
         <div class="row portal-box-container hero-container row-gap-0 ">
-            <!-- Box 1: 姉崎詳細 -->
-            <div class="col-xl-3  py-2">
-                <div class="portal-box ">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="box-icon flex-shrink-0">
-                            <?php echo sbs_get_icon('building'); ?>
-                        </div>
-                        <div class="box-info flex-grow-1">
-                            <h3 class="box-title mb-1">稲毛詳細</h3>
-                            <p class="box-description mb-0">Add description</p>
-                        </div>
-                    </div>
-                    <div class="box-line position-absolute"></div>
-                </div>
-            </div>
+            <?php
+            // Get all hero items for the bottom row (items 4-7)
+            $all_hero_items = sbs_get_hero_items(7);
 
-            <!-- Box 2: 稲毛詳細 -->
-            <div class="col-xl-3 py-2">
-                <div class="portal-box ">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="box-icon flex-shrink-0">
-                            <?php echo sbs_get_icon('building'); ?>
-                        </div>
-                        <div class="box-info flex-grow-1">
-                            <h3 class="box-title mb-1">稲毛詳細</h3>
-                            <p class="box-description mb-0">Add description</p>
-                        </div>
-                    </div>
-                    <div class="box-line position-absolute"></div>
-                </div>
-            </div>
+            if (!empty($all_hero_items)) {
+                // Skip the first 3 items (already displayed above) and show remaining items 4-7
+                $bottom_items = array_slice($all_hero_items, 3, 4);
 
-            <!-- Box 3: 予約システム -->
-            <div class="col-xl-3 py-2">
-                <div class="portal-box">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="box-icon flex-shrink-0">
-                            <?php echo sbs_get_icon('calendar'); ?>
-                        </div>
-                        <div class="box-info flex-grow-1">
-                            <h3 class="box-title mb-1">予約システム</h3>
-                            <p class="box-description mb-0">教習、宿泊䛾予約</p>
+                foreach ($bottom_items as $item) {
+            ?>
+                    <div class="col-xl-3 py-2">
+                        <div class="portal-box">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="box-icon flex-shrink-0">
+                                    <?php echo sbs_get_icon($item['icon'] ?: 'building'); ?>
+                                </div>
+                                <div class="box-info flex-grow-1">
+                                    <h3 class="box-title mb-1">
+                                        <?php if ($item['link']) : ?>
+                                            <a href="<?php echo esc_url($item['link']); ?>" class="text-decoration-none">
+                                                <?php echo esc_html($item['title']); ?>
+                                            </a>
+                                        <?php else : ?>
+                                            <?php echo esc_html($item['title']); ?>
+                                        <?php endif; ?>
+                                    </h3>
+                                    <p class="box-description mb-0">
+                                        <?php echo esc_html($item['description'] ?: 'Add description'); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="box-line position-absolute"></div>
                         </div>
                     </div>
-                    <div class="box-line position-absolute"></div>
+                <?php
+                }
+            } else {
+                // Fallback to static content if no hero items exist
+                ?>
+                <!-- Box 1: 姉崎詳細 -->
+                <div class="col-xl-3 py-2">
+                    <div class="portal-box">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="box-icon flex-shrink-0">
+                                <?php echo sbs_get_icon('building'); ?>
+                            </div>
+                            <div class="box-info flex-grow-1">
+                                <h3 class="box-title mb-1">姉崎詳細</h3>
+                                <p class="box-description mb-0">Add description</p>
+                            </div>
+                        </div>
+                        <div class="box-line position-absolute"></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Box 4: マッチングシステム -->
-            <div class="col-xl-3 py-2">
-                <div class="portal-box">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="box-icon flex-shrink-0">
-                            <?php echo sbs_get_icon('briefcase'); ?>
+                <!-- Box 2: 稲毛詳細 -->
+                <div class="col-xl-3 py-2">
+                    <div class="portal-box">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="box-icon flex-shrink-0">
+                                <?php echo sbs_get_icon('building'); ?>
+                            </div>
+                            <div class="box-info flex-grow-1">
+                                <h3 class="box-title mb-1">稲毛詳細</h3>
+                                <p class="box-description mb-0">Add description</p>
+                            </div>
                         </div>
-                        <div class="box-info flex-grow-1">
-                            <h3 class="box-title mb-1">マッチングシステム</h3>
-                            <p class="box-description mb-0">求人情報投稿</p>
-                        </div>
+                        <div class="box-line position-absolute"></div>
                     </div>
-                    <div class="box-line position-absolute"></div>
                 </div>
-            </div>
+
+                <!-- Box 3: 予約システム -->
+                <div class="col-xl-3 py-2">
+                    <div class="portal-box">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="box-icon flex-shrink-0">
+                                <?php echo sbs_get_icon('calendar'); ?>
+                            </div>
+                            <div class="box-info flex-grow-1">
+                                <h3 class="box-title mb-1">予約システム</h3>
+                                <p class="box-description mb-0">教習、宿泊の予約</p>
+                            </div>
+                        </div>
+                        <div class="box-line position-absolute"></div>
+                    </div>
+                </div>
+
+                <!-- Box 4: マッチングシステム -->
+                <div class="col-xl-3 py-2">
+                    <div class="portal-box">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="box-icon flex-shrink-0">
+                                <?php echo sbs_get_icon('briefcase'); ?>
+                            </div>
+                            <div class="box-info flex-grow-1">
+                                <h3 class="box-title mb-1">マッチングシステム</h3>
+                                <p class="box-description mb-0">求人情報投稿</p>
+                            </div>
+                        </div>
+                        <div class="box-line position-absolute"></div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </section>
 
@@ -157,36 +273,66 @@ if (!defined('ABSPATH')) {
     <section class="sbs-banner-carousel-section">
         <div class="banner-carousel-container">
             <div class="banner-carousel-track">
-                <!-- Banner 1: Gallery Image 1 -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
-                </div>
+                <?php
+                // Get banner items from database
+                $banner_items = sbs_get_banner_items(10);
 
-                <!-- Banner 2: Gallery Image 2 -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
-                </div>
+                if (!empty($banner_items)) {
+                    // Display original banners
+                    foreach ($banner_items as $item) {
+                        $link_attr = '';
+                        $link_wrapper_start = '';
+                        $link_wrapper_end = '';
 
-                <!-- Banner 3: Gallery Image 3 -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
-                </div>
+                        if ($item['link_url']) {
+                            $link_attr = ' onclick="window.open(\'' . esc_url($item['link_url']) . '\', \'_blank\')"';
+                            $link_wrapper_start = '<a href="' . esc_url($item['link_url']) . '" target="_blank" class="banner-link">';
+                            $link_wrapper_end = '</a>';
+                        }
+                ?>
+                        <div class="banner-item" <?php echo $link_attr; ?>>
+                            <?php echo $link_wrapper_start; ?>
+                            <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
+                            <?php echo $link_wrapper_end; ?>
+                        </div>
+                    <?php
+                    }
+                } else {
+                    // Fallback to static content if no banner items exist
+                    ?>
+                    <!-- Banner 1: Gallery Image 1 -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
+                    </div>
 
-                <!-- Duplicate banners for seamless loop -->
-                <!-- Banner 1 Duplicate -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
-                </div>
+                    <!-- Banner 2: Gallery Image 2 -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
+                    </div>
 
-                <!-- Banner 2 Duplicate -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
-                </div>
+                    <!-- Banner 3: Gallery Image 3 -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
+                    </div>
 
-                <!-- Banner 3 Duplicate -->
-                <div class="banner-item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
-                </div>
+                    <!-- Duplicate banners for seamless loop -->
+                    <!-- Banner 1 Duplicate -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
+                    </div>
+
+                    <!-- Banner 2 Duplicate -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
+                    </div>
+
+                    <!-- Banner 3 Duplicate -->
+                    <div class="banner-item">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </section>

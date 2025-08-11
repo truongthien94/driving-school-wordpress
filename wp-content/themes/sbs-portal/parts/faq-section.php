@@ -19,7 +19,7 @@ $faq_groups = sbs_get_faq_groups();
 
 <div class="faq-section position-relative">
     <!-- FAQ Title Bar -->
-    <div class="faq-title-bar d-flex align-items-start p-4">
+    <div class="faq-title-bar d-flex align-items-start p-3">
         <div class="faq-main-title">
             FAQ
         </div>
@@ -33,16 +33,14 @@ $faq_groups = sbs_get_faq_groups();
 
     <!-- FAQ Content Container -->
     <div class="faq-content-container position-relative">
-        <!-- FAQ Logos Section - Positioned in upper right -->
-       
-        <!-- FAQ Groups - Overlapping the logos section -->
-        <div class=" position-relative d-flex flex-column gap-4 ">
+        <!-- FAQ Groups -->
+        <div class="faq-groups-container position-relative d-flex flex-column gap-3">
             <?php if (!empty($faq_groups)): ?>
                 <?php foreach ($faq_groups as $group): ?>
                     <?php get_template_part('parts/faq-group', null, array('group' => $group)); ?>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="no-faqs text-center py-5">
+                <div class="no-faqs text-center py-4">
                     <p class="text-muted mb-0">FAQはまだありません。</p>
                 </div>
             <?php endif; ?>

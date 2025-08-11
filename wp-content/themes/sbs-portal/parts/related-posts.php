@@ -51,7 +51,7 @@ if ($related_posts->have_posts()) : ?>
                         'id' => get_the_ID(),
                         'title' => get_the_title(),
                         'excerpt' => get_the_excerpt(),
-                        'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured') ?: 'blog-featured-1-66030e.jpg',
+                        'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured') ?: 'blog-featured-1.jpg',
                         'date' => get_the_date('Y-m-d'),
                         'category' => 'BLOG'
                     )

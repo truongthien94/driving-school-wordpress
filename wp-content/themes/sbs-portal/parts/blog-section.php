@@ -14,7 +14,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$blog_posts = sbs_get_latest_blog_posts(3);
+// Get blog posts from database using the new function
+$blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
 ?>
 
 <div class="blog-section">

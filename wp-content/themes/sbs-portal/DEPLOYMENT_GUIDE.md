@@ -34,7 +34,7 @@ wp-content/themes/sbs-portal/
 │       ├── gallery-1.jpg
 │       ├── gallery-2.jpg
 │       ├── gallery-3.jpg
-│       ├── blog-featured-1-66030e.jpg
+│       ├── blog-featured-1.jpg
 │       ├── popup-image-7b3887.jpg
 │       ├── footer-bg.jpg
 │       └── icons/            # SVG icons

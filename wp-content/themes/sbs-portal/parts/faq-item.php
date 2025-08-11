@@ -27,7 +27,7 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
 <div class="faq-item <?php echo esc_attr($expanded_class); ?>" data-question-id="<?php echo esc_attr($question['id']); ?>">
     <!-- Question -->
     <div class="faq-question user-select-none" style="cursor: pointer;">
-        <div class="question-content d-flex justify-content-between align-items-center gap-2 py-3">
+        <div class="question-content d-flex justify-content-between align-items-center gap-2 py-2">
             <h4 class="question-text mb-0 flex-grow-1"><?php echo esc_html($question['question']); ?></h4>
             <div class="question-toggle d-flex align-items-center justify-content-center">
                 <?php if ($question['expanded']): ?>
@@ -45,7 +45,7 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
 
     <!-- Answer -->
     <?php if (!empty($question['answer']) || !empty($question['detail'])): ?>
-        <div class="faq-answer pt-3 d-flex flex-column gap-2">
+        <div class="faq-answer pt-2 d-flex flex-column gap-2">
             <?php if (!empty($question['answer'])): ?>
                 <div class="answer-brief">
                     <?php echo esc_html($question['answer']); ?>
@@ -59,7 +59,4 @@ $expanded_class = $question['expanded'] ? 'expanded' : '';
             <?php endif; ?>
         </div>
     <?php endif; ?>
-
-    <!-- Divider -->
-    <div class="faq-divider border-bottom pb-3 mb-3"></div>
 </div>

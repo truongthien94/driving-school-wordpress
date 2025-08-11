@@ -27,7 +27,6 @@ $expanded_class = $group['expanded'] ? 'expanded' : '';
 <div class="faq-group <?php echo esc_attr($expanded_class); ?>" data-group-id="<?php echo esc_attr($group['id']); ?>">
     <!-- Group Header -->
     <div class="faq-group-header d-flex align-items-center gap-3 mb-3 user-select-none" style="cursor: pointer;">
-        <div class="group-indicator flex-shrink-0" style="background-color: <?php echo esc_attr($group['color']); ?>"></div>
         <div class="group-title-container d-flex justify-content-between align-items-center flex-grow-1 gap-3">
             <h3 class="group-title mb-0"><?php echo esc_html($group['title']); ?></h3>
             <div class="group-toggle">
@@ -49,7 +48,7 @@ $expanded_class = $group['expanded'] ? 'expanded' : '';
     <!-- Group Content -->
     <div class="faq-group-content">
         <?php if (!empty($group['questions'])): ?>
-            <div class="faq-questions d-flex flex-column gap-3">
+            <div class="faq-questions d-flex flex-column gap-2">
                 <?php foreach ($group['questions'] as $question): ?>
                     <?php get_template_part('parts/faq-item', null, array('question' => $question)); ?>
                 <?php endforeach; ?>

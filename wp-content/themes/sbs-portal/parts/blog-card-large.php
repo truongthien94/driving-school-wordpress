@@ -27,7 +27,7 @@ if (!empty($post['featured_image']) && filter_var($post['featured_image'], FILTE
     $image_file = $post['featured_image'];
 } else {
     // Use existing image files or default
-    $image_file = get_template_directory_uri() . '/assets/images/' . (!empty($post['featured_image']) ? $post['featured_image'] : 'blog-featured-1-66030e.jpg');
+    $image_file = get_template_directory_uri() . '/assets/images/' . (!empty($post['featured_image']) ? $post['featured_image'] : 'blog-featured-1.jpg');
 }
 ?>
 
