@@ -1032,3 +1032,64 @@ Optimized for Bootstrap 5 integration
         gap: 6px;
     }
 }
+
+/* ===================================
+   SMALL BLOG CARD (SIDEBAR/RELATED)
+   =================================== */
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+}
+
+.blog-card-image img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.blog-card-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5em;
+    color: #262626;
+    margin: 0;
+}
+
+.blog-card-title a {
+    color: #262626;
+    text-decoration: none;
+}
+
+.blog-card-title a:hover {
+    color: #DD1F01;
+}
+
+.blog-card-excerpt {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5em;
+    color: #414141;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* show max 2 lines */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.blog-card .meta-tags .category-tag,
+.blog-card .meta-tags .date-tag {
+    font-size: 12px;
+    color: #8E8E8E;
+}
+
+@media (max-width: 576px) {
+    .blog-card-image img {
+        height: 140px;
+    }
+}
