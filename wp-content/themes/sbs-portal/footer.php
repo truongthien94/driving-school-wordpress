@@ -25,12 +25,11 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-company">
                 <div class="company-logo">
                     <!-- Logo would go here -->
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png"
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-footer.png"
                         alt="SBS Driving School" />
                 </div>
                 <div class="company-info">
-                    <h2 class="company-name">SBS 自動車学校</h2>
-                    <p class="company-slogan">For Your Dreams.</p>
+                   
                     <p class="company-description">
                         楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してまいりました。
                     </p>
@@ -94,7 +93,7 @@ $footer_data = sbs_get_footer_data();
         <div class="footer-bottom">
             <!-- Legal Links -->
             <?php if (isset($footer_data['legal'])): ?>
-                <div class="legal-links">
+                <div class="legal-links d-flex justify-content-center mb-2">
                     <?php foreach ($footer_data['legal'] as $legal): ?>
                         <a href="<?php echo esc_url($legal['url']); ?>">
                             <?php echo esc_html($legal['text']); ?>

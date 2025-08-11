@@ -1080,7 +1080,7 @@ body {
 }
 
 .footer-container {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -1097,11 +1097,6 @@ body {
     flex-direction: column;
     gap: 20px;
     flex: 1;
-}
-
-.company-logo img {
-    width: 200px;
-    height: 40px;
 }
 
 .company-info {
@@ -1126,9 +1121,9 @@ body {
 .company-description {
     font-size: 14px;
     line-height: 1.6;
-    color: #CCCCCC;
+    color: white;
     margin: 0;
-    max-width: 280px;
+    max-width: 335px;
 }
 
 .footer-columns {
@@ -1161,7 +1156,8 @@ body {
 
 .column-links a {
     font-size: 14px;
-    color: #CCCCCC;
+    color: white;
+    font-weight: 400;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -1187,14 +1183,14 @@ body {
 
 .contact-item h4 {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     color: white;
     margin: 0 0 4px 0;
 }
 
 .contact-item p {
     font-size: 14px;
-    color: #CCCCCC;
+    color: white;
     margin: 0;
 }
 
@@ -1204,12 +1200,12 @@ body {
 
 .contact-button {
     background: #F68306;
-    color: white;
+    color: #F8FAFC;
     padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     transition: all 0.3s ease;
     display: inline-block;
     text-align: center;
@@ -1223,11 +1219,9 @@ body {
 }
 
 .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
     padding-top: 30px;
-    border-top: 1px solid #404040;
+   
 }
 
 .legal-links {
@@ -1237,7 +1231,7 @@ body {
 
 .legal-links a {
     font-size: 14px;
-    color: #CCCCCC;
+    color: #F5F6F7;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -1248,7 +1242,7 @@ body {
 
 .copyright {
     font-size: 12px;
-    color: #999999;
+    color: #DFDFDF;
 }
 
 .copyright p {
@@ -2245,10 +2239,6 @@ body {
 
     .footer-company {
         text-align: center;
-    }
-
-    .company-logo img {
-        width: 180px;
     }
 
     .company-description {
