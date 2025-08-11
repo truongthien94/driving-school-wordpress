@@ -13,212 +13,196 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Get blog posts data
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+// First try to get from WordPress posts
+$blog_posts = new WP_Query(array(
+    'post_type' => 'blog',
+    'posts_per_page' => 9, // 3x3 grid
+    'paged' => $paged,
+    'post_status' => 'publish'
+));
+
+// If no posts found, fall back to mock data
+$use_mock_data = false;
+if (!$blog_posts->have_posts()) {
+    $use_mock_data = true;
+    $mock_blog_posts = sbs_get_latest_blog_posts(9);
+}
+
 ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
 
-<div class="sbs-blog-list ">
-    <section class="header-section">
-        <div class="hero-navigation row-gap-0 p-0 row py-4 flex justify-content-end">
-            <div class="col-xl-6">
-                <?php get_template_part('parts/portal-navigation'); ?>
-            </div>
-        </div>
-        <div class="header-section-container">
-            <div class="header-section-left">
-                <div class="header-section-logo">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/sbs-logo-header.png" alt="header" />
-                </div>
-                <div class="header-section-title ">
-                    <h4>ブログ</h4>
-                    <h1 class="fst-italic d-flex" style="white-space: nowrap;">BLOG and NEWS</h1>
-                </div>
-            </div>
-            <div class="header-section-right">
-                <img class="hero-circle" src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="header" />
-                <img class="hero-circle-2" src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.jpg" alt="header" />
-            </div>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <?php wp_head(); ?>
+</head>
 
-        </div>
+<body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
 
-    </section>
+    <div class="sbs-blog-list">
+        <?php
+        // Use reusable header section with blog-specific parameters
+        get_template_part('parts/header-section', null, array(
+            'title' => 'ブログ',
+            'subtitle' => 'BLOG and NEWS',
+            'breadcrumb_items' => array('ブログ一覧'),
+            'show_navigation' => true
+        ));
+        ?>
 
-    <!-- Blog Content Section -->
-    <section class="blog-list-content">
+        <!-- Blog Content Section -->
+        <section class="blog-list-content">
+            <div class="container">
+                <!-- Blog Posts Grid -->
+                <div class="blog-posts-main-grid">
+                    <?php if ($blog_posts->have_posts() || $use_mock_data) :
+                        $post_count = 0;
+                        $total_posts = $use_mock_data ? count($mock_blog_posts) : $blog_posts->post_count;
 
-        <div class="container">
-            <div class="blog-breadcrumbs mb-1">
-                <div class="breadcrumb-list d-flex align-items-center ">
-                    <div class="breadcrumb-item">
-                        <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link text-decoration-none">ポータル</a>
-                    </div>
-                    <div class="breadcrumb-separator d-flex align-items-center justify-content-center">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6.4 3.2L11.07 8L6.4 12.8" stroke="currentColor" />
-                        </svg>
-                    </div>
-                    <div class="breadcrumb-item">
-                        <span class="breadcrumb-current">ブログ一覧</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Posts Grid -->
-            <div class="blog-posts-main-grid">
-                <?php
-                // Get blog posts - try multiple methods
-                $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+                        if ($use_mock_data) :
+                            // Use mock data
+                            foreach ($mock_blog_posts as $mock_post) :
+                                $post_count++;
+                                $post_data = $mock_post;
+                    ?>
+                                <!-- Blog Post Row (every 3 posts) -->
+                                <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0): ?>
+                                    <div class="row g-3 mb-4">
+                                    <?php endif; ?>
 
-                // First try to get from WordPress posts
-                $blog_posts = new WP_Query(array(
-                    'post_type' => 'blog',
-                    'posts_per_page' => 9, // 3x3 grid
-                    'paged' => $paged,
-                    'post_status' => 'publish'
-                ));
+                                    <div class="col-md-4">
+                                        <?php get_template_part('parts/blog-card-large', null, array('post' => $post_data)); ?>
+                                    </div>
 
-                // If no posts found, fall back to mock data
-                $use_mock_data = false;
-                if (!$blog_posts->have_posts()) {
-                    $use_mock_data = true;
-                    $mock_blog_posts = sbs_get_latest_blog_posts(9);
-                }
-
-                if ($blog_posts->have_posts() || $use_mock_data) :
-                    $post_count = 0;
-                    $total_posts = $use_mock_data ? count($mock_blog_posts) : $blog_posts->post_count;
-
-                    if ($use_mock_data) :
-                        // Use mock data
-                        foreach ($mock_blog_posts as $mock_post) :
-                            $post_count++;
-                            $post_data = $mock_post;
-                ?>
-
-                            <!-- Blog Post Row (every 3 posts) -->
-                            <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0): ?>
-                                <div class="row g-3 mb-4">
+                                    <?php if ($post_count % 3 === 0 || $post_count === $total_posts): ?>
+                                    </div>
                                 <?php endif; ?>
 
-                                <div class="col-md-4">
-                                    <?php get_template_part('parts/blog-card-large', null, array('post' => $post_data)); ?>
-                                </div>
+                            <?php endforeach;
+                        else :
+                            // Use WordPress posts
+                            while ($blog_posts->have_posts()) : $blog_posts->the_post();
+                                $post_count++;
 
-                                <?php if ($post_count % 3 === 0 || $post_count === $total_posts): ?>
-                                </div>
-                            <?php endif; ?>
+                                // Create post data array
+                                $post_data = array(
+                                    'id' => get_the_ID(),
+                                    'title' => get_the_title(),
+                                    'excerpt' => get_the_excerpt(),
+                                    'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured'),
+                                    'date' => get_the_date('Y-m-d'),
+                                    'category' => 'BLOG' // Default to BLOG, can be enhanced with taxonomy
+                                );
 
-                        <?php endforeach;
-                    else :
-                        // Use WordPress posts
-                        while ($blog_posts->have_posts()) : $blog_posts->the_post();
-                            $post_count++;
-
-                            // Create post data array
-                            $post_data = array(
-                                'id' => get_the_ID(),
-                                'title' => get_the_title(),
-                                'excerpt' => get_the_excerpt(),
-                                'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured'),
-                                'date' => get_the_date('Y-m-d'),
-                                'category' => 'BLOG' // Default to BLOG, can be enhanced with taxonomy
-                            );
-
-                            // Determine if it's a NEWS post based on categories
-                            $categories = get_the_terms(get_the_ID(), 'blog_category');
-                            if ($categories && !is_wp_error($categories)) {
-                                foreach ($categories as $category) {
-                                    if (strtolower($category->name) === 'news') {
-                                        $post_data['category'] = 'NEWS';
-                                        break;
+                                // Determine if it's a NEWS post based on categories
+                                $categories = get_the_terms(get_the_ID(), 'blog_category');
+                                if ($categories && !is_wp_error($categories)) {
+                                    foreach ($categories as $category) {
+                                        if (strtolower($category->name) === 'news') {
+                                            $post_data['category'] = 'NEWS';
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                        ?>
+                            ?>
 
-                            <!-- Blog Post Row (every 3 posts) -->
-                            <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0): ?>
-                                <div class="row g-3 mb-4">
+                                <!-- Blog Post Row (every 3 posts) -->
+                                <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0): ?>
+                                    <div class="row g-3 mb-4">
+                                    <?php endif; ?>
+
+                                    <div class="col-md-4">
+                                        <?php get_template_part('parts/blog-card-large', null, array('post' => $post_data)); ?>
+                                    </div>
+
+                                    <?php if ($post_count % 3 === 0 || $post_count === $blog_posts->post_count): ?>
+                                    </div>
                                 <?php endif; ?>
 
-                                <div class="col-md-4">
-                                    <?php get_template_part('parts/blog-card-large', null, array('post' => $post_data)); ?>
+                        <?php endwhile;
+                        endif; ?>
+
+                        <!-- Pagination Section -->
+                        <div class="blog-pagination-section mt-5">
+                            <div class="pagination-wrapper d-flex justify-content-between align-items-center">
+                                <div class="pagination-info d-flex align-items-center gap-2">
+                                    <span class="page-info">
+                                        <?php
+                                        $max_pages = $use_mock_data ? 1 : ($blog_posts->max_num_pages ?: 1);
+                                        echo $paged . '/' . $max_pages . 'ページ';
+                                        ?>
+                                    </span>
                                 </div>
 
-                                <?php if ($post_count % 3 === 0 || $post_count === $blog_posts->post_count): ?>
-                                </div>
-                            <?php endif; ?>
-
-                    <?php endwhile;
-                    endif; ?>
-
-                    <!-- Pagination Section -->
-                    <div class="blog-pagination-section mt-5">
-                        <div class="pagination-wrapper d-flex justify-content-between align-items-center">
-                            <div class="pagination-info d-flex align-items-center gap-2">
-                                <span class="page-info">
+                                <div class="pagination-controls d-flex justify-content-center gap-2">
                                     <?php
-                                    $max_pages = $use_mock_data ? 1 : ($blog_posts->max_num_pages ?: 1);
-                                    echo $paged . '/' . $max_pages . 'ページ';
+                                    $prev_page = $paged > 1 ? $paged - 1 : null;
+                                    $next_page = $paged < $max_pages ? $paged + 1 : null;
                                     ?>
-                                </span>
-                            </div>
 
-                            <div class="pagination-controls d-flex justify-content-center gap-2">
-                                <?php
-                                $prev_page = $paged > 1 ? $paged - 1 : null;
-                                $next_page = $paged < $max_pages ? $paged + 1 : null;
-                                ?>
+                                    <!-- First Page Button (chevrons-left) -->
+                                    <button class="pagination-btn pagination-first btn btn-outline-secondary <?php echo $paged === 1 ? 'disabled' : ''; ?>"
+                                        <?php if ($paged > 1): ?>onclick="location.href='<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>'" <?php endif; ?>>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
+                                            <path d="M8.67 4.67L12 8L8.67 11.33" stroke="currentColor" stroke-width="0.83" />
+                                        </svg>
+                                    </button>
 
-                                <!-- First Page Button (chevrons-left) -->
-                                <button class="pagination-btn pagination-first btn btn-outline-secondary <?php echo $paged === 1 ? 'disabled' : ''; ?>"
-                                    <?php if ($paged > 1): ?>onclick="location.href='<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>'" <?php endif; ?>>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
-                                        <path d="M8.67 4.67L12 8L8.67 11.33" stroke="currentColor" stroke-width="0.83" />
-                                    </svg>
-                                </button>
+                                    <!-- Previous Page Button (chevron-left) -->
+                                    <button class="pagination-btn pagination-prev btn btn-outline-secondary <?php echo !$prev_page ? 'disabled' : ''; ?>"
+                                        <?php if ($prev_page): ?>onclick="location.href='<?php echo get_pagenum_link($prev_page); ?>'" <?php endif; ?>>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M6 4L2 8L6 12" stroke="currentColor" stroke-width="1" />
+                                        </svg>
+                                    </button>
 
-                                <!-- Previous Page Button (chevron-left) -->
-                                <button class="pagination-btn pagination-prev btn btn-outline-secondary <?php echo !$prev_page ? 'disabled' : ''; ?>"
-                                    <?php if ($prev_page): ?>onclick="location.href='<?php echo get_pagenum_link($prev_page); ?>'" <?php endif; ?>>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M6 4L2 8L6 12" stroke="currentColor" stroke-width="1" />
-                                    </svg>
-                                </button>
+                                    <!-- Next Page Button (chevron-right) -->
+                                    <button class="pagination-btn pagination-next btn btn-outline-secondary <?php echo !$next_page ? 'disabled' : ''; ?>"
+                                        <?php if ($next_page): ?>onclick="location.href='<?php echo get_pagenum_link($next_page); ?>'" <?php endif; ?>>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
+                                        </svg>
+                                    </button>
 
-                                <!-- Next Page Button (chevron-right) -->
-                                <button class="pagination-btn pagination-next btn btn-outline-secondary <?php echo !$next_page ? 'disabled' : ''; ?>"
-                                    <?php if ($next_page): ?>onclick="location.href='<?php echo get_pagenum_link($next_page); ?>'" <?php endif; ?>>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
-                                    </svg>
-                                </button>
-
-                                <!-- Last Page Button (chevrons-right) -->
-                                <button class="pagination-btn pagination-last btn btn-outline-secondary <?php echo $paged === $max_pages ? 'disabled' : ''; ?>"
-                                    <?php if ($paged < $max_pages): ?>onclick="location.href='<?php echo get_pagenum_link($max_pages); ?>'" <?php endif; ?>>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
-                                        <path d="M8.67 4.67L12 8L8.67 11.33" stroke="currentColor" stroke-width="0.83" />
-                                    </svg>
-                                </button>
+                                    <!-- Last Page Button (chevrons-right) -->
+                                    <button class="pagination-btn pagination-last btn btn-outline-secondary <?php echo $paged === $max_pages ? 'disabled' : ''; ?>"
+                                        <?php if ($paged < $max_pages): ?>onclick="location.href='<?php echo get_pagenum_link($max_pages); ?>'" <?php endif; ?>>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
+                                            <path d="M8.67 4.67L12 8L8.67 11.33" stroke="currentColor" stroke-width="0.83" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <?php wp_reset_postdata(); ?>
+                        <?php wp_reset_postdata(); ?>
 
-                <?php else: ?>
-                    <div class="no-blog-posts text-center py-5">
-                        <p class="text-muted">現在、ブログ投稿はありません。</p>
-                    </div>
-                <?php endif; ?>
+                    <?php else: ?>
+                        <div class="no-blog-posts text-center py-5">
+                            <p class="text-muted">現在、ブログ投稿はありません。</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Floating Elements -->
-    <?php get_template_part('parts/float-buttons'); ?>
+        <!-- Floating Elements -->
+        <?php get_template_part('parts/float-buttons'); ?>
+    </div>
 
-</div>
+    <!-- Footer Background for Blog List -->
+    <div class="footer-background blog-list-footer" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/footer-bg.jpg');"></div>
 
-<!-- Footer Background for Blog List -->
-<div class="footer-background blog-list-footer" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/footer-bg.jpg');"></div>
+    <?php wp_footer(); ?>
+</body>
+
+</html>

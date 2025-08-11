@@ -1490,10 +1490,8 @@ function sbs_template_redirect()
     $sbs_page = get_query_var('sbs_page');
 
     if ($sbs_page === 'blog-list') {
-        // Load the blog list template
-        get_header();
+        // Load the blog list template directly (no header/footer)
         get_template_part('templates/blog-list');
-        get_footer();
         exit;
     }
 }

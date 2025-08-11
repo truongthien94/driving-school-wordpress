@@ -4,7 +4,8 @@
  * Blog Card Large Component
  * 
  * Larger blog post card for blog list page
- * Enhanced with Bootstrap compatibility
+ * Enhanced with proper padding, white background, and modern design
+ * CSS styles are now in assets/css/blog-list.css for reusability
  *
  * @package SBS_Portal
  * @version 1.0.0
@@ -29,6 +30,11 @@ if (!empty($post['featured_image']) && filter_var($post['featured_image'], FILTE
     // Use existing image files or default
     $image_file = get_template_directory_uri() . '/assets/images/' . (!empty($post['featured_image']) ? $post['featured_image'] : 'blog-featured-1.jpg');
 }
+
+// Enqueue the CSS file if not already loaded
+if (!wp_style_is('sbs-blog-list', 'enqueued')) {
+    wp_enqueue_style('sbs-blog-list', get_template_directory_uri() . '/assets/css/blog-list.css', array(), '1.0.0');
+}
 ?>
 
 <article class="blog-card-large h-100">
@@ -47,13 +53,13 @@ if (!empty($post['featured_image']) && filter_var($post['featured_image'], FILTE
         </h3>
 
         <!-- Excerpt -->
-        <div class="blog-card-large-excerpt flex-grow-1">
+        <div class="blog-card-large-excerpt flex-grow-1 mb-2">
             <?php echo esc_html($post['excerpt']); ?>
         </div>
 
         <!-- Meta Information -->
         <div class="blog-card-large-meta mt-auto">
-            <div class="meta-tags d-flex gap-1">
+            <div class="meta-tags">
                 <span class="category-tag category-<?php echo strtolower($post['category']); ?>">
                     <?php echo esc_html($post['category']); ?>
                 </span>

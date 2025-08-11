@@ -42,7 +42,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
         <?php if (!empty($blog_posts)): ?>
             <?php foreach ($blog_posts as $post): ?>
                 <div class="col-lg-4 col-md-6">
-                    <?php get_template_part('parts/blog-card', null, array('post' => $post)); ?>
+                    <?php get_template_part('parts/blog-card-large', null, array('post' => $post)); ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

@@ -198,7 +198,7 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Content Section */
 .blog-list-content {
-    padding: 60px 40px 60px;
+    padding: 0px 40px 40px;
     min-height: calc(100vh - 284px - 278px);
     /* Subtract banner carousel height */
     position: relative;
@@ -206,107 +206,115 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Card Large - Enhanced with Bootstrap compatibility */
 .blog-card-large {
-    background: linear-gradient(135deg, rgba(252, 252, 253, 1) 0%, rgba(252, 252, 253, 0.83) 100%);
-    border: 1px solid #FCFCFD;
-    border-radius: 8px;
-    box-shadow: 0px 40px 64px -32px rgba(15, 15, 15, 0.1);
-    backdrop-filter: blur(32px);
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    overflow: visible;
+    transition: all 0.3s ease;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 31px;
+    padding: 16px;
 }
 
 .blog-card-large:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 50px 80px -40px rgba(15, 15, 15, 0.15);
+    transform: none;
+    box-shadow: none;
 }
 
 .blog-card-large-image {
     width: 100%;
-    height: 230px;
     overflow: hidden;
+    border-radius: 4px;
 }
 
 .blog-card-large-image img {
     width: 100%;
-    height: 100%;
+    height: 230px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
 .blog-card-large:hover .blog-card-large-image img {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .blog-card-large-content {
-    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    height: calc(100% - 230px);
+    flex: 1;
 }
 
 .blog-card-large-title {
-    font-family: Inter, sans-serif;
-    font-weight: 600;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 18px;
-    line-height: 1.5;
+    font-weight: 600;
+    line-height: 1.5em;
     color: #262626;
     margin: 0;
 }
 
 .blog-card-large-title a {
-    color: inherit;
+    color: #262626;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
 }
 
 .blog-card-large-title a:hover {
-    color: #CF0020;
+    color: #DD1F01;
 }
 
 .blog-card-large-excerpt {
-    font-family: Noto Sans JP, sans-serif;
-    font-weight: 400;
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    font-weight: 400;
+    line-height: 1.5em;
     color: #414141;
     height: 129px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    flex-grow: 1;
+    text-overflow: ellipsis;
 }
 
 .blog-card-large-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-top: auto;
 }
 
 .meta-tags {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 4px;
+    width: 100%;
 }
 
-.category-tag {
-    font-family: Noto Sans JP, sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.5;
-    color: #8E8E8E;
-    padding: 2px 6px;
-    background: rgba(142, 142, 142, 0.1);
-    border-radius: 4px;
-}
-
+.category-tag,
 .date-tag {
-    font-family: Noto Sans JP, sans-serif;
-    font-weight: 400;
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
     font-size: 12px;
-    line-height: 1.5;
+    font-weight: 400;
+    line-height: 1.5em;
+    color: #8E8E8E;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Remove all category-specific backgrounds */
+.category-tag.category-blog,
+.category-tag.category-news,
+.category-tag.category-event,
+.category-tag.category-campaign {
+    background: transparent;
     color: #8E8E8E;
 }
 
@@ -870,7 +878,7 @@ Optimized for Bootstrap 5 integration
     }
 
     /* Adjust breadcrumbs for mobile with banner carousel */
-   
+
 
     /* Adjust content height for mobile */
     .blog-list-content {
@@ -893,5 +901,54 @@ Optimized for Bootstrap 5 integration
     .blog-card-large-excerpt {
         height: auto;
         -webkit-line-clamp: 3;
+    }
+}
+
+/* Responsive Design for Blog Card Large */
+@media (max-width: 768px) {
+    .blog-card-large {
+        padding: 12px;
+        gap: 24px;
+    }
+
+    .blog-card-large-image img {
+        height: 200px;
+    }
+
+    .blog-card-large-title {
+        font-size: 16px;
+    }
+
+    .blog-card-large-excerpt {
+        font-size: 14px;
+        height: 100px;
+        -webkit-line-clamp: 4;
+    }
+}
+
+@media (max-width: 576px) {
+    .blog-card-large {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .blog-card-large-image img {
+        height: 180px;
+    }
+
+    .blog-card-large-title {
+        font-size: 15px;
+    }
+
+    .blog-card-large-excerpt {
+        font-size: 13px;
+        height: 80px;
+        -webkit-line-clamp: 3;
+    }
+
+    .meta-tags {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
     }
 }
