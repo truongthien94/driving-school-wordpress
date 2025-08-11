@@ -147,7 +147,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
         get_template_part('parts/header-section', null, array(
             'title' => 'ブログ',
             'subtitle' => 'BLOG and NEWS',
-            'breadcrumb_items' => array('ポータル', 'ブログ一覧', $post_title),
+            'breadcrumb_items' => array('ブログ一覧', $post_title),
             'show_navigation' => true
         ));
         ?>
