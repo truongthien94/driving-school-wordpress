@@ -21,7 +21,6 @@ body {
 /* Navigation Section - Based on Figma Design */
 .nav-section {
     background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #FCFCFD;
     border-radius: 8px;
     padding: 0;
     position: relative;
