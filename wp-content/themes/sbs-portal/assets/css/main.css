@@ -3404,6 +3404,14 @@ body.mega-menu-open {
     height: 44px;
 }
 
+.text-truncate-lines-5 {
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Giới hạn tối đa 5 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 .back-to-top {
     position: fixed;
     right: 20px;

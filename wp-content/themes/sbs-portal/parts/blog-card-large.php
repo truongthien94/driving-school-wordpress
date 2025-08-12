@@ -65,7 +65,7 @@ if (!empty($post['id'])) {
         </h3>
 
         <!-- Excerpt -->
-        <div class="blog-card-large-excerpt flex-grow-1 mb-2">
+        <div class="blog-card-large-excerpt flex-grow-1 mb-2 text-truncate-lines-5">
             <?php echo esc_html($post['excerpt']); ?>
         </div>
 
