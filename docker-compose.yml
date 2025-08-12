@@ -26,7 +26,7 @@ services:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-change_me}
       PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d
     volumes:
-      - ./driving-school-wordpress:/var/www/html
+      - ./:/var/www/html
       - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     depends_on:
       - db
@@ -38,10 +38,10 @@ services:
     container_name: wp_nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./driving-school-wordpress:/var/www/html:ro
+      - ./:/var/www/html:ro
     depends_on:
       - wordpress
     networks:
