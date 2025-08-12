@@ -48,20 +48,20 @@ services:
       - backend
 
   # --- Tuỳ chọn: phpMyAdmin (chỉ bật khi cần) ---
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   container_name: wp_phpmyadmin
-  #   restart: unless-stopped
-  #   environment:
-  #     PMA_HOST: db
-  #     PMA_USER: ${DB_USER:-wp_user}
-  #     PMA_PASSWORD: ${DB_PASSWORD:-change_me}
-  #   ports:
-  #     - "8081:80"
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wp_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${DB_USER:-wp_user}
+      PMA_PASSWORD: ${DB_PASSWORD:-change_me}
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - backend
 
 volumes:
   db_data:
