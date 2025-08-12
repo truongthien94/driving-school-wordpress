@@ -1,0 +1,343 @@
+# Copyright (C) 2024 SBS Portal
+# This file is distributed under the same license as the SBS Portal theme.
+msgid ""
+msgstr ""
+"Project-Id-Version: SBS Portal 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/sbs-portal\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: functions.php:31
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:32
+msgid "Footer Menu"
+msgstr ""
+
+#: functions.php:95
+msgctxt "Post Type General Name"
+msgid "FAQs"
+msgstr ""
+
+#: functions.php:96
+msgctxt "Post Type Singular Name"
+msgid "FAQ"
+msgstr ""
+
+#: functions.php:97
+#: functions.php:98
+msgid "FAQ"
+msgstr ""
+
+#: functions.php:99
+msgid "All FAQs"
+msgstr ""
+
+#: functions.php:100
+msgid "Add New FAQ"
+msgstr ""
+
+#: functions.php:101
+msgid "Add New"
+msgstr ""
+
+#: functions.php:102
+msgid "New FAQ"
+msgstr ""
+
+#: functions.php:103
+msgid "Edit FAQ"
+msgstr ""
+
+#: functions.php:104
+msgid "Update FAQ"
+msgstr ""
+
+#: functions.php:105
+msgid "View FAQ"
+msgstr ""
+
+#: functions.php:106
+msgid "Search FAQs"
+msgstr ""
+
+#: functions.php:110
+msgid "FAQs"
+msgstr ""
+
+#: functions.php:111
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: parts/portal-navigation.php:25
+msgid "Greeting"
+msgstr ""
+
+#: parts/portal-navigation.php:29
+msgid "Company Information"
+msgstr ""
+
+#: parts/portal-navigation.php:32
+msgid "Company Overview"
+msgstr ""
+
+#: parts/portal-navigation.php:33
+msgid "History"
+msgstr ""
+
+#: parts/portal-navigation.php:37
+msgid "About SBS Group"
+msgstr ""
+
+#: parts/portal-navigation.php:41
+#: parts/portal-navigation.php:83
+msgid "Japanese"
+msgstr ""
+
+#: parts/portal-navigation.php:53
+msgid "Menu"
+msgstr ""
+
+#: parts/portal-navigation.php:67
+msgid "Greeting"
+msgstr ""
+
+#: parts/portal-navigation.php:71
+msgid "Company Information"
+msgstr ""
+
+#: parts/portal-navigation.php:74
+msgid "Company Overview"
+msgstr ""
+
+#: parts/portal-navigation.php:75
+msgid "History"
+msgstr ""
+
+#: parts/portal-navigation.php:79
+msgid "About SBS Group"
+msgstr ""
+
+# Common navigation terms
+msgid "Home"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Services"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Campaign"
+msgstr ""
+
+msgid "FAQ"
+msgstr ""
+
+# Language names
+msgid "Japanese"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Indonesian"
+msgstr ""
+
+# Common UI terms
+msgid "Read More"
+msgstr ""
+
+msgid "Learn More"
+msgstr ""
+
+msgid "Contact Us"
+msgstr ""
+
+msgid "Get Started"
+msgstr ""
+
+msgid "Apply Now"
+msgstr ""
+
+msgid "Book Now"
+msgstr ""
+
+msgid "View Details"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Featured"
+msgstr ""
+
+msgid "Latest"
+msgstr ""
+
+msgid "Popular"
+msgstr ""
+
+# SBS specific terms
+msgid "SBS Driving School"
+msgstr ""
+
+msgid "SBS Auto"
+msgstr ""
+
+msgid "Driving License"
+msgstr ""
+
+msgid "Driving Course"
+msgstr ""
+
+msgid "Instructor"
+msgstr ""
+
+msgid "Practice"
+msgstr ""
+
+msgid "Theory"
+msgstr ""
+
+msgid "Examination"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Booking System"
+msgstr ""
+
+msgid "Matching System"
+msgstr ""
+
+# Hero section
+msgid "Welcome to SBS Portal"
+msgstr ""
+
+msgid "Your Gateway to Quality Driving Education"
+msgstr ""
+
+msgid "Professional driving instruction with modern facilities and experienced instructors"
+msgstr ""
+
+# Footer
+msgid "All rights reserved"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Terms of Service"
+msgstr ""
+
+msgid "Sitemap"
+msgstr ""
+
+# Blog
+msgid "Blog Posts"
+msgstr ""
+
+msgid "Latest News"
+msgstr ""
+
+msgid "Read Article"
+msgstr ""
+
+msgid "Published on"
+msgstr ""
+
+msgid "By"
+msgstr ""
+
+msgid "In"
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid "Related Posts"
+msgstr ""
+
+# FAQ
+msgid "Frequently Asked Questions"
+msgstr ""
+
+msgid "Question"
+msgstr ""
+
+msgid "Answer"
+msgstr ""
+
+msgid "Show Answer"
+msgstr ""
+
+msgid "Hide Answer"
+msgstr ""
+
+# Campaign
+msgid "Special Offers"
+msgstr ""
+
+msgid "Limited Time"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Valid Until"
+msgstr ""
+
+msgid "Terms and Conditions"
+msgstr ""

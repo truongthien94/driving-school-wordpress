@@ -1,0 +1,291 @@
+# English (United States) translation for SBS Portal
+# Copyright (C) 2024 SBS Portal
+# This file is distributed under the same license as the SBS Portal theme.
+msgid ""
+msgstr ""
+"Project-Id-Version: SBS Portal 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/sbs-portal\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01 00:00:00+00:00\n"
+"Last-Translator: SBS Team\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Primary Menu"
+msgstr "Primary Menu"
+
+msgid "Footer Menu"
+msgstr "Footer Menu"
+
+msgctxt "Post Type General Name"
+msgid "FAQs"
+msgstr "FAQs"
+
+msgctxt "Post Type Singular Name"
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "All FAQs"
+msgstr "All FAQs"
+
+msgid "Add New FAQ"
+msgstr "Add New FAQ"
+
+msgid "Add New"
+msgstr "Add New"
+
+msgid "New FAQ"
+msgstr "New FAQ"
+
+msgid "Edit FAQ"
+msgstr "Edit FAQ"
+
+msgid "Update FAQ"
+msgstr "Update FAQ"
+
+msgid "View FAQ"
+msgstr "View FAQ"
+
+msgid "Search FAQs"
+msgstr "Search FAQs"
+
+msgid "FAQs"
+msgstr "FAQs"
+
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+msgid "Greeting"
+msgstr "Greeting"
+
+msgid "Company Information"
+msgstr "Company Information"
+
+msgid "Company Overview"
+msgstr "Company Overview"
+
+msgid "History"
+msgstr "History"
+
+msgid "About SBS Group"
+msgstr "About SBS Group"
+
+msgid "Japanese"
+msgstr "Japanese"
+
+msgid "Menu"
+msgstr "Menu"
+
+# Common navigation terms
+msgid "Home"
+msgstr "Home"
+
+msgid "About"
+msgstr "About"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "News"
+msgstr "News"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Campaign"
+msgstr "Campaign"
+
+# Language names
+msgid "English"
+msgstr "English"
+
+msgid "Indonesian"
+msgstr "Indonesian"
+
+# Common UI terms
+msgid "Read More"
+msgstr "Read More"
+
+msgid "Learn More"
+msgstr "Learn More"
+
+msgid "Contact Us"
+msgstr "Contact Us"
+
+msgid "Get Started"
+msgstr "Get Started"
+
+msgid "Apply Now"
+msgstr "Apply Now"
+
+msgid "Book Now"
+msgstr "Book Now"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Sort"
+msgstr "Sort"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Featured"
+msgstr "Featured"
+
+msgid "Latest"
+msgstr "Latest"
+
+msgid "Popular"
+msgstr "Popular"
+
+# SBS specific terms
+msgid "SBS Driving School"
+msgstr "SBS Driving School"
+
+msgid "SBS Auto"
+msgstr "SBS Auto"
+
+msgid "Driving License"
+msgstr "Driving License"
+
+msgid "Driving Course"
+msgstr "Driving Course"
+
+msgid "Instructor"
+msgstr "Instructor"
+
+msgid "Practice"
+msgstr "Practice"
+
+msgid "Theory"
+msgstr "Theory"
+
+msgid "Examination"
+msgstr "Examination"
+
+msgid "Registration"
+msgstr "Registration"
+
+msgid "Schedule"
+msgstr "Schedule"
+
+msgid "Booking System"
+msgstr "Booking System"
+
+msgid "Matching System"
+msgstr "Matching System"
+
+# Hero section
+msgid "Welcome to SBS Portal"
+msgstr "Welcome to SBS Portal"
+
+msgid "Your Gateway to Quality Driving Education"
+msgstr "Your Gateway to Quality Driving Education"
+
+msgid "Professional driving instruction with modern facilities and experienced instructors"
+msgstr "Professional driving instruction with modern facilities and experienced instructors"
+
+# Footer
+msgid "All rights reserved"
+msgstr "All rights reserved"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "Sitemap"
+msgstr "Sitemap"
+
+# Blog
+msgid "Blog Posts"
+msgstr "Blog Posts"
+
+msgid "Latest News"
+msgstr "Latest News"
+
+msgid "Read Article"
+msgstr "Read Article"
+
+msgid "Published on"
+msgstr "Published on"
+
+msgid "By"
+msgstr "By"
+
+msgid "In"
+msgstr "In"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Related Posts"
+msgstr "Related Posts"
+
+# FAQ
+msgid "Question"
+msgstr "Question"
+
+msgid "Answer"
+msgstr "Answer"
+
+msgid "Show Answer"
+msgstr "Show Answer"
+
+msgid "Hide Answer"
+msgstr "Hide Answer"
+
+# Campaign
+msgid "Special Offers"
+msgstr "Special Offers"
+
+msgid "Limited Time"
+msgstr "Limited Time"
+
+msgid "Discount"
+msgstr "Discount"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Valid Until"
+msgstr "Valid Until"
+
+msgid "Terms and Conditions"
+msgstr "Terms and Conditions"

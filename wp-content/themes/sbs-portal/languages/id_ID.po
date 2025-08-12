@@ -1,0 +1,291 @@
+# Indonesian (Indonesia) translation for SBS Portal
+# Copyright (C) 2024 SBS Portal
+# This file is distributed under the same license as the SBS Portal theme.
+msgid ""
+msgstr ""
+"Project-Id-Version: SBS Portal 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/sbs-portal\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01 00:00:00+00:00\n"
+"Last-Translator: SBS Team\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Primary Menu"
+msgstr "Menu Utama"
+
+msgid "Footer Menu"
+msgstr "Menu Footer"
+
+msgctxt "Post Type General Name"
+msgid "FAQs"
+msgstr "FAQ"
+
+msgctxt "Post Type Singular Name"
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "All FAQs"
+msgstr "Semua FAQ"
+
+msgid "Add New FAQ"
+msgstr "Tambah FAQ Baru"
+
+msgid "Add New"
+msgstr "Tambah Baru"
+
+msgid "New FAQ"
+msgstr "FAQ Baru"
+
+msgid "Edit FAQ"
+msgstr "Edit FAQ"
+
+msgid "Update FAQ"
+msgstr "Perbarui FAQ"
+
+msgid "View FAQ"
+msgstr "Lihat FAQ"
+
+msgid "Search FAQs"
+msgstr "Cari FAQ"
+
+msgid "FAQs"
+msgstr "FAQ"
+
+msgid "Frequently Asked Questions"
+msgstr "Pertanyaan yang Sering Diajukan"
+
+msgid "Greeting"
+msgstr "Salam"
+
+msgid "Company Information"
+msgstr "Informasi Perusahaan"
+
+msgid "Company Overview"
+msgstr "Gambaran Perusahaan"
+
+msgid "History"
+msgstr "Sejarah"
+
+msgid "About SBS Group"
+msgstr "Tentang Grup SBS"
+
+msgid "Japanese"
+msgstr "Bahasa Jepang"
+
+msgid "Menu"
+msgstr "Menu"
+
+# Common navigation terms
+msgid "Home"
+msgstr "Beranda"
+
+msgid "About"
+msgstr "Tentang"
+
+msgid "Services"
+msgstr "Layanan"
+
+msgid "Contact"
+msgstr "Kontak"
+
+msgid "News"
+msgstr "Berita"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Campaign"
+msgstr "Kampanye"
+
+# Language names
+msgid "English"
+msgstr "Bahasa Inggris"
+
+msgid "Indonesian"
+msgstr "Bahasa Indonesia"
+
+# Common UI terms
+msgid "Read More"
+msgstr "Baca Selengkapnya"
+
+msgid "Learn More"
+msgstr "Pelajari Lebih Lanjut"
+
+msgid "Contact Us"
+msgstr "Hubungi Kami"
+
+msgid "Get Started"
+msgstr "Mulai"
+
+msgid "Apply Now"
+msgstr "Daftar Sekarang"
+
+msgid "Book Now"
+msgstr "Pesan Sekarang"
+
+msgid "View Details"
+msgstr "Lihat Detail"
+
+msgid "Previous"
+msgstr "Sebelumnya"
+
+msgid "Next"
+msgstr "Selanjutnya"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Open"
+msgstr "Buka"
+
+msgid "Submit"
+msgstr "Kirim"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Sort"
+msgstr "Urutkan"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Date"
+msgstr "Tanggal"
+
+msgid "Featured"
+msgstr "Unggulan"
+
+msgid "Latest"
+msgstr "Terbaru"
+
+msgid "Popular"
+msgstr "Populer"
+
+# SBS specific terms
+msgid "SBS Driving School"
+msgstr "Sekolah Mengemudi SBS"
+
+msgid "SBS Auto"
+msgstr "SBS Auto"
+
+msgid "Driving License"
+msgstr "Surat Izin Mengemudi"
+
+msgid "Driving Course"
+msgstr "Kursus Mengemudi"
+
+msgid "Instructor"
+msgstr "Instruktur"
+
+msgid "Practice"
+msgstr "Praktik"
+
+msgid "Theory"
+msgstr "Teori"
+
+msgid "Examination"
+msgstr "Ujian"
+
+msgid "Registration"
+msgstr "Pendaftaran"
+
+msgid "Schedule"
+msgstr "Jadwal"
+
+msgid "Booking System"
+msgstr "Sistem Pemesanan"
+
+msgid "Matching System"
+msgstr "Sistem Pencocokan"
+
+# Hero section
+msgid "Welcome to SBS Portal"
+msgstr "Selamat Datang di Portal SBS"
+
+msgid "Your Gateway to Quality Driving Education"
+msgstr "Gerbang Anda menuju Pendidikan Mengemudi Berkualitas"
+
+msgid "Professional driving instruction with modern facilities and experienced instructors"
+msgstr "Instruksi mengemudi profesional dengan fasilitas modern dan instruktur berpengalaman"
+
+# Footer
+msgid "All rights reserved"
+msgstr "Semua hak dilindungi"
+
+msgid "Privacy Policy"
+msgstr "Kebijakan Privasi"
+
+msgid "Terms of Service"
+msgstr "Syarat Layanan"
+
+msgid "Sitemap"
+msgstr "Peta Situs"
+
+# Blog
+msgid "Blog Posts"
+msgstr "Postingan Blog"
+
+msgid "Latest News"
+msgstr "Berita Terbaru"
+
+msgid "Read Article"
+msgstr "Baca Artikel"
+
+msgid "Published on"
+msgstr "Diterbitkan pada"
+
+msgid "By"
+msgstr "Oleh"
+
+msgid "In"
+msgstr "Dalam"
+
+msgid "Tags"
+msgstr "Tag"
+
+msgid "Related Posts"
+msgstr "Postingan Terkait"
+
+# FAQ
+msgid "Question"
+msgstr "Pertanyaan"
+
+msgid "Answer"
+msgstr "Jawaban"
+
+msgid "Show Answer"
+msgstr "Tampilkan Jawaban"
+
+msgid "Hide Answer"
+msgstr "Sembunyikan Jawaban"
+
+# Campaign
+msgid "Special Offers"
+msgstr "Penawaran Khusus"
+
+msgid "Limited Time"
+msgstr "Waktu Terbatas"
+
+msgid "Discount"
+msgstr "Diskon"
+
+msgid "Save"
+msgstr "Hemat"
+
+msgid "Valid Until"
+msgstr "Berlaku Sampai"
+
+msgid "Terms and Conditions"
+msgstr "Syarat dan Ketentuan"

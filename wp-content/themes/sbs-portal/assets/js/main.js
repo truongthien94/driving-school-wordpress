@@ -11,7 +11,7 @@
     // DOM Ready
     $(document).ready(function () {
         initFAQAccordion();
-        initLanguageDropdown();
+        initLanguageSwitcher();
         initFloatButtons();
         initPopup();
         initMobileMenu();
@@ -90,32 +90,91 @@
     }
 
     /**
-     * Initialize Language Dropdown
+     * Initialize Language Switcher
      */
-    function initLanguageDropdown() {
-        $('.language-dropdown').on('click', function (e) {
-            e.stopPropagation();
-            $(this).toggleClass('active');
-
-            if ($(this).hasClass('active')) {
-                $('.language-options').slideDown(200);
-            } else {
-                $('.language-options').slideUp(200);
-            }
-        });
-
+    function initLanguageSwitcher() {
+        // Handle language option clicks
         $('.language-option').on('click', function (e) {
             e.preventDefault();
-            const selectedLang = $(this).text();
-            $('.current-language').text(selectedLang);
-            $('.language-dropdown').removeClass('active');
-            $('.language-options').slideUp(200);
+
+            const languageCode = $(this).data('language');
+            const languageName = $(this).find('.lang-name').text();
+            const languageFlag = $(this).find('.flag-icon').text();
+
+            // Don't switch if same language
+            if ($(this).hasClass('active')) {
+                return;
+            }
+
+            // Show loading state
+            const originalText = $(this).text();
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+
+            // Send AJAX request to switch language
+            $.ajax({
+                url: sbsLanguage.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'switch_language',
+                    language: languageCode,
+                    nonce: sbsLanguage.nonce
+                },
+                success: function (response) {
+                    try {
+                        const data = JSON.parse(response);
+                        if (data.success) {
+                            // Update current language display
+                            $('.language-switcher .lang-name').text(languageName);
+                            $('.language-switcher .flag-icon').text(languageFlag);
+                            $('.language-switcher-mobile .lang-name').text(languageName);
+                            $('.language-switcher-mobile .flag-icon').text(languageFlag);
+
+                            // Update active states
+                            $('.language-option').removeClass('active');
+                            $('.language-option[data-language="' + languageCode + '"]').addClass('active');
+
+                            // Close dropdowns
+                            $('.dropdown-menu').removeClass('show');
+
+                            // Reload page to show new language content
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300);
+
+                        } else {
+                            console.error('Language switch failed:', data.message);
+                            alert('Language switch failed. Please try again.');
+                        }
+                    } catch (e) {
+                        console.error('Invalid JSON response:', e);
+                        alert('Language switch failed. Please try again.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', error);
+                    alert('Language switch failed. Please try again.');
+                },
+                complete: function () {
+                    // Restore original text if still on page
+                    setTimeout(function () {
+                        $('.language-option').each(function () {
+                            const $option = $(this);
+                            if ($option.find('.spinner-border').length > 0) {
+                                const flag = $option.data('flag');
+                                const name = $option.data('name');
+                                $option.html('<span class="flag-icon">' + flag + '</span><span class="lang-name">' + name + '</span>');
+                            }
+                        });
+                    }, 1000);
+                }
+            });
         });
 
         // Close dropdown when clicking outside
-        $(document).on('click', function () {
-            $('.language-dropdown').removeClass('active');
-            $('.language-options').slideUp(200);
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown-menu').removeClass('show');
+            }
         });
     }
 
@@ -231,21 +290,87 @@
     }
 
     /**
-     * Initialize Mobile Menu
+     * Initialize Mobile Menu and Mega Menu
      */
     function initMobileMenu() {
-        $('.mobile-menu-button, .menu-button').on('click', function () {
-            $(this).toggleClass('active');
-            $('.nav-links').slideToggle(300);
-        });
-
-        // Close mobile menu when window is resized
-        $(window).on('resize', function () {
-            if ($(window).width() > 768) {
-                $('.nav-links').show();
-                $('.mobile-menu-button, .menu-button').removeClass('active');
+        // Handle mega menu close button only (Bootstrap handles opening)
+        $('.mega-menu-close').on('click', function () {
+            $('.menu-button').removeClass('active');
+            // Close the offcanvas using Bootstrap method
+            const offcanvasElement = document.getElementById('offcanvasNavbar');
+            const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (offcanvas) {
+                offcanvas.hide();
             }
         });
+
+        // Handle mega menu language switcher
+        $('.language-switcher-mega').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $dropdown = $(this).closest('.mega-language-dropdown');
+            $dropdown.find('.dropdown-menu').toggleClass('show');
+        });
+
+        // Close language dropdown when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.mega-language-dropdown').length) {
+                $('.language-dropdown-menu-mega').removeClass('show');
+            }
+        });
+
+        // Handle mega menu navigation links
+        $('.mega-nav-link, .mega-nav-sublink, .mega-footer-link').on('click', function (e) {
+            // Add any navigation handling here
+            console.log('Navigation link clicked:', $(this).text());
+        });
+
+        // Handle mega menu show/hide events
+        $('#offcanvasNavbar').on('show.bs.offcanvas', function () {
+            $('body').addClass('mega-menu-open');
+            $('.menu-button').addClass('active');
+        });
+
+        $('#offcanvasNavbar').on('shown.bs.offcanvas', function () {
+            $(this).addClass('show');
+        });
+
+        $('#offcanvasNavbar').on('hide.bs.offcanvas', function () {
+            $(this).removeClass('show');
+        });
+
+        $('#offcanvasNavbar').on('hidden.bs.offcanvas', function () {
+            $('.menu-button').removeClass('active');
+            $('body').removeClass('mega-menu-open');
+        });
+
+        // Handle responsive behavior
+        handleMegaMenuResponsive();
+    }
+
+    /**
+     * Handle Mega Menu Responsive Behavior
+     */
+    function handleMegaMenuResponsive() {
+        function adjustMegaMenuLayout() {
+            const $megaMenu = $('.sbs-mega-menu');
+            const windowWidth = $(window).width();
+
+            if (windowWidth <= 768) {
+                $megaMenu.addClass('mobile-layout');
+            } else if (windowWidth <= 1024) {
+                $megaMenu.removeClass('mobile-layout').addClass('tablet-layout');
+            } else {
+                $megaMenu.removeClass('mobile-layout tablet-layout');
+            }
+        }
+
+        // Initial adjustment
+        adjustMegaMenuLayout();
+
+        // Adjust on window resize
+        $(window).on('resize', debounce(adjustMegaMenuLayout, 250));
     }
 
     /**
@@ -489,7 +614,7 @@
         });
 
         // Banner item click handlers
-        $bannerItems.on('click', function () {
+        $bannerItems.on('click', function (e) {
             const $item = $(this);
 
             // Add click animation
@@ -498,23 +623,7 @@
                 $item.removeClass('clicked');
             }, 200);
 
-            // Handle different banner actions
-            const bannerIndex = $item.index() % 3; // Get original banner index (0, 1, or 2)
 
-            switch (bannerIndex) {
-                case 0: // Gallery Image 1
-                    console.log('Opening gallery image 1 details');
-                    // Add your gallery popup or navigation logic here
-                    break;
-                case 1: // Gallery Image 2
-                    console.log('Opening gallery image 2 details');
-                    // Add navigation to gallery image 2 page
-                    break;
-                case 2: // Gallery Image 3
-                    console.log('Opening gallery image 3 details');
-                    // Add navigation to gallery image 3 page
-                    break;
-            }
         });
 
         // Add touch/swipe support for mobile
@@ -709,6 +818,33 @@
                 $(this).css('animation-play-state', 'running');
             }
         );
+    }
+
+    /**
+     * Utility function to debounce function calls
+     * @param {Function} func - Function to debounce
+     * @param {number} wait - Wait time in milliseconds
+     * @returns {Function} - Debounced function
+     */
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    /**
+     * Helper function to get template directory URI
+     * @returns {string} - Template directory URI
+     */
+    function getTemplateDirectoryUri() {
+        // Fallback for template directory URI
+        return window.sbsPortalData?.templateUrl || '/wp-content/themes/sbs-portal';
     }
 
 })(jQuery);

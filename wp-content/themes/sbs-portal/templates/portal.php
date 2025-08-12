@@ -277,60 +277,73 @@ if (!defined('ABSPATH')) {
                 // Get banner items from database
                 $banner_items = sbs_get_banner_items(10);
 
-                if (!empty($banner_items)) {
-                    // Display original banners
-                    foreach ($banner_items as $item) {
-                        $link_attr = '';
-                        $link_wrapper_start = '';
-                        $link_wrapper_end = '';
-
-                        if ($item['link_url']) {
-                            $link_attr = ' onclick="window.open(\'' . esc_url($item['link_url']) . '\', \'_blank\')"';
-                            $link_wrapper_start = '<a href="' . esc_url($item['link_url']) . '" target="_blank" class="banner-link">';
-                            $link_wrapper_end = '</a>';
-                        }
-                ?>
-                        <div class="banner-item" <?php echo $link_attr; ?>>
-                            <?php echo $link_wrapper_start; ?>
-                            <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
-                            <?php echo $link_wrapper_end; ?>
-                        </div>
-                    <?php
+                // If no banner items exist, create sample ones
+                if (empty($banner_items)) {
+                    // Try to create sample banner items
+                    if (function_exists('sbs_create_sample_banner_items')) {
+                        sbs_create_sample_banner_items();
+                        $banner_items = sbs_get_banner_items(10);
                     }
-                } else {
-                    // Fallback to static content if no banner items exist
-                    ?>
+                }
+
+                // Debug: Check if we have banner items
+                if (empty($banner_items)) {
+                    // No banner items in database, use fallback static content
+                ?>
                     <!-- Banner 1: Gallery Image 1 -->
-                    <div class="banner-item">
+                    <div class="banner-item" data-banner-type="gallery" data-banner-id="1">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
                     </div>
 
                     <!-- Banner 2: Gallery Image 2 -->
-                    <div class="banner-item">
+                    <div class="banner-item" data-banner-type="gallery" data-banner-id="2">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
                     </div>
 
                     <!-- Banner 3: Gallery Image 3 -->
-                    <div class="banner-item">
+                    <div class="banner-item" data-banner-type="gallery" data-banner-id="3">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
                     </div>
+                    <?php
+                } else {
+                    // Display dynamic banners from database
+                    foreach ($banner_items as $item) {
+                        // Get campaign posts to match with banner items
+                        $campaign_posts = get_posts(array(
+                            'post_type' => 'campaign',
+                            'post_status' => 'publish',
+                            'posts_per_page' => 10,
+                            'orderby' => 'date',
+                            'order' => 'DESC',
+                        ));
 
-                    <!-- Duplicate banners for seamless loop -->
-                    <!-- Banner 1 Duplicate -->
-                    <div class="banner-item">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
-                    </div>
+                        // Find matching campaign post by title or use first available
+                        $campaign_post = null;
+                        if (!empty($campaign_posts)) {
+                            // Try to find campaign with matching title
+                            foreach ($campaign_posts as $campaign) {
+                                if (
+                                    strpos(strtolower($campaign->post_title), strtolower($item['title'])) !== false ||
+                                    strpos(strtolower($item['title']), strtolower($campaign->post_title)) !== false
+                                ) {
+                                    $campaign_post = $campaign;
+                                    break;
+                                }
+                            }
+                            // If no match found, use first available campaign
+                            if (!$campaign_post) {
+                                $campaign_post = $campaign_posts[0];
+                            }
+                        }
 
-                    <!-- Banner 2 Duplicate -->
-                    <div class="banner-item">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
-                    </div>
-
-                    <!-- Banner 3 Duplicate -->
-                    <div class="banner-item">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
-                    </div>
+                        // Store campaign post ID for JavaScript navigation
+                        $campaign_id = $campaign_post ? $campaign_post->ID : 0;
+                    ?>
+                        <div class="banner-item" data-banner-type="dynamic" data-banner-id="<?php echo esc_attr($item['id']); ?>" data-campaign-id="<?php echo esc_attr($campaign_id); ?>">
+                            <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
+                        </div>
                 <?php
+                    }
                 }
                 ?>
             </div>
