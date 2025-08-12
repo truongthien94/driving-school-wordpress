@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: wp_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-wp_dev_admin}
+      MYSQL_USER: ${DB_USER:-wp_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change_me}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-change_root}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend
+
+  wordpress:
+    image: wordpress:php8.2-fpm
+    container_name: wp_app
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME:-wp_dev_admin}
+      WORDPRESS_DB_USER: ${DB_USER:-wp_user}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-change_me}
+      PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d
+    volumes:
+      - ./driving-school-wordpress:/var/www/html
+      - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: wp_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./driving-school-wordpress:/var/www/html:ro
+    depends_on:
+      - wordpress
+    networks:
+      - backend
+
+  # --- Tuỳ chọn: phpMyAdmin (chỉ bật khi cần) ---
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: wp_phpmyadmin
+  #   restart: unless-stopped
+  #   environment:
+  #     PMA_HOST: db
+  #     PMA_USER: ${DB_USER:-wp_user}
+  #     PMA_PASSWORD: ${DB_PASSWORD:-change_me}
+  #   ports:
+  #     - "8081:80"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge
