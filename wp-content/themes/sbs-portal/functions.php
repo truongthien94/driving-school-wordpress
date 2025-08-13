@@ -2042,10 +2042,24 @@ function sbs_get_blog_posts($limit = 10, $category = '')
         'posts_per_page' => $limit,
         'post_status' => 'publish',
         'meta_query' => array(
+            'relation' => 'AND',
+            // Status filter: include published OR missing status meta
             array(
-                'key' => '_blog_post_status',
-                'value' => 'published',
-                'compare' => '='
+                'relation' => 'OR',
+                array(
+                    'key' => '_blog_post_status',
+                    'value' => 'published',
+                    'compare' => '='
+                ),
+                array(
+                    'key' => '_blog_post_status',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key' => '_blog_post_status',
+                    'value' => '',
+                    'compare' => '='
+                )
             )
         )
     );
@@ -2059,13 +2073,18 @@ function sbs_get_blog_posts($limit = 10, $category = '')
         );
     }
 
-    // Add order by custom order field
+    // Order by custom order if exists, otherwise by date desc
+    $args['orderby'] = array('meta_value_num' => 'ASC', 'date' => 'DESC');
     $args['meta_key'] = '_blog_post_order';
-    $args['orderby'] = 'meta_value_num';
-    $args['order'] = 'ASC';
 
     $query = new WP_Query($args);
     $posts = array();
+
+    // Fallback: if nothing matched (e.g., only one post without meta), query again without status meta
+    if (!$query->have_posts()) {
+        unset($args['meta_query']);
+        $query = new WP_Query($args);
+    }
 
     if ($query->have_posts()) {
         while ($query->have_posts()) {
@@ -2078,7 +2097,7 @@ function sbs_get_blog_posts($limit = 10, $category = '')
                 'excerpt' => get_the_excerpt(),
                 'content' => get_the_content(),
                 'featured_image' => has_post_thumbnail() ? get_the_post_thumbnail_url($post_id, 'full') : '',
-                'date' => get_the_date('Y-d-m'),
+                'date' => get_the_date('Y-m-d'),
                 'category' => get_post_meta($post_id, '_blog_post_category', true),
                 'status' => get_post_meta($post_id, '_blog_post_status', true),
                 'permalink' => get_permalink()

@@ -62,8 +62,8 @@ if (!empty($post['id'])) {
             </a>
         </h3>
 
-        <!-- Excerpt (max 2 lines via CSS) -->
-        <div class="blog-card-excerpt flex-grow-1">
+        <!-- Excerpt (min 2 lines, clamp 2 lines) -->
+        <div class="blog-card-excerpt mb-2">
             <?php echo esc_html($post['excerpt']); ?>
         </div>
 
