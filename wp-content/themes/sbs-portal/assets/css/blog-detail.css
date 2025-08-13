@@ -111,12 +111,6 @@ Optimized for Bootstrap 5 integration
     margin-bottom: 24px;
 }
 
-.related-posts-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 24px;
-}
 
 .related-post-card {
     display: flex;
@@ -395,9 +389,7 @@ Optimized for Bootstrap 5 integration
         font-size: 18px;
     }
 
-    .related-posts-grid {
-        gap: 12px;
-    }
+ 
 
     .related-post-card {
         padding: 12px;

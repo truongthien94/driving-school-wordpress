@@ -52,16 +52,14 @@ if (!$blog_posts->have_posts()) {
         get_template_part('parts/header-section', null, array(
             'title' => 'ブログ',
             'subtitle' => 'BLOG and NEWS',
-            'breadcrumb_items' => array('ブログ一覧'),
             'show_navigation' => true
         ));
         ?>
 
         <!-- Blog Content Section -->
         <section class="blog-list-content">
-            <div class="container">
-                <!-- Blog Posts Grid -->
-                <div class="blog-posts-main-grid">
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('ブログ一覧'))); ?>
+            <div class="blog-posts-main-grid">
                     <?php if ($blog_posts->have_posts() || $use_mock_data) :
                         $post_count = 0;
                         $total_posts = $use_mock_data ? count($mock_blog_posts) : $blog_posts->post_count;
@@ -192,7 +190,6 @@ if (!$blog_posts->have_posts()) {
                         </div>
                     <?php endif; ?>
                 </div>
-            </div>
         </section>
 
         <!-- Floating Elements -->

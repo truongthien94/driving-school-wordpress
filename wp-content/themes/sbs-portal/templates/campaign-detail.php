@@ -87,36 +87,71 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     ?>
 
     <section class="blog-detail-content">
-        <div class="container my-5">
+        <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('キャンペーン一覧', $post_title))); ?>
+        <div class="container mb-5">
             <div class="row g-4">
                 <!-- Left: Main Article -->
-                <div class="col-md-8">
-                    <article class="blog-detail-article">
-                        <div class="blog-detail-featured-image mb-4">
-                            <img src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($post_title); ?>" class="img-fluid" />
+                <div class="col-md-9">
+                    <div class="bg-white p-4 rounded-3">
+                        <div class="campaign-detail-img mb-4">
+                            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/campaign-detail.png" alt="campaign-detail-img" />
                         </div>
 
-                        <div class="blog-detail-meta mb-4">
-                            <div class="d-flex align-items-center gap-2 mb-3">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.4c-3.5 0-6.4-2.9-6.4-6.4S4.5 1.6 8 1.6s6.4 2.9 6.4 6.4-2.9 6.4-6.4 6.4z" fill="#8E8E8E" />
-                                    <path d="M8 3.2c-.4 0-.8.4-.8.8v3.2l2.4 1.6c.4.2.8 0 .8-.4V4.8c0-.4-.4-.8-.8-.8z" fill="#8E8E8E" />
-                                </svg>
-                                <span class="blog-detail-date"><?php echo esc_html($post_date); ?></span>
+                        <div class="mb-4">
+                            <h4 class="fw-bold">「自動車免許がタダで取れる？」そんな夢みたいな話が現実に！</h4>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="fw-bold">コース情報</h5>
+                            <div class="campaign-text-block">
+                                <p class="campaign-text">「自動車免許が無料で取れたら良いな…」と思ったことはありませんか？でも、普通はそんなことはありえないですよね。ところが実は、現実にそんなチャンスがあるのです。方法は簡単――SBS自動車学校に入社するだけ！</p>
+
+                                <p class="campaign-text">SBS自動車学校では、採用キャンペーンとして通常289,830円の教習費が<strong>完全無料</strong>になる特典を実施中です。この特典は、働きながら教習を進めることで実現しています。社員として活躍していただきながら、免許取得に必要な費用を<strong>全額負担</strong>する仕組みです。</p>
+
+                                <p class="campaign-text">現在、入社後「自動車免許をタダで取れる」求人は、<strong>教習指導員候補</strong>と<strong>事務員</strong>です。免許を持っていない方でも、未経験から安心してスタートできる環境が整っています。</p>
+                                <p class="campaign-text">さらに、働きやすい職場づくりのために、以下のような制度やサポートも充実しています。</p>
+
+                                <p class="campaign-text bullet">副業OKでライフスタイルに合わせた働き方が可能</p>
+                                <p class="campaign-text bullet">充実の研修制度で未経験者もスムーズにスタート</p>
+                                <p class="campaign-text bullet">年齢も幅広く、女性職員・指導員も多数在籍</p>
+
+                                <p class="campaign-text">「免許を取りたい」「働きながらスキルを身につけたい」と思っている方、<strong>今が絶好のチャンス</strong>です！</p>
+                                <p class="campaign-text">詳しい情報や応募方法については、こちらからご確認ください。</p>
+
+                                <p class="campaign-text text-muted small">※送迎バス運転手の募集については「免許無料取得特典」の対象外となりますので、あらかじめご了承ください。</p>
                             </div>
-                            <h2 class="blog-detail-title"><?php echo esc_html($post_title); ?></h2>
-                        </div>
 
-                        <div class="blog-detail-content-text">
-                            <?php echo apply_filters('the_content', $post_content); ?>
+                            <div class="campaign-text-block mb-4">
+                                <p class="campaign-text">皆さんこんにちは！</p>
+
+                                <p class="campaign-text">久しぶりの投稿となってしまいました。</p>
+
+                                <p class="campaign-text">この度、SBS自動車学校は敬愛学園女子バレーボール部のスポンサーに就任いたしました！</p>
+
+                                <p class="campaign-text">敬愛学園は、千葉市稲毛区内の教習所から近い学校でもあり、同じ敷地の敬愛大学からも沢山の生徒さんが通ってくれていることもあり、お話を頂いた際には即決させていただきました。</p>
+
+                                <p class="campaign-text">個人的にバレーボールが大好きという理由が一番大きいですが・・・</p>
+
+                                <p class="campaign-text">そして、スポンサー契約をした直後にインターハイ出場することが決定し、社内でもお祭り騒ぎとなっております！</p>
+
+                                <p class="campaign-text">しかも今回は、スポンサーとしてユニフォームへのロゴ入れをさせていただきました。</p>
+
+                                <p class="campaign-text">壮行会に参加させていただき、そこで新ユニフォームのお披露目となりました。</p>
+                                <p class="campaign-text">なんだか感慨深いですね。</p>
+                                <p class="campaign-text">このユニフォームは、教習所内に展示しますので、お越しになった際には是非ご覧ください！</p>
+                                <p class="campaign-text">インターハイは8月6日から始まります。</p>
+                                <p class="campaign-text">会社をあげて応援します！</p>
+                                <p class="campaign-text">1人のバレーボールファンとしても応援していきたいと思います！</p>
+                                <p class="campaign-text">頑張れ！敬愛学園女子バレーボール部！！</p>
+                            </div>
                         </div>
-                    </article>
+                    </div>
                 </div>
 
                 <!-- Right: Sidebar -->
-                <aside class="col-md-4 blog-detail-sidebar">
+                <aside class="col-md-3 blog-detail-sidebar">
                     <div class="blog-detail-related">
-                        <h3 class="sidebar-title">関連キャンペーン</h3>
+                        
                         <div class="related-posts-grid">
                             <?php
                             // Get related campaign posts
@@ -150,7 +185,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                 }
                             } else {
                                 // Fallback to mock data
-                                $mock_campaign_posts = sbs_get_latest_campaign_posts(3);
+                                $mock_campaign_posts = sbs_get_latest_campaign_posts(4);
                                 foreach ($mock_campaign_posts as $mock_post) {
                                     $card_post = array(
                                         'id' => 0,
@@ -161,23 +196,24 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                         'category' => 'CAMPAIGN',
                                         'permalink' => '#',
                                     );
+
+                                    $permalink = !empty($card_post['permalink']) ? $card_post['permalink'] : '#';
+
+                                    if (!empty($card_post['featured_image']) && filter_var($card_post['featured_image'], FILTER_VALIDATE_URL)) {
+                                        $image_file = $card_post['featured_image'];
+                                    } else {
+                                        $image_file = get_template_directory_uri() . '/assets/images/' . (!empty($card_post['featured_image']) ? $card_post['featured_image'] : 'blog-featured-1.jpg');
+                                    }
                                 ?>
-                                    <div class="mb-3">
-                                        <?php get_template_part('parts/blog-card', null, array('post' => $card_post)); ?>
+                                    <div class="mb-4">
+                                        <a href="<?php echo esc_url($permalink); ?>" aria-label="<?php echo esc_attr($card_post['title']); ?>">
+                                            <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($card_post['title']); ?>" class="img-fluid" />
+                                        </a>
                                     </div>
                             <?php
                                 }
                             }
                             ?>
-                        </div>
-
-                        <div class="view-all-section text-center mt-4">
-                            <a href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>" class="sbs-btn-outline-sm">
-                                <span>もっと見る</span>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </a>
                         </div>
                     </div>
                 </aside>

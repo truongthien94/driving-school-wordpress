@@ -211,12 +211,6 @@ Optimized for Bootstrap 5 integration
 }
 
 /* Blog Content Section */
-.blog-list-content {
-    padding: 60px 40px 60px;
-    min-height: calc(100vh - 284px - 278px);
-    /* Subtract banner carousel height */
-    position: relative;
-}
 
 /* Blog Card Large - Enhanced with Bootstrap compatibility */
 .blog-card-large {
@@ -233,23 +227,6 @@ Optimized for Bootstrap 5 integration
 .blog-card-large:hover {
     transform: translateY(-2px);
     box-shadow: 0px 50px 80px -40px rgba(15, 15, 15, 0.15);
-}
-
-.blog-card-large-image {
-    width: 100%;
-    height: 230px;
-    overflow: hidden;
-}
-
-.blog-card-large-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.blog-card-large:hover .blog-card-large-image img {
-    transform: scale(1.05);
 }
 
 .blog-card-large-content {

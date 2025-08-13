@@ -198,9 +198,8 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Content Section */
 .blog-list-content {
-    padding: 0px 40px 40px;
+    padding: 60px 40px 60px;
     min-height: calc(100vh - 284px - 278px);
-    /* Subtract banner carousel height */
     position: relative;
 }
 
@@ -218,6 +217,7 @@ Optimized for Bootstrap 5 integration
     flex-direction: column;
     gap: 31px;
     padding: 16px;
+    background-color: white;
 }
 
 .blog-card-large:hover {
@@ -765,7 +765,6 @@ Optimized for Bootstrap 5 integration
 .header-section-container {
     display: flex;
     justify-content: space-between;
-
 }
 
 .header-section-logo {
@@ -1042,12 +1041,7 @@ Optimized for Bootstrap 5 integration
 /* ===================================
    SMALL BLOG CARD (SIDEBAR/RELATED)
    =================================== */
-.blog-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    height: 100%;
-}
+
 
 .blog-card-image img {
     width: 100%;

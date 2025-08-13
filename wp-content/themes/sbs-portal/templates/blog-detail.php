@@ -147,13 +147,13 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
         get_template_part('parts/header-section', null, array(
             'title' => 'ブログ',
             'subtitle' => 'BLOG and NEWS',
-            'breadcrumb_items' => array('ブログ一覧', $post_title),
             'show_navigation' => true
         ));
         ?>
 
         <!-- Blog Detail Content Section -->
         <section class="blog-detail-content">
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('ブログ一覧', $post_title))); ?>
             <div class="row g-4">
                 <!-- Left Column: Main Article Content (2/3) -->
                 <div class="col-lg-8">
@@ -204,103 +204,99 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                 </div>
 
                 <!-- Right Column: Sidebar (1/3) -->
-                <div class="col-lg-4">
-                    <aside class="blog-detail-sidebar">
-                        <!-- Related Articles Section -->
-                        <div class="blog-detail-related">
-                            <h3 class="sidebar-title">関連記事</h3>
-                            <div class="related-posts-grid">
-                                <?php
-                                // Try to get 3 related posts from WP, excluding current
-                                $current_id = $post_data ? $post_data->ID : 0;
-                                $related_q = new WP_Query(array(
-                                    'post_type' => 'blog',
-                                    'post_status' => 'publish',
-                                    'posts_per_page' => 3,
-                                    'post__not_in' => $current_id ? array($current_id) : array(),
-                                    'orderby' => 'date',
-                                    'order' => 'DESC',
-                                ));
+                <aside class="col-lg-4 blog-detail-sidebar">
+                    <div class="blog-posts-main-grid">
+                        <div class="related-posts-grid">
+                            <?php
+                            // Try to get 3 related posts from WP, excluding current
+                            $current_id = $post_data ? $post_data->ID : 0;
+                            $related_q = new WP_Query(array(
+                                'post_type' => 'blog',
+                                'post_status' => 'publish',
+                                'posts_per_page' => 3,
+                                'post__not_in' => $current_id ? array($current_id) : array(),
+                                'orderby' => 'date',
+                                'order' => 'DESC',
+                            ));
 
-                                if ($related_q->have_posts()):
-                                    while ($related_q->have_posts()): $related_q->the_post();
-                                        $rp_id    = get_the_ID();
-                                        $rp_title = get_the_title();
-                                        $rp_date  = get_the_date('Y-m-d');
-                                        $rp_img   = get_the_post_thumbnail_url($rp_id, 'medium');
-                                        if (!$rp_img) {
-                                            $rp_img = get_template_directory_uri() . '/assets/images/blog-default.jpg';
-                                        }
-                                        // Build permalink to blog-detail route
-                                        $rp_link = add_query_arg('post_id', $rp_id, home_url('/blog-detail/'));
-                                        // Determine category label (fallback BLOG)
-                                        $rp_cat = 'BLOG';
-                                        $rp_terms = get_the_terms($rp_id, 'blog_category');
-                                        if ($rp_terms && !is_wp_error($rp_terms)) {
-                                            $rp_cat = strtoupper($rp_terms[0]->name);
-                                        }
-                                        $rp_excerpt = get_the_excerpt();
+                            if ($related_q->have_posts()):
+                                while ($related_q->have_posts()): $related_q->the_post();
+                                    $rp_id    = get_the_ID();
+                                    $rp_title = get_the_title();
+                                    $rp_date  = get_the_date('Y-m-d');
+                                    $rp_img   = get_the_post_thumbnail_url($rp_id, 'medium');
+                                    if (!$rp_img) {
+                                        $rp_img = get_template_directory_uri() . '/assets/images/blog-default.jpg';
+                                    }
+                                    // Build permalink to blog-detail route
+                                    $rp_link = add_query_arg('post_id', $rp_id, home_url('/blog-detail/'));
+                                    // Determine category label (fallback BLOG)
+                                    $rp_cat = 'BLOG';
+                                    $rp_terms = get_the_terms($rp_id, 'blog_category');
+                                    if ($rp_terms && !is_wp_error($rp_terms)) {
+                                        $rp_cat = strtoupper($rp_terms[0]->name);
+                                    }
+                                    $rp_excerpt = get_the_excerpt();
 
+                                    $card_post = array(
+                                        'id' => $rp_id,
+                                        'title' => $rp_title,
+                                        'excerpt' => wp_trim_words($rp_excerpt, 20, '...'),
+                                        'featured_image' => $rp_img,
+                                        'date' => $rp_date,
+                                        'category' => $rp_cat,
+                                        'permalink' => $rp_link,
+                                    );
+                            ?>
+                                    <div class="mb-3">
+                                        <?php get_template_part('parts/blog-card-large', null, array('post' => $card_post)); ?>
+                                    </div>
+                                    <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            else:
+                                // fallback: use existing helper
+                                if (!empty($related_posts)) :
+                                    foreach ($related_posts as $related_post) :
+                                        $fallback_link = add_query_arg('post_title', urlencode($related_post['title']), home_url('/blog-detail/'));
+                                        $fallback_img  = get_template_directory_uri() . '/assets/images/' . $related_post['featured_image'];
                                         $card_post = array(
-                                            'id' => $rp_id,
-                                            'title' => $rp_title,
-                                            'excerpt' => wp_trim_words($rp_excerpt, 20, '...'),
-                                            'featured_image' => $rp_img,
-                                            'date' => $rp_date,
-                                            'category' => $rp_cat,
-                                            'permalink' => $rp_link,
+                                            'id' => 0,
+                                            'title' => $related_post['title'],
+                                            'excerpt' => wp_trim_words($related_post['excerpt'] ?? '', 20, '...'),
+                                            'featured_image' => $fallback_img,
+                                            'date' => $related_post['date'],
+                                            'category' => $related_post['category'] ?? 'BLOG',
+                                            'permalink' => $fallback_link,
                                         );
-                                ?>
+                                    ?>
                                         <div class="mb-3">
-                                            <?php get_template_part('parts/blog-card', null, array('post' => $card_post)); ?>
+                                            <?php get_template_part('parts/blog-card-large', null, array('post' => $card_post)); ?>
                                         </div>
-                                        <?php
-                                    endwhile;
-                                    wp_reset_postdata();
+                                    <?php
+                                    endforeach;
                                 else:
-                                    // fallback: use existing helper
-                                    if (!empty($related_posts)) :
-                                        foreach ($related_posts as $related_post) :
-                                            $fallback_link = add_query_arg('post_title', urlencode($related_post['title']), home_url('/blog-detail/'));
-                                            $fallback_img  = get_template_directory_uri() . '/assets/images/' . $related_post['featured_image'];
-                                            $card_post = array(
-                                                'id' => 0,
-                                                'title' => $related_post['title'],
-                                                'excerpt' => wp_trim_words($related_post['excerpt'] ?? '', 20, '...'),
-                                                'featured_image' => $fallback_img,
-                                                'date' => $related_post['date'],
-                                                'category' => $related_post['category'] ?? 'BLOG',
-                                                'permalink' => $fallback_link,
-                                            );
-                                        ?>
-                                            <div class="mb-3">
-                                                <?php get_template_part('parts/blog-card', null, array('post' => $card_post)); ?>
-                                            </div>
-                                        <?php
-                                        endforeach;
-                                    else:
-                                        ?>
-                                        <div class="no-related-posts">
-                                            <p>関連記事はありません。</p>
-                                        </div>
-                                <?php
-                                    endif;
+                                    ?>
+                                    <div class="no-related-posts">
+                                        <p>関連記事はありません。</p>
+                                    </div>
+                            <?php
                                 endif;
-                                ?>
-                            </div>
-
-                            <!-- View All Button -->
-                            <div class="view-all-section">
-                                <a class="sbs-btn-outline-sm text-decoration-none" href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog/')); ?>">
-                                    <span>すべて表示</span>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
-                                    </svg>
-                                </a>
-                            </div>
+                            endif;
+                            ?>
                         </div>
-                    </aside>
-                </div>
+
+                        <!-- View All Button -->
+                        <div class="view-all-section">
+                            <a class="sbs-btn-outline-sm text-decoration-none" href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog/')); ?>">
+                                <span>すべて表示</span>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </section>
 
