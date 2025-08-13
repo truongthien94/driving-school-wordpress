@@ -25,8 +25,10 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-company">
                 <div class="company-logo">
                     <!-- Logo would go here -->
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-footer.png"
-                        alt="SBS Driving School" />
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-footer.png"
+                            alt="SBS Driving School" />
+                    </a>
                 </div>
                 <div class="company-info">
                     <p class="company-description">

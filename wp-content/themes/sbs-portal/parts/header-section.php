@@ -33,7 +33,9 @@ $show_navigation = isset($args['show_navigation']) ? $args['show_navigation'] : 
     <div class="header-section-container">
         <div class="header-section-left">
             <div class="header-section-logo">
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/sbs-logo-header.png" alt="SBS" />
+                <a href="<?php echo esc_url(home_url('/')); ?>" title="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/sbs-logo-header.png" alt="SBS" />
+                </a>
             </div>
             <div class="header-section-title">
                 <h4><?php echo esc_html($title); ?></h4>
