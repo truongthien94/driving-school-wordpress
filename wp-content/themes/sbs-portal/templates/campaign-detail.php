@@ -13,6 +13,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Ensure header is loaded so that wp_head() prints enqueued CSS/JS
+get_header();
 // Get post data from query parameters
 $post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
 $post_slug = isset($_GET['post_slug']) ? sanitize_text_field($_GET['post_slug']) : '';
@@ -190,3 +192,8 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
 <!-- Footer Background for Campaign Detail -->
 <div class="footer-background blog-list-footer" style="background-image: url('<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/footer-bg.jpg');"></div>
+
+<?php
+// Ensure footer is loaded so that wp_footer() prints scripts and closing markup
+get_footer();
+?>

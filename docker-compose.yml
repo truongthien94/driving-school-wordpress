@@ -3,13 +3,13 @@ version: "3.8"
 services:
   db:
     image: mariadb:10.11
-    container_name: wp_db
+    container_name: wp_db_portal
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_NAME:-wp_dev_admin}
-      MYSQL_USER: ${DB_USER:-wp_user}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-change_me}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-change_root}
+      MYSQL_DATABASE: ${DB_NAME:-wp_dev_portal}
+      MYSQL_USER: ${DB_USER:-sbsportal}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-Abcd@1234}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-Abcd@1234}
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -21,9 +21,9 @@ services:
     restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: ${DB_NAME:-wp_dev_admin}
-      WORDPRESS_DB_USER: ${DB_USER:-wp_user}
-      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-change_me}
+      WORDPRESS_DB_NAME: ${DB_NAME:-wp_dev_portal}
+      WORDPRESS_DB_USER: ${DB_USER:-sbsportal}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-Abcd@1234}
       PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d
     volumes:
       - ./:/var/www/html
@@ -54,8 +54,8 @@ services:
     restart: unless-stopped
     environment:
       PMA_HOST: db
-      PMA_USER: ${DB_USER:-wp_user}
-      PMA_PASSWORD: ${DB_PASSWORD:-change_me}
+      PMA_USER: ${DB_USER:-sbsportal}
+      PMA_PASSWORD: ${DB_PASSWORD:-Abcd@1234}
     ports:
       - "8081:80"
     depends_on:

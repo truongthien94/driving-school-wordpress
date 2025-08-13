@@ -62,8 +62,10 @@ function sbs_enqueue_scripts()
         wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
     }
 
-    // Enqueue campaign detail specific stylesheet only on single campaign posts
-    if (is_singular('campaign')) {
+    // Enqueue campaign detail specific stylesheet when viewing campaign-detail custom page
+    $is_campaign_detail_page = (get_query_var('sbs_page') === 'campaign-detail') || (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/campaign-detail') !== false);
+    if ($is_campaign_detail_page) {
+        // Enqueue dedicated CSS for campaign detail page
         wp_enqueue_style('sbs-campaign-detail-style', get_stylesheet_directory_uri() . '/assets/css/campaign-detail.css', array('sbs-style'), '1.0.0');
     }
 
@@ -1465,10 +1467,17 @@ function sbs_add_rewrite_rules()
         'top'
     );
 
-    // Add rewrite rule for campaign detail page
+    // Add rewrite rules for campaign detail page
+    // 1) /campaign-detail/ -> list or generic
     add_rewrite_rule(
         '^campaign-detail/?$',
         'index.php?sbs_page=campaign-detail',
+        'top'
+    );
+    // 2) /campaign-detail/{slug}/ -> detail by slug
+    add_rewrite_rule(
+        '^campaign-detail/([^/]+)/?$',
+        'index.php?sbs_page=campaign-detail&post_slug=$matches[1]',
         'top'
     );
 }
@@ -1480,6 +1489,8 @@ add_action('init', 'sbs_add_rewrite_rules');
 function sbs_add_query_vars($vars)
 {
     $vars[] = 'sbs_page';
+    $vars[] = 'post_slug';
+    $vars[] = 'post_id';
     return $vars;
 }
 add_filter('query_vars', 'sbs_add_query_vars');
@@ -1493,6 +1504,31 @@ function sbs_template_redirect()
     $request_uri = $_SERVER['REQUEST_URI'] ?? '';
 }
 add_action('template_redirect', 'sbs_template_redirect');
+
+/**
+ * Load custom templates for pretty URLs driven by sbs_page
+ */
+function sbs_template_include(string $template): string
+{
+    $sbs_page = get_query_var('sbs_page');
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+    // Detect campaign-detail via query var, pretty permalink, or direct /campaign-detail/ path
+    if (
+        $sbs_page === 'campaign-detail'
+        || (isset($GLOBALS['wp']) && isset($GLOBALS['wp']->query_vars['pagename']) && $GLOBALS['wp']->query_vars['pagename'] === 'campaign-detail')
+        || strpos($request_uri, '/campaign-detail') !== false
+    ) {
+        $custom_template = get_template_directory() . '/templates/campaign-detail.php';
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+
+    // You can extend here for other custom pages (e.g., blog-list, blog-detail) if needed
+    return $template;
+}
+add_filter('template_include', 'sbs_template_include');
 
 /**
  * Flush rewrite rules on theme activation
@@ -1515,6 +1551,11 @@ function sbs_flush_rewrite_rules()
     add_rewrite_rule(
         '^campaign-detail/?$',
         'index.php?sbs_page=campaign-detail',
+        'top'
+    );
+    add_rewrite_rule(
+        '^campaign-detail/([^/]+)/?$',
+        'index.php?sbs_page=campaign-detail&post_slug=$matches[1]',
         'top'
     );
 
@@ -2685,6 +2726,11 @@ function sbs_force_flush_rewrite_rules_dev()
         add_rewrite_rule(
             '^campaign-detail/?$',
             'index.php?sbs_page=campaign-detail',
+            'top'
+        );
+        add_rewrite_rule(
+            '^campaign-detail/([^/]+)/?$',
+            'index.php?sbs_page=campaign-detail&post_slug=$matches[1]',
             'top'
         );
     }

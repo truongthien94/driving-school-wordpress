@@ -291,19 +291,19 @@ if (!defined('ABSPATH')) {
                     // No banner items in database, use fallback static content
                 ?>
                     <!-- Banner 1: Gallery Image 1 -->
-                    <div class="banner-item" data-banner-type="gallery" data-banner-id="1">
+                    <a class="banner-item" data-banner-type="gallery" data-banner-id="1" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
-                    </div>
+                    </a>
 
                     <!-- Banner 2: Gallery Image 2 -->
-                    <div class="banner-item" data-banner-type="gallery" data-banner-id="2">
+                    <a class="banner-item" data-banner-type="gallery" data-banner-id="2" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
-                    </div>
+                    </a>
 
                     <!-- Banner 3: Gallery Image 3 -->
-                    <div class="banner-item" data-banner-type="gallery" data-banner-id="3">
+                    <a class="banner-item" data-banner-type="gallery" data-banner-id="3" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
-                    </div>
+                    </a>
                     <?php
                 } else {
                     // Display dynamic banners from database
@@ -339,9 +339,13 @@ if (!defined('ABSPATH')) {
                         // Store campaign post ID for JavaScript navigation
                         $campaign_id = $campaign_post ? $campaign_post->ID : 0;
                     ?>
-                        <div class="banner-item" data-banner-type="dynamic" data-banner-id="<?php echo esc_attr($item['id']); ?>" data-campaign-id="<?php echo esc_attr($campaign_id); ?>">
+                        <?php
+                        $slug = $campaign_id ? get_post_field('post_name', $campaign_id) : sanitize_title($item['title']);
+                        $detail_url = home_url('/campaign-detail/' . $slug . '/');
+                        ?>
+                        <a class="banner-item" data-banner-type="dynamic" data-banner-id="<?php echo esc_attr($item['id']); ?>" data-campaign-id="<?php echo esc_attr($campaign_id); ?>" href="<?php echo esc_url($detail_url); ?>">
                             <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
-                        </div>
+                        </a>
                 <?php
                     }
                 }
