@@ -56,7 +56,7 @@ if (!defined('ABSPATH')) {
                                 <div class="box-info flex-grow-1">
                                     <h3 class="box-title mb-1">
                                         <?php if ($main_item['link']) : ?>
-                                            <a href="<?php echo esc_url($main_item['link']); ?>">
+                                            <a href="<?php echo esc_url($main_item['link']); ?>" class="text-decoration-none">
                                                 <?php echo esc_html($main_item['title']); ?>
                                             </a>
                                         <?php else : ?>

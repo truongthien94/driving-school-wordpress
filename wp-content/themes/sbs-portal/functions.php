@@ -51,8 +51,8 @@ function sbs_enqueue_scripts()
 {
     // Enqueue Bootstrap 5 (CSS & JS)
     wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3');
-    // Main style depends on Bootstrap
-    wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array('bootstrap-css'), '1.0.0');
+    // Ensure theme styles load after Bootstrap and core block library to keep our overrides
+    wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array('bootstrap-css', 'wp-block-library'), '1.0.1');
 
     // Enqueue blog list stylesheet (contains shared blog styles)
     wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
@@ -72,7 +72,7 @@ function sbs_enqueue_scripts()
     // Enqueue Bootstrap JS (bundle includes Popper)
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.3', true);
     // Enqueue theme JS
-    wp_enqueue_script('sbs-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap-js'), '1.0.0', true);
+    wp_enqueue_script('sbs-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap-js'), '1.0.1', true);
 
     // Localize script for AJAX
     wp_localize_script('sbs-script', 'sbs_ajax', array(
@@ -85,7 +85,8 @@ function sbs_enqueue_scripts()
         'templateDirectoryUri' => get_template_directory_uri(),
     ));
 }
-add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts');
+// Load our assets late to reduce chance of being overridden by plugins
+add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts', 100);
 
 /**
  * Register Custom Post Types
