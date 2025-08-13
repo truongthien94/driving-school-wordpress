@@ -1609,6 +1609,20 @@ body.mega-menu-open {
     transition: color 0.3s ease;
 }
 
+/* Ensure links inside portal titles use our color and no underline even if Bootstrap reboot loads later */
+.portal-box .box-title a,
+.portal-box .box-title a:link,
+.portal-box .box-title a:visited {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+.portal-box .box-title a:hover,
+.portal-box .box-title a:focus {
+    color: #DD1F01 !important;
+    text-decoration: none !important;
+}
+
 .box-description {
     font-size: 16px;
     color: #777E90;
@@ -3418,11 +3432,12 @@ body.mega-menu-open {
 
 .text-truncate-lines-5 {
     display: -webkit-box;
-    -webkit-line-clamp: 5; /* Giới hạn tối đa 5 dòng */
+    -webkit-line-clamp: 5;
+    /* Giới hạn tối đa 5 dòng */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
 
 .back-to-top {
     position: fixed;

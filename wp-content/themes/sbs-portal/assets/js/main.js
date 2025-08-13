@@ -613,18 +613,7 @@
             $(this).css('animation-play-state', 'running');
         });
 
-        // Banner item click handlers
-        $bannerItems.on('click', function (e) {
-            const $item = $(this);
-
-            // Add click animation
-            $item.addClass('clicked');
-            setTimeout(() => {
-                $item.removeClass('clicked');
-            }, 200);
-
-
-        });
+        // Click navigation handled via anchors in template
 
         // Add touch/swipe support for mobile
         let startX = 0;
