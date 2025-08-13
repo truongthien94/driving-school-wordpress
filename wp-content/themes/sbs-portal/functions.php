@@ -1467,6 +1467,12 @@ function sbs_add_rewrite_rules()
         'index.php?sbs_page=blog-detail',
         'top'
     );
+    // Optional detail by slug
+    add_rewrite_rule(
+        '^blog-detail/([^/]+)/?$',
+        'index.php?sbs_page=blog-detail&post_slug=$matches[1]',
+        'top'
+    );
 
     // Add rewrite rules for campaign detail page
     // 1) /campaign-detail/ -> list or generic
@@ -1526,6 +1532,18 @@ function sbs_template_include(string $template): string
         }
     }
 
+    // Detect blog-detail custom route and map to our template
+    if (
+        $sbs_page === 'blog-detail'
+        || (isset($GLOBALS['wp']) && isset($GLOBALS['wp']->query_vars['pagename']) && $GLOBALS['wp']->query_vars['pagename'] === 'blog-detail')
+        || strpos($request_uri, '/blog-detail') !== false
+    ) {
+        $custom_template = get_template_directory() . '/templates/blog-detail.php';
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+
     // You can extend here for other custom pages (e.g., blog-list, blog-detail) if needed
     return $template;
 }
@@ -1546,6 +1564,11 @@ function sbs_flush_rewrite_rules()
     add_rewrite_rule(
         '^blog-detail/?$',
         'index.php?sbs_page=blog-detail',
+        'top'
+    );
+    add_rewrite_rule(
+        '^blog-detail/([^/]+)/?$',
+        'index.php?sbs_page=blog-detail&post_slug=$matches[1]',
         'top'
     );
 
@@ -2732,6 +2755,18 @@ function sbs_force_flush_rewrite_rules_dev()
         add_rewrite_rule(
             '^campaign-detail/([^/]+)/?$',
             'index.php?sbs_page=campaign-detail&post_slug=$matches[1]',
+            'top'
+        );
+
+        // Blog-detail rules as well for dev convenience
+        add_rewrite_rule(
+            '^blog-detail/?$',
+            'index.php?sbs_page=blog-detail',
+            'top'
+        );
+        add_rewrite_rule(
+            '^blog-detail/([^/]+)/?$',
+            'index.php?sbs_page=blog-detail&post_slug=$matches[1]',
             'top'
         );
     }

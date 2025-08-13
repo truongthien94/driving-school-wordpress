@@ -31,7 +31,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
             <p class="section-subtitle mb-0">BLOG and NEWS</p>
         </div>
         <div class="header-action">
-            <a href="<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>" class="view-all-button btn btn-outline-secondary btn-sm">
+            <a href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog-list/')); ?>" class="view-all-button btn btn-outline-secondary btn-sm text-decoration-none">
                 すべて表示
             </a>
         </div>

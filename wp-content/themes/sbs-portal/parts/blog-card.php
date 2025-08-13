@@ -34,7 +34,15 @@ if (!wp_style_is('sbs-blog-list', 'enqueued')) {
     wp_enqueue_style('sbs-blog-list', get_template_directory_uri() . '/assets/css/blog-list.css', array(), '1.0.0');
 }
 
-$permalink = !empty($post['permalink']) ? $post['permalink'] : '#';
+// Normalize permalink to our blog-detail route
+$permalink = home_url('/blog-detail/');
+if (!empty($post['id'])) {
+    $permalink = add_query_arg('post_id', $post['id'], $permalink);
+} elseif (!empty($post['slug'])) {
+    $permalink = add_query_arg('post_slug', $post['slug'], $permalink);
+} elseif (!empty($post['title'])) {
+    $permalink = add_query_arg('post_title', urlencode($post['title']), $permalink);
+}
 ?>
 
 <article class="blog-card h-100">
