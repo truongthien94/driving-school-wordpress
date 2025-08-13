@@ -89,8 +89,8 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     ?>
 
     <section class="blog-detail-content">
-        <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('キャンペーン一覧', $post_title))); ?>
-        <div class="container mb-5">
+        <div class="mb-5">
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('キャンペーン一覧', $post_title))); ?>
             <div class="row g-4">
                 <!-- Left: Main Article -->
                 <div class="col-md-9">
@@ -153,7 +153,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                 <!-- Right: Sidebar -->
                 <aside class="col-md-3 blog-detail-sidebar">
                     <div class="blog-detail-related">
-                        
+
                         <div class="related-posts-grid">
                             <?php
                             // Get related campaign posts
