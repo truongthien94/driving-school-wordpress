@@ -92,7 +92,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #262626;
+    color: #DD1F01;
     text-decoration: none;
 }
 
@@ -1160,6 +1160,12 @@ body.mega-menu-open {
     display: block;
 }
 
+/* Also reveal dropdowns on hover/focus for desktop */
+.nav-item.dropdown:hover>.dropdown-menu,
+.nav-item.dropdown:focus-within>.dropdown-menu {
+    display: block;
+}
+
 /* Bootstrap 5 compatibility */
 .dropdown-menu.show {
     display: block !important;
@@ -1174,12 +1180,15 @@ body.mega-menu-open {
     top: 100%;
     left: 0;
     right: auto;
+    z-index: 10002;
+    /* keep above nav container */
 }
 
 /* Language dropdown positioning */
 .nav-item.dropdown .language-dropdown-menu {
     right: 0;
     left: auto;
+    z-index: 10003;
 }
 
 /* Company dropdown positioning */
@@ -1251,7 +1260,7 @@ body.mega-menu-open {
 /* Additional fixes for proper alignment */
 .mega-search-box {
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .navigation-items .nav-item:last-child {
@@ -1260,7 +1269,7 @@ body.mega-menu-open {
 
 /* Ensure all navigation elements stay on one line */
 .nav-section {
-    overflow: hidden;
+    overflow: visible;
 }
 
 .navigation-items {
@@ -2103,7 +2112,7 @@ body.mega-menu-open {
     object-fit: cover;
 }
 
-.img-fluid{
+.img-fluid {
     width: 100%;
     height: 100%;
     object-fit: cover;

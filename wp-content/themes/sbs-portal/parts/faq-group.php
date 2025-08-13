@@ -33,11 +33,11 @@ $expanded_class = $group['expanded'] ? 'expanded' : '';
                 <div class="toggle-icon">
                     <?php if ($group['expanded']): ?>
                         <div class="icon-container expanded d-flex align-items-center justify-content-center">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" class="img-fluid" />
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-minus.svg" alt="Minus" width="16" height="16" />
                         </div>
                     <?php else: ?>
                         <div class="icon-container collapsed d-flex align-items-center justify-content-center">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" class="img-fluid" />
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-plus.svg" alt="Plus" width="16" height="16" />
                         </div>
                     <?php endif; ?>
                 </div>

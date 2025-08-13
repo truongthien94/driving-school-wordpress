@@ -31,7 +31,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                 </a>
             </li>
             <li class="nav-item dropdown d-none d-xl-flex">
-                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="dropdown-text">
                         <?php echo sbs_get_text('company_info', array(
                             'ja' => '企業情報',
@@ -77,7 +77,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                 $available_languages = sbs_get_available_languages();
                 $current_lang_data = $available_languages[$current_lang];
                 ?>
-                <a class="nav-link  language-switcher dropdown-with-icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link language-switcher dropdown-with-icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="dropdown-text"><?php echo $current_lang_data['native_name']; ?></span>
                     <span class="dropdown-icon"><?php echo sbs_get_icon('chevron-down'); ?></span>
                 </a>
