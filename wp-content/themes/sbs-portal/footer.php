@@ -51,15 +51,6 @@ $footer_data = sbs_get_footer_data();
                     </ul>
                 </div>
 
-                <!-- Column 2: その他のサービス -->
-                <div class="footer-column">
-                    <h3 class="column-title">その他のサービス</h3>
-                    <ul class="column-links">
-                        <li><a href="/reservation">予約システム</a></li>
-                        <li><a href="/matching">マッチングシステム</a></li>
-                    </ul>
-                </div>
-
                 <!-- Column 3: SBS自動車学校 -->
                 <div class="footer-column">
                     <h3 class="column-title">SBS自動車学校</h3>
