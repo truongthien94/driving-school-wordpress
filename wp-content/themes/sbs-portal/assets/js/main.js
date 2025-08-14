@@ -26,13 +26,16 @@
      * Initialize FAQ Accordion
      */
     function initFAQAccordion() {
-        // Initialize expanded groups on page load (headers are expanded by default)
-        $('.faq-group.expanded').each(function () {
+        // Normalize initial visibility for all groups based on .expanded
+        $('.faq-group').each(function () {
             const $group = $(this);
-            const $content = $group.find('.faq-group-content');
-
-            // Show content for expanded groups
-            $content.show();
+            const $content = $group.children('.faq-group-content');
+            const isExpanded = $group.hasClass('expanded');
+            if (isExpanded) {
+                $content.show();
+            } else {
+                $content.hide();
+            }
         });
 
         // Initialize collapsed items on page load (items are collapsed by default)
@@ -47,17 +50,19 @@
         // FAQ Group Toggle
         $('.faq-group-header').on('click', function () {
             const $group = $(this).closest('.faq-group');
-            const $content = $group.find('.faq-group-content');
+            const $content = $group.children('.faq-group-content');
             const $iconContainer = $group.find('.group-toggle .icon-container');
 
-            // Toggle expanded state
-            $group.toggleClass('expanded');
+            const willExpand = !$group.hasClass('expanded');
+            $group.toggleClass('expanded', willExpand);
+            $(this).attr('aria-expanded', willExpand ? 'true' : 'false');
+            $content.attr('aria-hidden', willExpand ? 'false' : 'true');
 
-            // Show/hide content
-            $content.slideToggle(300);
+            // Stop queued animations and toggle
+            $content.stop(true, true).slideToggle(300);
 
             // Update icon container
-            if ($group.hasClass('expanded')) {
+            if (willExpand) {
                 $iconContainer.removeClass('collapsed').addClass('expanded');
                 $iconContainer.html('<img src="' + getTemplateDirectoryUri() + '/assets/images/icons/icon-minus.svg" alt="Minus" />');
             } else {
