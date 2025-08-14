@@ -148,10 +148,10 @@ if (!$blog_posts->have_posts()) {
                                     <!-- First Page Button (double left arrow) -->
                                     <button class="pagination-btn pagination-first <?php echo $paged === 1 ? 'disabled' : ''; ?>"
                                         <?php if ($paged > 1): ?>onclick="location.href='<?php echo get_post_type_archive_link('blog') ?: home_url('/blog-list/'); ?>'" <?php endif; ?>>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M4 4.67L7.33 8L4 11.33" stroke="currentColor" stroke-width="0.83" />
-                                            <path d="M8.67 4.67L12 8L8.67 11.33" stroke="currentColor" stroke-width="0.83" />
-                                        </svg>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                <path d="M12 11.33L8.67 8L12 4.67" stroke="currentColor" stroke-width="0.83" />
+                                                <path d="M7.33 11.33L4 8L7.33 4.67" stroke="currentColor" stroke-width="0.83" />
+                                            </svg>
                                     </button>
 
                                     <!-- Previous Page Button (single left arrow) -->

@@ -1740,7 +1740,7 @@ body.mega-menu-open {
 }
 
 .language-option:hover {
-    background: #f5f5f5;
+    background: #F7F7F7;
     color: #DD1F01;
 }
 
@@ -3432,7 +3432,7 @@ body.mega-menu-open {
 .sbs-portal {
     position: relative;
     z-index: 2;
-    background-color: #F5F5F5;
+    background-color: #F7F7F7;
 }
 
 .float-button {

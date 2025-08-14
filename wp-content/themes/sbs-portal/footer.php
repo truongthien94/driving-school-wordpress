@@ -83,9 +83,9 @@ $footer_data = sbs_get_footer_data();
                     </div>
                 </div>
                 <div class="contact-button-wrapper">
-                    <a href="/contact" class="contact-button">
+                    <div class="contact-button" id="contact-button">
                         <span>お問い合わせ</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,9 +96,9 @@ $footer_data = sbs_get_footer_data();
             <?php if (isset($footer_data['legal'])): ?>
                 <div class="legal-links d-flex justify-content-center mb-2">
                     <?php foreach ($footer_data['legal'] as $legal): ?>
-                        <a href="<?php echo esc_url($legal['url']); ?>">
+                        <div  class="<?php echo esc_attr($legal['class']); ?>">
                             <?php echo esc_html($legal['text']); ?>
-                        </a>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

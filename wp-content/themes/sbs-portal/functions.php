@@ -2808,19 +2808,19 @@ function sbs_get_available_languages()
             'name' => '日本語',
             'native_name' => '日本語',
             'flag' => '🇯🇵',
-            'locale' => 'ja_JP'
+            'locale' => 'ja'
         ),
         'en' => array(
             'name' => 'English',
             'native_name' => 'English',
             'flag' => '🇺🇸',
-            'locale' => 'en_US'
+            'locale' => 'en'
         ),
         'id' => array(
             'name' => 'Indonesia',
             'native_name' => 'Bahasa Indonesia',
             'flag' => '🇮🇩',
-            'locale' => 'id_ID'
+            'locale' => 'id'
         )
     );
 }

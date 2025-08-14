@@ -452,10 +452,12 @@
         ],
         "legal": [
             {
+                "class": "terms",
                 "text": "利用規約",
                 "url": "/terms"
             },
             {
+                "class": "privacy",
                 "text": "プライバシー",
                 "url": "/privacy"
             }

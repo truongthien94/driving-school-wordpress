@@ -191,7 +191,9 @@
         const $backToTop = $('#back-to-top');
         const $floatButtons = $('.float-buttons');
         const $floatChat = $('#float-chat');
-        const $floatContact = $('#float-contact');
+        const $floatContact = $('#float-contact, #contact-button');
+        const $terms = $('.terms');
+        const $privacy = $('.privacy'); 
 
         // Show/hide back to top and adjust float buttons and popup position
         $(window).on('scroll', function () {
@@ -227,9 +229,22 @@
 
         // Float contact button
         $floatContact.on('click', function () {
-            // Add contact functionality here
-            console.log('Contact button clicked');
-            // You can open contact form or redirect to contact page
+            var locale = document.documentElement.lang || 'ja';
+            var url = 'https://dev.sbs-ds.com/' + locale + '/contact';
+            window.open(url, '_blank');
+        });
+
+        // Terms and Privacy
+        $terms.on('click', function () {
+            var locale = document.documentElement.lang || 'ja';
+            var url = 'https://dev.sbs-ds.com/' + locale + '/site-usage';
+            window.open(url, '_blank');
+        });
+
+        $privacy.on('click', function () {
+            var locale = document.documentElement.lang || 'ja';
+            var url = 'https://dev.sbs-ds.com/' + locale + '/privacy-policy';
+            window.open(url, '_blank');
         });
     }
 

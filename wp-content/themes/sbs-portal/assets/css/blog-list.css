@@ -207,7 +207,7 @@ Optimized for Bootstrap 5 integration
 .blog-card-large {
     background: transparent;
     border: none;
-    border-radius: 0;
+    border-radius: 8px;
     box-shadow: none;
     backdrop-filter: none;
     overflow: visible;
