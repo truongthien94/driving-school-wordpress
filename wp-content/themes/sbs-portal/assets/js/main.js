@@ -15,6 +15,7 @@
         initFloatButtons();
         initPopup();
         initMobileMenu();
+        initDesktopHoverDropdowns();
         initScrollEffects();
         initPortalEffects();
         initFloatingAnimation();
@@ -376,6 +377,97 @@
 
         // Adjust on window resize
         $(window).on('resize', debounce(adjustMegaMenuLayout, 250));
+    }
+
+    /**
+     * Smooth Desktop Hover Dropdowns for top navigation
+     * - Open with a slight delay on hover/focus
+     * - Keep open when moving cursor into the dropdown menu
+     * - Close with a slight delay when leaving the whole dropdown area
+     */
+    function initDesktopHoverDropdowns() {
+        const OPEN_DELAY_MS = 120;
+        const CLOSE_DELAY_MS = 200;
+
+        // Only apply on desktop (match classes d-none d-xl-flex usage)
+        function isDesktop() {
+            return window.matchMedia('(min-width: 1200px)').matches;
+        }
+
+        $('.nav-item.dropdown').each(function () {
+            const $item = $(this);
+            const $toggle = $item.children('.nav-link').first();
+            const $menu = $item.children('.dropdown-menu').first();
+
+            let openTimeout = null;
+            let closeTimeout = null;
+
+            function openDropdown() {
+                if (!isDesktop()) return;
+                clearTimeout(closeTimeout);
+                clearTimeout(openTimeout);
+                openTimeout = setTimeout(function () {
+                    $item.addClass('show');
+                    $menu.addClass('show');
+                    $toggle.attr('aria-expanded', 'true');
+                }, OPEN_DELAY_MS);
+            }
+
+            function closeDropdown() {
+                if (!isDesktop()) return;
+                clearTimeout(openTimeout);
+                clearTimeout(closeTimeout);
+                closeTimeout = setTimeout(function () {
+                    $item.removeClass('show');
+                    $menu.removeClass('show');
+                    $toggle.attr('aria-expanded', 'false');
+                }, CLOSE_DELAY_MS);
+            }
+
+            // Hover and focus handling on the entire li.dropdown
+            $item.on('mouseenter focusin', openDropdown);
+            $item.on('mouseleave', function (e) {
+                // If moving to a child element, do nothing
+                const related = e.relatedTarget;
+                if (related && ($item[0] === related || $.contains($item[0], related))) {
+                    return;
+                }
+                closeDropdown();
+            });
+            $item.on('focusout', function (e) {
+                // Close only when focus leaves the whole dropdown
+                const related = e.relatedTarget;
+                if (related && ($item[0] === related || $.contains($item[0], related))) {
+                    return;
+                }
+                closeDropdown();
+            });
+
+            // Keep open while cursor is inside the menu
+            $menu.on('mouseenter', function () {
+                clearTimeout(closeTimeout);
+            });
+            $menu.on('mouseleave', closeDropdown);
+
+            // Prevent Bootstrap click toggling on desktop causing flicker
+            $toggle.on('click', function (e) {
+                if (isDesktop()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openDropdown();
+                }
+            });
+
+            // Recalculate on resize
+            $(window).on('resize', debounce(function () {
+                if (!isDesktop()) {
+                    // Ensure menu state is clean when leaving desktop
+                    $item.removeClass('show');
+                    $menu.removeClass('show');
+                    $toggle.attr('aria-expanded', 'false');
+                }
+            }, 150));
+        });
     }
 
     /**

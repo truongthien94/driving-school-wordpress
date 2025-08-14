@@ -1337,7 +1337,7 @@ body.mega-menu-open {
 
 /* Enhanced Hover and Focus Effects */
 .nav-link:hover .dropdown-text {
-    color: #262626;
+    color: #DD1F01;
 }
 
 .nav-link:focus .dropdown-text {
@@ -3601,7 +3601,7 @@ body.mega-menu-open {
 
 .language-switcher:hover,
 .language-switcher-mobile:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: transparent;
     text-decoration: none;
     color: inherit;
 }

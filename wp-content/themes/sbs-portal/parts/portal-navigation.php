@@ -63,7 +63,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                 </ul>
             </li>
             <li class="nav-item  d-none d-xl-flex">
-                <a class="nav-link">
+                <a class="nav-link" href="#">
                     <?php echo sbs_get_text('about_sbs_group', array(
                         'ja' => 'SBSグループについて',
                         'en' => 'About SBS Group',
