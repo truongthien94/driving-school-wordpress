@@ -14,19 +14,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Enqueue required CSS files
-wp_enqueue_style('sbs-style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0.0');
-wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
-wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
-
-// Enqueue Bootstrap CSS if available
-if (wp_style_is('bootstrap', 'registered')) {
-    wp_enqueue_style('bootstrap');
-} else {
-    // Fallback to CDN Bootstrap
-    wp_enqueue_style('bootstrap-cdn', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', array(), '5.3.0');
-}
-
 // Get post data from query parameters
 $post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
 $post_slug = isset($_GET['post_slug']) ? sanitize_text_field($_GET['post_slug']) : '';
@@ -142,7 +129,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
         <!-- Blog Detail Content Section -->
         <section class="blog-detail-content">
-            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('ブログ一覧', $post_title))); ?>
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array( array('label' => 'ブログ一覧', 'url' => home_url('/blog/')), array('label' => $post_title)))); ?>
             <div class="row g-4">
                 <!-- Left Column: Main Article Content (2/3) -->
                 <div class="col-lg-8">

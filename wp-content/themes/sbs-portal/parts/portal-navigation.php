@@ -19,10 +19,10 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
 ?>
 
 <div class="nav-section">
-    <div class="mega-search-box">
-        <ul class="navigation-items">
-            <li class="nav-item  d-none d-xl-flex">
-                <a class="nav-link" aria-current="page" href="#">
+    <div class="d-flex align-items-center justify-content-end">
+        <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 gap-2 gap-xxl-4">
+            <li class="nav-item d-none d-xl-flex">
+                <a class="nav-link active" aria-current="page" href="#">
                     <?php echo sbs_get_text('greeting', array(
                         'ja' => 'ごあいさつ',
                         'en' => 'Greeting',
@@ -31,17 +31,16 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                 </a>
             </li>
             <li class="nav-item dropdown d-none d-xl-flex">
-                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="dropdown-text">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>
                         <?php echo sbs_get_text('company_info', array(
                             'ja' => '企業情報',
-                            'en' => 'Company Information',
-                            'id' => 'Informasi Perusahaan'
+                            'en' => 'Company Info',
+                            'id' => 'Info Perusahaan'
                         )); ?>
                     </span>
-                    <span class="dropdown-icon"><?php echo sbs_get_icon('chevron-down'); ?></span>
                 </a>
-                <ul class="dropdown-menu company-dropdown-menu">
+                <ul class="dropdown-menu">
                     <li>
                         <a class="dropdown-item" href="#">
                             <?php echo sbs_get_text('company_overview', array(
@@ -62,8 +61,9 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                     </li>
                 </ul>
             </li>
+
             <li class="nav-item  d-none d-xl-flex">
-                <a class="nav-link" href="#">
+                <a class="nav-link  active" href="#">
                     <?php echo sbs_get_text('about_sbs_group', array(
                         'ja' => 'SBSグループについて',
                         'en' => 'About SBS Group',
@@ -71,17 +71,17 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                     )); ?>
                 </a>
             </li>
+
             <li class="nav-item dropdown d-none d-xl-flex">
                 <?php
                 $current_lang = sbs_get_current_language();
                 $available_languages = sbs_get_available_languages();
                 $current_lang_data = $available_languages[$current_lang];
                 ?>
-                <a class="nav-link language-switcher dropdown-with-icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="dropdown-text"><?php echo $current_lang_data['native_name']; ?></span>
-                    <span class="dropdown-icon"><?php echo sbs_get_icon('chevron-down'); ?></span>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php echo $current_lang_data['native_name']; ?>
                 </a>
-                <ul class="dropdown-menu language-dropdown-menu">
+                <ul class="dropdown-menu">
                     <?php foreach ($available_languages as $lang_code => $lang_data): ?>
                         <li>
                             <a class="dropdown-item language-option <?php echo ($lang_code === $current_lang) ? 'active' : ''; ?>"
@@ -97,17 +97,15 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
             </li>
             <li class="nav-item">
                 <nav class="navbar">
-                    <div class="container-fluid p-0">
-                        <button class="navbar-toggler menu-button" type="button"
+                    <div class="container-fluid">
+                        <button class="navbar-toggler btn-custom-nav p-2 d-flex gap-2" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                            <span class="menu-text d-none d-xl-flex">
-                                <?php echo sbs_get_text('menu', array(
-                                    'ja' => 'Menu',
-                                    'en' => 'Menu',
-                                    'id' => 'Menu'
-                                )); ?>
-                            </span>
-                            <span class="menu-icon"><?php echo sbs_get_icon('align-justify'); ?></span>
+                            <span class="d-none d-xl-flex align-items-center"><?php echo sbs_get_text('menu', array(
+                                                                                    'ja' => 'Menu',
+                                                                                    'en' => 'Menu',
+                                                                                    'id' => 'Menu'
+                                                                                )); ?></span>
+                            <span><?php echo sbs_get_icon('align-justify'); ?></span>
                         </button>
 
                         <div class="offcanvas offcanvas-end sbs-mega-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -133,7 +131,6 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
 
                             <!-- Right Content Panel -->
                             <div class="mega-menu-content-panel">
-
                                 <!-- Close Button -->
                                 <div class="mega-menu-header">
                                     <div class="language-switcher-container">

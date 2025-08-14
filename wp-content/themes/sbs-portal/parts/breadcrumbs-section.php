@@ -32,10 +32,15 @@ $breadcrumb_items = isset($args['breadcrumb_items']) ? $args['breadcrumb_items']
                 </svg>
             </div>
             <div class="breadcrumb-item">
-                <?php if ($index === count($breadcrumb_items) - 1): ?>
-                    <span class="breadcrumb-current"><?php echo esc_html($item); ?></span>
+                <?php
+                $is_last = ($index === count($breadcrumb_items) - 1);
+                $label = is_array($item) ? $item['label'] : $item;
+                $url = (is_array($item) && isset($item['url'])) ? $item['url'] : false;
+                ?>
+                <?php if ($is_last || !$url): ?>
+                    <span class="breadcrumb-current"><?php echo esc_html($label); ?></span>
                 <?php else: ?>
-                    <a href="#" class="breadcrumb-link text-decoration-none"><?php echo esc_html($item); ?></a>
+                    <a href="<?php echo esc_url($url); ?>" class="breadcrumb-link text-decoration-none"><?php echo esc_html($label); ?></a>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>

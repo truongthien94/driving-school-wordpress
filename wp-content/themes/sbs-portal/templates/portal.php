@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
             <div class="col-xl-6 image-container">
                 <div class="hero-left-column d-flex align-items-center justify-content-center">
                     <div class="hero-circle-image floating-animation position-absolute">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-circle.png" alt="Hero Circle" class="img-fluid rounded-circle" />
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-circle.png" alt="Hero Circle" class="img-fluid rounded-circle" />
                     </div>
                     <div class="hero-logo-strip position-absolute d-flex align-items-center justify-content-center">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-logo-strip.png" alt="SBS Logo Strip" class="img-fluid" />
