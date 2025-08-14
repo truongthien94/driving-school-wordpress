@@ -193,7 +193,7 @@
         const $floatChat = $('#float-chat');
         const $floatContact = $('#float-contact, #contact-button');
         const $terms = $('.terms');
-        const $privacy = $('.privacy'); 
+        const $privacy = $('.privacy');
 
         // Show/hide back to top and adjust float buttons and popup position
         $(window).on('scroll', function () {
@@ -506,10 +506,26 @@
         });
 
         // Portal box click effects
-        $('.portal-box').on('click', function () {
-            const title = $(this).find('.box-title').text();
-            console.log('Portal box clicked:', title);
-            // Add navigation logic here
+        $(document).on('click', '.portal-box', function (e) {
+            // If user clicked a real anchor inside, let the browser handle it
+            if ($(e.target).closest('a').length > 0) {
+                return;
+            }
+            const href = $(this).data('href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+
+        // Keyboard accessibility: Enter/Space to activate
+        $(document).on('keydown', '.portal-box[role="link"]', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const href = $(this).data('href');
+                if (href) {
+                    window.location.href = href;
+                }
+            }
         });
     }
 

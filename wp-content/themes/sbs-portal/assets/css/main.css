@@ -1793,6 +1793,11 @@ body.mega-menu-open {
     z-index: 1;
 }
 
+/* Add spacing when banner section is hidden between hero and blog sections */
+.sbs-hero-section+.sbs-blog-section {
+    margin-top: 60px;
+}
+
 .banner-carousel-container {
     position: relative;
     max-width: 1500px;
@@ -2575,6 +2580,7 @@ body.mega-menu-open {
 .legal-links {
     display: flex;
     gap: 30px;
+    cursor: pointer;
 }
 
 .legal-links a {

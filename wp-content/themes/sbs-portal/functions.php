@@ -57,8 +57,9 @@ function sbs_enqueue_scripts()
     // Enqueue blog list stylesheet (contains shared blog styles)
     wp_enqueue_style('sbs-blog-list-style', get_stylesheet_directory_uri() . '/assets/css/blog-list.css', array('sbs-style'), '1.0.0');
 
-    // Enqueue blog detail specific stylesheet only on single blog posts
-    if (is_singular('blog')) {
+    // Enqueue blog detail specific stylesheet on real single blog posts OR custom route /blog-detail
+    $is_blog_detail_page = (get_query_var('sbs_page') === 'blog-detail') || (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/blog-detail') !== false);
+    if (is_singular('blog') || $is_blog_detail_page) {
         wp_enqueue_style('sbs-blog-detail-style', get_stylesheet_directory_uri() . '/assets/css/blog-detail.css', array('sbs-style'), '1.0.0');
     }
 
@@ -1328,6 +1329,53 @@ function sbs_get_banner_items($limit = 10)
     }
 
     return $banner_items;
+}
+
+/**
+ * Get Campaign posts for banner carousel
+ *
+ * @param int $limit Maximum number of campaigns to retrieve
+ * @return array{id:int,title:string,image_src:string,permalink:string}[]
+ */
+function sbs_get_campaign_items(int $limit = 10): array
+{
+    $args = array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'posts_per_page' => $limit,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    );
+
+    $query = new WP_Query($args);
+    $items = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+
+            $image_src = has_post_thumbnail($post_id)
+                ? get_the_post_thumbnail_url($post_id, 'full')
+                : '';
+
+            $slug = get_post_field('post_name', $post_id);
+            // Build campaign-detail link by ID to avoid title/slug mismatch
+            $detail_url = add_query_arg('post_id', $post_id, home_url('/campaign-detail/'));
+
+            $items[] = array(
+                'id' => $post_id,
+                'title' => get_the_title(),
+                'image_src' => $image_src,
+                'permalink' => get_permalink($post_id),
+                'slug' => $slug,
+                'detail_url' => $detail_url,
+            );
+        }
+        wp_reset_postdata();
+    }
+
+    return $items;
 }
 
 /**

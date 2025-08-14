@@ -128,18 +128,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     error_log('Blog Detail - Final post_date: ' . $post_date);
 }
 ?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="profile" href="https://gmpg.org/xfn/11">
-    <?php wp_head(); ?>
-</head>
-
-<body <?php body_class(); ?>>
-    <?php wp_body_open(); ?>
+<?php get_header(); ?>
 
     <div class="sbs-blog-detail">
         <?php
@@ -307,17 +296,4 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     <!-- Footer Background for Blog Detail -->
     <div class="footer-background blog-list-footer" style="background-image: url('<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/footer-bg.jpg');"></div>
 
-    <!-- Enqueue Bootstrap JS -->
-    <?php
-    if (wp_script_is('bootstrap', 'registered')) {
-        wp_enqueue_script('bootstrap');
-    } else {
-        // Fallback to CDN Bootstrap
-        wp_enqueue_script('bootstrap-cdn', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js', array(), '5.3.0', true);
-    }
-    ?>
-
-    <?php wp_footer(); ?>
-</body>
-
-</html>
+<?php get_footer(); ?>

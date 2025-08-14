@@ -25,7 +25,7 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-company">
                 <div class="company-logo">
                     <!-- Logo would go here -->
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                    <a href="<?php echo esc_url(home_url('/')); ?>">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-footer.png"
                             alt="SBS Driving School" />
                     </a>
@@ -96,9 +96,9 @@ $footer_data = sbs_get_footer_data();
             <?php if (isset($footer_data['legal'])): ?>
                 <div class="legal-links d-flex justify-content-center mb-2">
                     <?php foreach ($footer_data['legal'] as $legal): ?>
-                        <div  class="<?php echo esc_attr($legal['class']); ?>">
+                        <a class="<?php echo esc_attr($legal['class']); ?>">
                             <?php echo esc_html($legal['text']); ?>
-                        </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

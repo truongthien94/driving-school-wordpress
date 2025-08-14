@@ -48,7 +48,7 @@ if (!defined('ABSPATH')) {
                     $main_item = array_shift($hero_items);
                 ?>
                     <div class="py-2">
-                        <div class="portal-box">
+                        <div class="portal-box" <?php if (!empty($main_item['link'])): ?> data-href="<?php echo esc_url($main_item['link']); ?>" role="link" tabindex="0" <?php endif; ?>>
                             <div class="d-flex align-items-center gap-3">
                                 <div class="box-icon flex-shrink-0">
                                     <?php echo sbs_get_icon($main_item['icon'] ?: 'car'); ?>
@@ -80,7 +80,7 @@ if (!defined('ABSPATH')) {
                             foreach ($row2_items as $item) {
                             ?>
                                 <div class="col-xl-6 py-2">
-                                    <div class="portal-box">
+                                    <div class="portal-box" <?php if (!empty($item['link'])): ?> data-href="<?php echo esc_url($item['link']); ?>" role="link" tabindex="0" <?php endif; ?>>
                                         <div class="box-header d-flex align-items-center gap-3">
                                             <div class="box-icon flex-shrink-0">
                                                 <?php echo sbs_get_icon($item['icon'] ?: 'bus'); ?>
@@ -172,7 +172,7 @@ if (!defined('ABSPATH')) {
                 foreach ($bottom_items as $item) {
             ?>
                     <div class="col-xl-3 py-2">
-                        <div class="portal-box">
+                        <div class="portal-box" <?php if (!empty($item['link'])): ?> data-href="<?php echo esc_url($item['link']); ?>" role="link" tabindex="0" <?php endif; ?>>
                             <div class="d-flex align-items-center gap-3">
                                 <div class="box-icon flex-shrink-0">
                                     <?php echo sbs_get_icon($item['icon'] ?: 'building'); ?>
@@ -269,90 +269,27 @@ if (!defined('ABSPATH')) {
         </div>
     </section>
 
-    <!-- SECTION 2: Banner Carousel Section -->
-    <section class="sbs-banner-carousel-section">
-        <div class="banner-carousel-container">
-            <div class="banner-carousel-track">
-                <?php
-                // Get banner items from database
-                $banner_items = sbs_get_banner_items(10);
-
-                // If no banner items exist, create sample ones
-                if (empty($banner_items)) {
-                    // Try to create sample banner items
-                    if (function_exists('sbs_create_sample_banner_items')) {
-                        sbs_create_sample_banner_items();
-                        $banner_items = sbs_get_banner_items(10);
-                    }
-                }
-
-                // Debug: Check if we have banner items
-                if (empty($banner_items)) {
-                    // No banner items in database, use fallback static content
-                ?>
-                    <!-- Banner 1: Gallery Image 1 -->
-                    <a class="banner-item" data-banner-type="gallery" data-banner-id="1" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="SBS ドライビングスクール 教習風景" />
-                    </a>
-
-                    <!-- Banner 2: Gallery Image 2 -->
-                    <a class="banner-item" data-banner-type="gallery" data-banner-id="2" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-2.jpg" alt="SBS 自動車整備 サービス" />
-                    </a>
-
-                    <!-- Banner 3: Gallery Image 3 -->
-                    <a class="banner-item" data-banner-type="gallery" data-banner-id="3" href="<?php echo esc_url(home_url('/campaign-detail/')); ?>">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-3.jpg" alt="SBS 施設案内" />
-                    </a>
-                    <?php
-                } else {
-                    // Display dynamic banners from database
-                    foreach ($banner_items as $item) {
-                        // Get campaign posts to match with banner items
-                        $campaign_posts = get_posts(array(
-                            'post_type' => 'campaign',
-                            'post_status' => 'publish',
-                            'posts_per_page' => 10,
-                            'orderby' => 'date',
-                            'order' => 'DESC',
-                        ));
-
-                        // Find matching campaign post by title or use first available
-                        $campaign_post = null;
-                        if (!empty($campaign_posts)) {
-                            // Try to find campaign with matching title
-                            foreach ($campaign_posts as $campaign) {
-                                if (
-                                    strpos(strtolower($campaign->post_title), strtolower($item['title'])) !== false ||
-                                    strpos(strtolower($item['title']), strtolower($campaign->post_title)) !== false
-                                ) {
-                                    $campaign_post = $campaign;
-                                    break;
-                                }
-                            }
-                            // If no match found, use first available campaign
-                            if (!$campaign_post) {
-                                $campaign_post = $campaign_posts[0];
-                            }
-                        }
-
-                        // Store campaign post ID for JavaScript navigation
-                        $campaign_id = $campaign_post ? $campaign_post->ID : 0;
-                    ?>
-                        <?php
-                        $slug = $campaign_id ? get_post_field('post_name', $campaign_id) : sanitize_title($item['title']);
-                        $detail_url = home_url('/campaign-detail/' . $slug . '/');
-                        ?>
-                        <a class="banner-item" data-banner-type="dynamic" data-banner-id="<?php echo esc_attr($item['id']); ?>" data-campaign-id="<?php echo esc_attr($campaign_id); ?>" href="<?php echo esc_url($detail_url); ?>">
-                            <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
+    <?php
+    // SECTION 2: Banner Carousel Section (render only when campaigns exist)
+    $campaign_items = function_exists('sbs_get_campaign_items') ? sbs_get_campaign_items(10) : array();
+    if (!empty($campaign_items)) :
+    ?>
+        <section class="sbs-banner-carousel-section">
+            <div class="banner-carousel-container">
+                <div class="banner-carousel-track">
+                    <?php foreach ($campaign_items as $item): ?>
+                        <a class="banner-item" data-banner-type="campaign" data-banner-id="<?php echo esc_attr($item['id']); ?>" href="<?php echo esc_url($item['detail_url'] ?? $item['permalink']); ?>">
+                            <?php if (!empty($item['image_src'])): ?>
+                                <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
+                            <?php else: ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="<?php echo esc_attr($item['title']); ?>" />
+                            <?php endif; ?>
                         </a>
-                <?php
-                    }
-                }
-                ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 
     <!-- SECTION 3: Blog Section -->
     <section class="sbs-blog-section">

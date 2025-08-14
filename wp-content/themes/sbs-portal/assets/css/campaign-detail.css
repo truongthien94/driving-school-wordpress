@@ -21,10 +21,57 @@ Optimized for Bootstrap 5 integration
     object-fit: cover;
 }
 
+/* Campaign related thumbnails in sidebar (image-only cards) */
+.campaign-related-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.campaign-related-item a,
+.campaign-related-image {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.campaign-related-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.campaign-detail-img {
+    /* Follow Figma frame proportions ~844x492 */
+    max-width: 844px;
+    margin: 0 auto 24px;
+}
+
 .campaign-detail-img img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 900 / 400;
     object-fit: cover;
+    border-radius: 16px;
+}
+
+/* Responsive tweaks following design breakpoints */
+@media (max-width: 1024px) {
+    .campaign-detail-img {
+        max-width: 100%;
+    }
+
+    .campaign-detail-img img {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+@media (max-width: 768px) {
+    .campaign-detail-img img {
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+    }
 }
 
 /* Header Section - Following Figma Design Exactly */
