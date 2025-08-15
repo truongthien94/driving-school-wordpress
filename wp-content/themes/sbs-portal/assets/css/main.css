@@ -1412,6 +1412,10 @@ body.mega-menu-open {
     z-index: 3;
 }
 
+.header-action{
+    white-space: nowrap;
+}
+
 .hero-navigation {
     z-index: 10000;
     max-width: 1500px;
