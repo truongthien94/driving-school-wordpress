@@ -444,7 +444,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 20px 40px 0 40px;
+    padding: 40px;
     position: relative;
     z-index: 10001;
     background: transparent;
@@ -567,7 +567,7 @@ body {
 /* Mega Menu Body */
 .mega-menu-body {
     flex: 1;
-    padding: 40px 40px 40px 40px;
+    padding:40px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -576,10 +576,8 @@ body {
 /* Navigation Columns */
 .mega-nav-columns {
     display: flex;
-    gap: 50px;
     align-items: flex-start;
     width: 100%;
-    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -595,12 +593,11 @@ body {
 .mega-nav-section {
     display: flex;
     flex-direction: column;
-    gap: 16px;
 }
 
 .mega-section-title {
     font-family: 'Inter', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
     line-height: 1.4em;
     color: #1A1A1A;
@@ -630,7 +627,7 @@ body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 24px;
     line-height: 1.5em;
     color: #262626;
     text-decoration: none;
@@ -643,13 +640,11 @@ body {
 
 .mega-nav-link:hover {
     color: #CF0020 !important;
-    transform: translateX(8px);
     text-decoration: none;
 }
 
 .mega-nav-link:focus {
     color: #CF0020 !important;
-    transform: translateX(8px);
     outline: none;
     text-decoration: none;
     outline: none !important;
@@ -678,18 +673,6 @@ body {
     text-decoration: none;
 }
 
-.mega-nav-link.large {
-    font-weight: 600;
-    font-size: 24px;
-    color: #262626;
-}
-
-.mega-nav-link.main {
-    font-weight: 600;
-    font-size: 24px;
-    color: #262626;
-}
-
 /* Subsections */
 .mega-nav-subsection {
     display: flex;
@@ -702,7 +685,7 @@ body {
 .mega-subsection-title {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 24px;
     line-height: 1.5em;
     color: #1A1A1A;
     margin: 0 0 16px 0;
@@ -725,7 +708,7 @@ body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.5em;
     color: #666666;
     text-decoration: none;
@@ -774,7 +757,7 @@ body {
 /* Mega Menu Footer */
 .mega-menu-footer {
     margin-top: auto;
-    padding: 20px 0 40px 0;
+   
 }
 
 .mega-footer-links {
@@ -787,7 +770,7 @@ body {
 .mega-footer-link {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.5em;
     color: #8E8E8E;
     text-decoration: none;
@@ -838,30 +821,22 @@ body {
         padding: 20px;
     }
 
-    .mega-menu-brand-panel {
-        width: 500px;
-    }
-
-    .mega-nav-columns {
-        gap: 50px;
-    }
-
-    .mega-menu-body {
-        padding: 40px 40px 30px 40px;
-    }
-
     .mega-section-title {
         font-size: 22px;
     }
 
+    .mega-subsection-title {
+        font-size: 22px;
+    }
+
     .mega-nav-link {
-        font-size: 17px;
+        font-size: 22px;
     }
 
     .brand-circle-image {
         width: 320px;
         height: 320px;
-        top: 120px;
+       
         left: 40px;
     }
 
@@ -921,26 +896,20 @@ body {
         transform: translateX(-50%);
     }
 
-    .mega-menu-header {
-        padding: 20px 30px 0 30px;
-    }
 
-    .mega-menu-body {
-        padding: 40px 30px 20px 30px;
-    }
 
-    .mega-nav-columns {
-        flex-direction: column;
-        gap: 40px;
-    }
 
     .mega-section-title {
         font-size: 20px;
     }
 
+    .mega-subsection-title {
+        font-size: 20px;
+    }
+
     .mega-nav-link {
-        font-size: 18px;
-        text-align: left;
+        font-size: 20px;
+      
     }
 }
 
@@ -976,33 +945,24 @@ body {
         bottom: 30px;
     }
 
-    .mega-menu-header {
-        padding: 15px 20px 0 20px;
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
-    }
-
     .mega-menu-close {
         align-self: flex-end;
         padding: 6px 12px;
         font-size: 14px;
     }
 
-    .mega-menu-body {
-        padding: 30px 20px 20px 20px;
-    }
+
 
     .mega-section-title {
         font-size: 18px;
     }
 
-    .mega-nav-link {
-        font-size: 16px;
+    .mega-subsection-title {
+        font-size: 18px;
     }
 
-    .mega-nav-sublink {
-        font-size: 14px;
+    .mega-nav-link {
+        font-size: 18px;
     }
 }
 

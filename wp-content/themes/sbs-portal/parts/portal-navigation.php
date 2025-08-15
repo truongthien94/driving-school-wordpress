@@ -108,7 +108,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                             <span><?php echo sbs_get_icon('align-justify'); ?></span>
                         </button>
 
-                        <div class="offcanvas offcanvas-end sbs-mega-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas offcanvas-end sbs-mega-menu " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
                             <!-- Left Brand Panel -->
                             <div class="mega-menu-brand-panel">
@@ -140,9 +140,9 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                         $current_lang_data_mobile = $available_languages_mobile[$current_lang_mobile];
                                         ?>
                                         <div class="dropdown mega-language-dropdown">
-                                            <a class="language-switcher-mega" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="lang-name"><?php echo $current_lang_data_mobile['native_name']; ?></span>
-                                                <span class="dropdown-icon"><?php echo sbs_get_icon('chevron-down'); ?></span>
+                                            <a class="language-switcher-mega dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span><?php echo $current_lang_data_mobile['native_name']; ?></span>
+
                                             </a>
                                             <ul class="dropdown-menu language-dropdown-menu-mega">
                                                 <?php foreach ($available_languages_mobile as $lang_code => $lang_data): ?>
@@ -174,7 +174,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
 
                                 <!-- Navigation Content -->
                                 <div class="mega-menu-body">
-                                    <div class="mega-nav-columns">
+                                    <div class="mega-nav-columns d-xl-flex d-block align-items-start">
 
                                         <!-- Portal Section -->
                                         <div class="mega-nav-column">
@@ -187,7 +187,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                     )); ?>
                                                 </h3>
 
-                                                <ul class="mega-nav-list">
+                                                <ul class="mega-nav-list mb-4">
                                                     <li>
                                                         <a class="mega-nav-link" href="#">
                                                             <?php echo sbs_get_text('greeting', array(
@@ -199,7 +199,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                     </li>
                                                 </ul>
 
-                                                <div class="mega-nav-subsection">
+                                                <div class="mega-nav-subsection gap-0 mb-4">
                                                     <h4 class="mega-subsection-title">
                                                         <?php echo sbs_get_text('company_info', array(
                                                             'ja' => '企業情報',
