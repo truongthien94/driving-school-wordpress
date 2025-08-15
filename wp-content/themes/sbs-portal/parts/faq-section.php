@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 $faq_groups = sbs_get_faq_groups();
 ?>
 
-<div class="faq-section position-relative">
+<div id="faq-section" class="faq-section position-relative">
     <!-- FAQ Title Bar -->
     <div class="faq-title-bar d-flex align-items-start p-3">
         <div class="faq-main-title">
