@@ -291,6 +291,55 @@ if (!defined('ABSPATH')) {
         </section>
     <?php endif; ?>
 
+    <script>
+        (function() {
+            // Attach click tracking for campaign banner items
+            document.addEventListener('click', function(e) {
+                var anchor = e.target.closest('a.banner-item[data-banner-type="campaign"][data-banner-id]');
+                if (!anchor) return;
+
+                var id = anchor.getAttribute('data-banner-id');
+                var ref = window.location.pathname || '/';
+                var restUrl = (window.sbsThemeData && window.sbsThemeData.restUrl ? window.sbsThemeData.restUrl : '/wp-json/') + 'sbs/v1/campaign/track';
+
+                try {
+                    navigator.sendBeacon && navigator.sendBeacon.length; // just to reference API if available
+                } catch (err) {}
+
+                var payload = JSON.stringify({
+                    campaign_id: parseInt(id, 10),
+                    type: 'click',
+                    ref: ref
+                });
+
+                // Prefer sendBeacon for non-blocking tracking during navigation
+                if (navigator.sendBeacon) {
+                    var blob = new Blob([payload], {
+                        type: 'application/json'
+                    });
+                    navigator.sendBeacon(restUrl, blob);
+                } else if (window.fetch) {
+                    fetch(restUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: payload,
+                        keepalive: true
+                    });
+                } else {
+                    // Fallback XHR
+                    try {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', restUrl, true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(payload);
+                    } catch (err) {}
+                }
+            }, true);
+        })();
+    </script>
+
     <!-- SECTION 3: Blog Section -->
     <section class="sbs-blog-section">
         <div class="container">

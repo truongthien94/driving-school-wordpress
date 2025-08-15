@@ -84,6 +84,7 @@ function sbs_enqueue_scripts()
     // Localize theme data
     wp_localize_script('sbs-script', 'sbsThemeData', array(
         'templateDirectoryUri' => get_template_directory_uri(),
+        'restUrl' => esc_url_raw(rest_url()),
     ));
 }
 // Load our assets late to reduce chance of being overridden by plugins
@@ -2190,3 +2191,458 @@ function sbs_enqueue_language_assets()
     ));
 }
 add_action('wp_enqueue_scripts', 'sbs_enqueue_language_assets');
+
+/**
+ * ============================================================================
+ * REST API: Campaigns & Blogs
+ * ============================================================================
+ */
+
+/**
+ * Register custom REST API routes under sbs/v1
+ */
+function sbs_register_rest_routes()
+{
+    register_rest_route(
+        'sbs/v1',
+        '/campaigns',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaigns',
+            'permission_callback' => '__return_true',
+            'args' => array(
+                'page' => array(
+                    'default' => 1,
+                    'sanitize_callback' => 'absint',
+                ),
+                'per_page' => array(
+                    'default' => 10,
+                    'sanitize_callback' => 'absint',
+                ),
+                'search' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+                'orderby' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'default' => 'date',
+                ),
+                'order' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'default' => 'DESC',
+                ),
+            ),
+        )
+    );
+
+    register_rest_route(
+        'sbs/v1',
+        '/campaign/(?P<id>\d+)',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaign_detail',
+            'permission_callback' => '__return_true',
+        )
+    );
+
+    register_rest_route(
+        'sbs/v1',
+        '/campaign/track',
+        array(
+            'methods'  => 'POST',
+            'callback' => 'sbs_api_track_campaign',
+            'permission_callback' => '__return_true',
+            'args' => array(
+                'campaign_id' => array(
+                    'required' => true,
+                    'sanitize_callback' => 'absint',
+                ),
+                'type' => array(
+                    'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+                'ref' => array(
+                    'required' => false,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+            ),
+        )
+    );
+
+    // Metrics for a single campaign
+    register_rest_route(
+        'sbs/v1',
+        '/campaign/(?P<id>\d+)/metrics',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaign_metrics',
+            'permission_callback' => '__return_true',
+        )
+    );
+
+    // Metrics for multiple campaigns: /campaigns/metrics?ids=1,2,3
+    register_rest_route(
+        'sbs/v1',
+        '/campaigns/metrics',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaigns_metrics',
+            'permission_callback' => '__return_true',
+            'args' => array(
+                'ids' => array(
+                    'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+            ),
+        )
+    );
+
+    register_rest_route(
+        'sbs/v1',
+        '/blogs',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_blogs',
+            'permission_callback' => '__return_true',
+            'args' => array(
+                'page' => array(
+                    'default' => 1,
+                    'sanitize_callback' => 'absint',
+                ),
+                'per_page' => array(
+                    'default' => 10,
+                    'sanitize_callback' => 'absint',
+                ),
+                'category' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+                'status' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+                'search' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+                'orderby' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'default' => 'date',
+                ),
+                'order' => array(
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'default' => 'DESC',
+                ),
+            ),
+        )
+    );
+
+    register_rest_route(
+        'sbs/v1',
+        '/blogs/(?P<id>\d+)',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_blog_detail',
+            'permission_callback' => '__return_true',
+        )
+    );
+}
+add_action('rest_api_init', 'sbs_register_rest_routes');
+
+/**
+ * Format a Campaign post for API responses
+ * @param int $post_id
+ * @param bool $include_content
+ * @return array
+ */
+function sbs_format_campaign_post($post_id, $include_content = false)
+{
+    $post = get_post($post_id);
+    if (!$post || $post->post_type !== 'campaign') {
+        return array();
+    }
+
+    $impressions = (int) get_post_meta($post_id, '_campaign_impressions', true);
+    $clicks = (int) get_post_meta($post_id, '_campaign_clicks', true);
+
+    return array(
+        'id' => $post_id,
+        'title' => get_the_title($post_id),
+        'excerpt' => get_the_excerpt($post_id),
+        'content' => $include_content ? apply_filters('the_content', $post->post_content) : '',
+        'featured_image' => has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'full') : '',
+        'date' => get_the_date('Y-m-d', $post_id),
+        'slug' => get_post_field('post_name', $post_id),
+        'permalink' => get_permalink($post_id),
+        'detail_url' => add_query_arg('post_id', $post_id, home_url('/campaign-detail/')),
+        'metrics' => array(
+            'impressions' => $impressions,
+            'clicks' => $clicks,
+        ),
+    );
+}
+
+/**
+ * Format a Blog post for API responses
+ * @param int $post_id
+ * @param bool $include_content
+ * @return array
+ */
+function sbs_format_blog_post($post_id, $include_content = false)
+{
+    $post = get_post($post_id);
+    if (!$post || $post->post_type !== 'blog') {
+        return array();
+    }
+
+    return array(
+        'id' => $post_id,
+        'title' => get_the_title($post_id),
+        'excerpt' => get_the_excerpt($post_id),
+        'content' => $include_content ? apply_filters('the_content', $post->post_content) : '',
+        'featured_image' => has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'full') : '',
+        'date' => get_the_date('Y-m-d', $post_id),
+        'category' => get_post_meta($post_id, '_blog_post_category', true),
+        'status' => get_post_meta($post_id, '_blog_post_status', true),
+        'permalink' => get_permalink($post_id),
+        'slug' => get_post_field('post_name', $post_id),
+    );
+}
+
+/**
+ * GET /sbs/v1/campaigns
+ */
+function sbs_api_get_campaigns(WP_REST_Request $request)
+{
+    $page = max(1, (int) $request->get_param('page'));
+    $per_page = max(1, min(50, (int) $request->get_param('per_page')));
+    $search = (string) $request->get_param('search');
+    $orderby = (string) $request->get_param('orderby');
+    $order = strtoupper((string) $request->get_param('order')) === 'ASC' ? 'ASC' : 'DESC';
+
+    $args = array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'paged' => $page,
+        'posts_per_page' => $per_page,
+        'orderby' => $orderby ?: 'date',
+        'order' => $order,
+        's' => $search,
+    );
+
+    $query = new WP_Query($args);
+
+    $items = array();
+    foreach ($query->posts as $post) {
+        $items[] = sbs_format_campaign_post($post->ID, false);
+    }
+
+    $response = rest_ensure_response($items);
+    $response->header('X-WP-Total', (string) $query->found_posts);
+    $response->header('X-WP-TotalPages', (string) max(1, (int) $query->max_num_pages));
+    return $response;
+}
+
+/**
+ * GET /sbs/v1/campaign/{id}
+ */
+function sbs_api_get_campaign_detail(WP_REST_Request $request)
+{
+    $id = absint($request['id']);
+    if (!$id) {
+        return new WP_Error('invalid_id', 'Invalid campaign id', array('status' => 400));
+    }
+
+    $post = get_post($id);
+    if (!$post || $post->post_type !== 'campaign' || $post->post_status !== 'publish') {
+        return new WP_Error('not_found', 'Campaign not found', array('status' => 404));
+    }
+
+    return rest_ensure_response(sbs_format_campaign_post($id, true));
+}
+
+/**
+ * POST /sbs/v1/campaign/track
+ * Body: { campaign_id: int, type: impression|click, ref?: string }
+ */
+function sbs_api_track_campaign(WP_REST_Request $request)
+{
+    $campaign_id = absint($request->get_param('campaign_id'));
+    $type = strtolower((string) $request->get_param('type'));
+    $ref = sanitize_text_field((string) $request->get_param('ref'));
+
+    if (!$campaign_id || !in_array($type, array('impression', 'click'), true)) {
+        return new WP_Error('invalid_params', 'campaign_id and valid type are required', array('status' => 400));
+    }
+
+    $post = get_post($campaign_id);
+    if (!$post || $post->post_type !== 'campaign') {
+        return new WP_Error('not_found', 'Campaign not found', array('status' => 404));
+    }
+
+    // Basic throttling by IP + campaign + type
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '0.0.0.0';
+    $key_base = sprintf('sbs_campaign_%s_%d_%s', $type, $campaign_id, md5($ip . '|' . $ref));
+    $throttle_key = $key_base . '_ts';
+    $cooldown = ($type === 'impression') ? MINUTE_IN_SECONDS * 15 : MINUTE_IN_SECONDS * 5; // 15m impressions, 5m clicks
+    $last_ts = get_transient($throttle_key);
+
+    if ($last_ts) {
+        // Already counted recently
+        return rest_ensure_response(array('success' => true, 'throttled' => true));
+    }
+
+    $meta_key = ($type === 'impression') ? '_campaign_impressions' : '_campaign_clicks';
+    $current = (int) get_post_meta($campaign_id, $meta_key, true);
+    $new_value = $current + 1;
+    update_post_meta($campaign_id, $meta_key, $new_value);
+
+    set_transient($throttle_key, time(), $cooldown);
+
+    return rest_ensure_response(array(
+        'success' => true,
+        'campaign_id' => $campaign_id,
+        'type' => $type,
+        'count' => $new_value,
+    ));
+}
+
+/**
+ * GET /sbs/v1/campaign/{id}/metrics
+ */
+function sbs_api_get_campaign_metrics(WP_REST_Request $request)
+{
+    $id = absint($request['id']);
+    if (!$id) {
+        return new WP_Error('invalid_id', 'Invalid campaign id', array('status' => 400));
+    }
+
+    $post = get_post($id);
+    if (!$post || $post->post_type !== 'campaign') {
+        return new WP_Error('not_found', 'Campaign not found', array('status' => 404));
+    }
+
+    $impressions = (int) get_post_meta($id, '_campaign_impressions', true);
+    $clicks = (int) get_post_meta($id, '_campaign_clicks', true);
+
+    return rest_ensure_response(array(
+        'id' => $id,
+        'impressions' => $impressions,
+        'clicks' => $clicks,
+    ));
+}
+
+/**
+ * GET /sbs/v1/campaigns/metrics?ids=1,2,3
+ */
+function sbs_api_get_campaigns_metrics(WP_REST_Request $request)
+{
+    $idsParam = (string) $request->get_param('ids');
+    if (empty($idsParam)) {
+        return new WP_Error('invalid_params', 'ids is required', array('status' => 400));
+    }
+
+    $ids = array_filter(array_map('absint', preg_split('/[|,;\s]+/', $idsParam)));
+    if (empty($ids)) {
+        return new WP_Error('invalid_params', 'No valid ids provided', array('status' => 400));
+    }
+
+    $results = array();
+    foreach ($ids as $id) {
+        $post = get_post($id);
+        if ($post && $post->post_type === 'campaign') {
+            $results[] = array(
+                'id' => $id,
+                'impressions' => (int) get_post_meta($id, '_campaign_impressions', true),
+                'clicks' => (int) get_post_meta($id, '_campaign_clicks', true),
+            );
+        }
+    }
+
+    return rest_ensure_response($results);
+}
+
+/**
+ * GET /sbs/v1/blogs
+ */
+function sbs_api_get_blogs(WP_REST_Request $request)
+{
+    $page = max(1, (int) $request->get_param('page'));
+    $per_page = max(1, min(50, (int) $request->get_param('per_page')));
+    $category = (string) $request->get_param('category'); // BLOG|NEWS|EVENT|CAMPAIGN or multiple delimited by | , ;
+    $status = (string) $request->get_param('status'); // optional: published|draft|private
+    $search = (string) $request->get_param('search');
+    $orderby = (string) $request->get_param('orderby');
+    $order = strtoupper((string) $request->get_param('order')) === 'ASC' ? 'ASC' : 'DESC';
+
+    $meta_query = array('relation' => 'AND');
+
+    // Only apply status filter if provided; otherwise do not restrict by custom meta
+    if (!empty($status)) {
+        $meta_query[] = array(
+            'key' => '_blog_post_status',
+            'value' => $status,
+            'compare' => '=',
+        );
+    }
+
+    if (!empty($category)) {
+        // Accept multiple categories separated by | , ; or space
+        $delimited = preg_split('/[|,;\s]+/', $category);
+        $categories = array_filter(array_map('trim', (array) $delimited));
+
+        if (!empty($categories)) {
+            $meta_query[] = array(
+                'key' => '_blog_post_category',
+                'value' => $categories,
+                'compare' => 'IN',
+            );
+        }
+    }
+
+    $args = array(
+        'post_type' => 'blog',
+        'post_status' => 'publish',
+        'paged' => $page,
+        'posts_per_page' => $per_page,
+        'orderby' => $orderby ?: 'date',
+        'order' => $order,
+        's' => $search,
+        'meta_query' => $meta_query,
+    );
+
+    // If ordering by custom order first, mirror theme helper
+    if ($orderby === 'menu_order' || $orderby === 'meta_value_num') {
+        $args['meta_key'] = '_blog_post_order';
+        $args['orderby'] = array('meta_value_num' => 'ASC', 'date' => $order);
+    }
+
+    $query = new WP_Query($args);
+
+    $items = array();
+    foreach ($query->posts as $post) {
+        $formatted = sbs_format_blog_post($post->ID, false);
+        // Exclude content in list
+        unset($formatted['content']);
+        $items[] = $formatted;
+    }
+
+    $response = rest_ensure_response($items);
+    $response->header('X-WP-Total', (string) $query->found_posts);
+    $response->header('X-WP-TotalPages', (string) max(1, (int) $query->max_num_pages));
+    return $response;
+}
+
+/**
+ * GET /sbs/v1/blogs/{id}
+ */
+function sbs_api_get_blog_detail(WP_REST_Request $request)
+{
+    $id = absint($request['id']);
+    if (!$id) {
+        return new WP_Error('invalid_id', 'Invalid blog id', array('status' => 400));
+    }
+
+    $post = get_post($id);
+    if (!$post || $post->post_type !== 'blog' || $post->post_status !== 'publish') {
+        return new WP_Error('not_found', 'Blog not found', array('status' => 404));
+    }
+
+    return rest_ensure_response(sbs_format_blog_post($id, true));
+}
