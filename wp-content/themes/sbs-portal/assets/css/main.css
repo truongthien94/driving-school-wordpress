@@ -2482,7 +2482,7 @@ body.mega-menu-open {
 .footer-columns {
     display: flex;
     gap: 60px;
-    flex: 2;
+    flex: 1;
 }
 
 .footer-column {
