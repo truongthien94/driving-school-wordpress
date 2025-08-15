@@ -111,7 +111,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                         <div class="offcanvas offcanvas-end sbs-mega-menu " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
                             <!-- Left Brand Panel -->
-                            <div class="mega-menu-brand-panel">
+                            <div class="mega-menu-brand-panel d-none d-xl-block">
                                 <div class="brand-content">
                                     <div class="brand-circle-image">
                                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo_menu.png" alt="SBS Image" />
@@ -144,7 +144,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                 <span><?php echo $current_lang_data_mobile['native_name']; ?></span>
 
                                             </a>
-                                            <ul class="dropdown-menu language-dropdown-menu-mega">
+                                            <ul class="dropdown-menu ">
                                                 <?php foreach ($available_languages_mobile as $lang_code => $lang_data): ?>
                                                     <li>
                                                         <a class="dropdown-item language-option <?php echo ($lang_code === $current_lang_mobile) ? 'active' : ''; ?>"
@@ -173,7 +173,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                 </div>
 
                                 <!-- Navigation Content -->
-                                <div class="mega-menu-body">
+                                <div class="mega-menu-container">
                                     <div class="mega-nav-columns d-xl-flex d-block align-items-start">
 
                                         <!-- Portal Section -->
@@ -333,6 +333,12 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                             </a>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="mt-4 menu-footer-logo d-block d-xl-none">
+                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-footer-dark.png"
+                                            alt="SBS Driving School" />
+                                    </a>
                                 </div>
                             </div>
                         </div>
