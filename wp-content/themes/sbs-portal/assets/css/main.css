@@ -595,6 +595,12 @@ body {
     margin: 0 0 20px 0;
     padding: 0;
     position: relative;
+    text-decoration: none;
+}
+
+.hover-link:hover {
+    color: #CF0020;
+    text-decoration: none;
 }
 
 /* Navigation Lists */
@@ -781,12 +787,7 @@ body {
     transform: translateX(4px);
 }
 
-.mega-footer-link:focus {
-    color: #CF0020;
-    transform: translateX(4px);
-    outline: none;
-    text-decoration: none;
-}
+
 
 .mega-footer-link::before {
     content: '';
@@ -1006,16 +1007,6 @@ body.mega-menu-open {
 .mega-nav-link:hover::before,
 .mega-nav-sublink:hover::before {
     width: 100%;
-}
-
-/* Focus states for better accessibility */
-.mega-nav-link:focus,
-.mega-nav-sublink:focus,
-.mega-footer-link:focus {
-    outline: 2px solid #DD1F01;
-    outline-offset: 2px;
-    color: #DD1F01;
-    text-decoration: none;
 }
 
 .mega-menu-close:focus {
@@ -2478,11 +2469,20 @@ body.admin-bar .faq-title-bar {
     gap: 16px;
 }
 
-.contact-item h4 {
-    font-size: 14px;
+.contact-item {
+    text-align: left;
+}
+
+.contact-item a {
+    font-size: 16px;
     font-weight: 400;
     color: white;
     margin: 0 0 4px 0;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    color: #DD1F01;
 }
 
 .contact-item p {

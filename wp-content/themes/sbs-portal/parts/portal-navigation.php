@@ -22,7 +22,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
     <div class="d-flex align-items-center justify-content-end">
         <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 gap-2 gap-xxl-4">
             <li class="nav-item d-none d-xl-flex">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-link active" aria-current="page" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
                     <?php echo sbs_get_text('greeting', array(
                         'ja' => 'ごあいさつ',
                         'en' => 'Greeting',
@@ -42,7 +42,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">
                             <?php echo sbs_get_text('company_overview', array(
                                 'ja' => '会社概要',
                                 'en' => 'Company Overview',
@@ -51,7 +51,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">
                             <?php echo sbs_get_text('history', array(
                                 'ja' => '沿革',
                                 'en' => 'History',
@@ -63,7 +63,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
             </li>
 
             <li class="nav-item  d-none d-xl-flex">
-                <a class="nav-link  active" href="#">
+                <a class="nav-link  active" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">
                     <?php echo sbs_get_text('about_sbs_group', array(
                         'ja' => 'SBSグループについて',
                         'en' => 'About SBS Group',
@@ -189,7 +189,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
 
                                                 <ul class="mega-nav-list mb-4">
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
                                                             <?php echo sbs_get_text('greeting', array(
                                                                 'ja' => 'ごあいさつ',
                                                                 'en' => 'Greeting',
@@ -209,7 +209,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                     </h4>
                                                     <ul class="mega-nav-sublist">
                                                         <li>
-                                                            <a class="mega-nav-sublink" href="#">
+                                                            <a class="mega-nav-sublink" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">
                                                                 <?php echo sbs_get_text('company_overview', array(
                                                                     'ja' => '会社概要',
                                                                     'en' => 'Company Overview',
@@ -218,7 +218,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="mega-nav-sublink" href="#">
+                                                            <a class="mega-nav-sublink" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">
                                                                 <?php echo sbs_get_text('history', array(
                                                                     'ja' => '沿革',
                                                                     'en' => 'History',
@@ -231,7 +231,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
 
                                                 <ul class="mega-nav-list">
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">
                                                             <?php echo sbs_get_text('about_sbs_group', array(
                                                                 'ja' => 'SBSグループについて',
                                                                 'en' => 'About SBS Group',
@@ -246,17 +246,17 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                         <!-- SBS Auto Section -->
                                         <div class="mega-nav-column">
                                             <div class="mega-nav-section">
-                                                <h3 class="mega-section-title">
+                                                <a class="mega-section-title hover-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk">
                                                     <?php echo sbs_get_text('sbs_auto', array(
                                                         'ja' => 'SBS自動車',
                                                         'en' => 'SBS Auto',
                                                         'id' => 'SBS Auto'
                                                     )); ?>
-                                                </h3>
+                                                </a>
 
                                                 <ul class="mega-nav-list">
                                                     <li>
-                                                        <a class="mega-nav-link large" href="#">
+                                                        <a class="mega-nav-link large" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">
                                                             <?php echo sbs_get_text('sbs_driving_school_anesaki', array(
                                                                 'ja' => 'SBSドライビングスクール姉崎',
                                                                 'en' => 'SBS Driving School Anesaki',
@@ -265,7 +265,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="mega-nav-link main" href="#">
+                                                        <a class="mega-nav-link main" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage">
                                                             <?php echo sbs_get_text('sbs_driving_school_inage', array(
                                                                 'ja' => 'SBSドライビングスクール稲毛',
                                                                 'en' => 'SBS Driving School Inage',
@@ -274,7 +274,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://anesaki.sbs-drivingschool.co.jp">
                                                             <?php echo sbs_get_text('anesaki_details', array(
                                                                 'ja' => '姉崎詳細',
                                                                 'en' => 'Anesaki Details',
@@ -283,7 +283,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://inage.sbs-drivingschool.co.jp">
                                                             <?php echo sbs_get_text('inage_details', array(
                                                                 'ja' => '稲毛詳細',
                                                                 'en' => 'Inage Details',
@@ -292,7 +292,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/reservation-course">
                                                             <?php echo sbs_get_text('reservation_system', array(
                                                                 'ja' => '予約システム',
                                                                 'en' => 'Reservation System',
@@ -301,7 +301,7 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="mega-nav-link" href="#">
+                                                        <a class="mega-nav-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/matching">
                                                             <?php echo sbs_get_text('matching_system', array(
                                                                 'ja' => 'マッチングシステム',
                                                                 'en' => 'Matching System',
@@ -317,14 +317,14 @@ $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array
                                     <!-- Footer Section -->
                                     <div class="mega-menu-footer">
                                         <div class="mega-footer-links">
-                                            <a class="mega-footer-link primary" href="#">
+                                            <a class="mega-footer-link primary" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/site-usage">
                                                 <?php echo sbs_get_text('terms_of_use', array(
                                                     'ja' => '利用規約',
                                                     'en' => 'Terms of Use',
                                                     'id' => 'Syarat Penggunaan'
                                                 )); ?>
                                             </a>
-                                            <a class="mega-footer-link" href="#">
+                                            <a class="mega-footer-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/privacy-policy">
                                                 <?php echo sbs_get_text('privacy', array(
                                                     'ja' => 'プライバシー',
                                                     'en' => 'Privacy',
