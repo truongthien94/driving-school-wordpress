@@ -46,37 +46,35 @@ if (!empty($post['id'])) {
 ?>
 
 <article class="blog-card h-100">
-    <!-- Featured Image (smaller height) -->
-    <div class="blog-card-image">
-        <a href="<?php echo esc_url($permalink); ?>" aria-label="<?php echo esc_attr($post['title']); ?>">
+    <a href="<?php echo esc_url($permalink); ?>" aria-label="<?php echo esc_attr($post['title']); ?>" class="blog-card-link d-block h-100 text-decoration-none">
+        <!-- Featured Image (smaller height) -->
+        <div class="blog-card-image">
             <img src="<?php echo esc_url($image_file); ?>" alt="<?php echo esc_attr($post['title']); ?>" class="img-fluid" />
-        </a>
-    </div>
-
-    <!-- Card Content -->
-    <div class="blog-card-content d-flex flex-column h-100">
-        <!-- Title -->
-        <h3 class="blog-card-title">
-            <a href="<?php echo esc_url($permalink); ?>" class="text-decoration-none">
-                <?php echo esc_html($post['title']); ?>
-            </a>
-        </h3>
-
-        <!-- Excerpt (min 2 lines, clamp 2 lines) -->
-        <div class="blog-card-excerpt mb-2">
-            <?php echo esc_html($post['excerpt']); ?>
         </div>
 
-        <!-- Meta Information -->
-        <div class="blog-card-meta mt-auto">
-            <div class="meta-tags d-flex justify-content-between align-items-center">
-                <span class="category-tag category-<?php echo strtolower($post['category'] ?? 'blog'); ?>">
-                    <?php echo esc_html($post['category'] ?? 'BLOG'); ?>
-                </span>
-                <span class="date-tag">
-                    <?php echo esc_html($post['date'] ?? ''); ?>
-                </span>
+        <!-- Card Content -->
+        <div class="blog-card-content d-flex flex-column h-100">
+            <!-- Title -->
+            <h3 class="blog-card-title">
+                <?php echo esc_html($post['title']); ?>
+            </h3>
+
+            <!-- Excerpt (min 2 lines, clamp 2 lines) -->
+            <div class="blog-card-excerpt mb-2">
+                <?php echo esc_html($post['excerpt']); ?>
+            </div>
+
+            <!-- Meta Information -->
+            <div class="blog-card-meta mt-auto">
+                <div class="meta-tags d-flex justify-content-between align-items-center">
+                    <span class="category-tag category-<?php echo strtolower($post['category'] ?? 'blog'); ?>">
+                        <?php echo esc_html($post['category'] ?? 'BLOG'); ?>
+                    </span>
+                    <span class="date-tag">
+                        <?php echo esc_html($post['date'] ?? ''); ?>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </article>

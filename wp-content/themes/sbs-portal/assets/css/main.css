@@ -24,13 +24,12 @@ body {
     border-radius: 8px;
     padding: 0;
     position: relative;
-    z-index: 1000;
     width: 47.5%;
+    z-index: 1000;
 }
 
 .portal-sticky {
     position: fixed;
-
 }
 
 /* Mega Search Box - Main Container */
@@ -39,7 +38,6 @@ body {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 16px;
     width: 100%;
     height: 64px;
     margin-left: auto;
@@ -1826,7 +1824,6 @@ body.mega-menu-open {
 
     .sbs-banner-carousel-section::after {
         height: 60px;
-        border-radius: 0 0 50% 50% / 0 0 80px 80px;
     }
 
     .banner-carousel-container {
@@ -1842,7 +1839,6 @@ body.mega-menu-open {
 @media (max-width: 480px) {
     .sbs-banner-carousel-section::after {
         height: 50px;
-        border-radius: 0 0 50% 50% / 0 0 60px 60px;
     }
 
     .banner-item {
