@@ -43,9 +43,6 @@ $show_navigation = isset($args['show_navigation']) ? $args['show_navigation'] : 
             </div>
         </div>
 
-        <div class="header-section-right">
-            <img class="hero-circle" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
-            <img class="hero-circle-2" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-circle.jpg" alt="circle" />
-        </div>
+       
     </div>
 </section>

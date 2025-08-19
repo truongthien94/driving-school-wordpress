@@ -20,7 +20,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
 
 <div class="blog-section">
     <!-- Section Header -->
-    <div class="section-header d-flex justify-content-between align-items-end mb-4">
+    <div class="section-header d-flex justify-content-between align-items-end my-4">
         <div class="header-content d-flex flex-column gap-2">
             <div class="header-title d-flex align-items-center gap-3">
                 <div class="logo-icon d-flex align-items-center justify-content-center">

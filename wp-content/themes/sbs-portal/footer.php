@@ -43,11 +43,11 @@ $footer_data = sbs_get_footer_data();
                 <div class="footer-column">
                     <h3 class="column-title">探索</h3>
                     <ul class="column-links">
-                        <li><a href="/about">ごあいさつ</a></li>
-                        <li><a href="/company">企業情報</a></li>
-                        <li><a href="/news">ニュース</a></li>
-                        <li><a href="/group">SBSグループについて</a></li>
-                        <li><a href="/recruitment">採用</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">ごあいさつ</a></li>
+                        <li><a href="#">企業情報</a></li>
+                        <li><a href="#">ニュース</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">SBSグループについて</a></li>
+                        <li><a href="#">採用</a></li>
                     </ul>
                 </div>
 
@@ -55,8 +55,8 @@ $footer_data = sbs_get_footer_data();
                 <div class="footer-column">
                     <h3 class="column-title">SBS自動車学校</h3>
                     <ul class="column-links">
-                        <li><a href="/school/inage">SBSドライビングスクール稲毛</a></li>
-                        <li><a href="/school/anegasaki">SBSドライビングスクール姉崎</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage">SBSドライビングスクール稲毛</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">SBSドライビングスクール姉崎</a></li>
                     </ul>
                 </div>
             </div>
@@ -65,11 +65,11 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-contact">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <h4>SBSドライビングスクール稲毛</h4>
+                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage/">SBSドライビングスクール稲毛</a>
                         <p>Tel: 043-259-6371</p>
                     </div>
                     <div class="contact-item">
-                        <h4>SBSドライビングスクール姉崎</h4>
+                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">SBSドライビングスクール姉崎</a>
                         <p>Tel: 0436-61-1131</p>
                     </div>
                 </div>
