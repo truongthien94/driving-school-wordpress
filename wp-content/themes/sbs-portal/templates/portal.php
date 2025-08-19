@@ -354,41 +354,7 @@ if (!defined('ABSPATH')) {
         </div>
     </section>
 
-    <!-- Popup -->
-    <div class="sbs-popup" id="sbs-popup">
-        <div class="popup-content" id="draggable-popup">
-            <!-- Popup Header -->
-            <button class="popup-close position-absolute" id="popup-close">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-x.svg" alt="Close" class="img-fluid" />
-            </button>
-
-            <!-- Popup Content -->
-            <div class="popup-background">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ads.png" alt="SBS Background" />
-            </div>
-        </div>
-    </div>
-
-    <!-- Float Buttons -->
-    <div class="float-buttons">
-        <!-- Chat Button -->
-        <div class="float-button float-chat" id="float-chat">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-chat.svg" alt="Chat" />
-        </div>
-
-        <!-- Contact Button -->
-        <div class="float-button float-contact" id="float-contact">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-mail.svg" alt="Contact" />
-        </div>
-
-        <!-- Back to Top Button -->
-        <div class="back-to-top" id="back-to-top">
-            <div class="back-to-top-content">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-arrow-up.svg" alt="Back to top" />
-                <span>Page top</span>
-            </div>
-        </div>
-    </div>
+    <?php get_template_part('parts/float-buttons'); ?>
 </div>
 
 <!-- Footer Background -->

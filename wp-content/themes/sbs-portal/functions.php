@@ -138,6 +138,138 @@ function sbs_register_campaign_post_type()
 add_action('init', 'sbs_register_campaign_post_type');
 
 /**
+ * Add Campaign meta boxes
+ */
+function sbs_add_campaign_meta_boxes()
+{
+    add_meta_box(
+        'sbs_campaign_highlight',
+        __('Campaign Highlight', 'sbs-portal'),
+        'sbs_campaign_highlight_meta_box_callback',
+        'campaign',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'sbs_add_campaign_meta_boxes');
+
+/**
+ * Campaign highlight meta box callback
+ */
+function sbs_campaign_highlight_meta_box_callback($post)
+{
+    wp_nonce_field('sbs_campaign_highlight_meta_box', 'sbs_campaign_highlight_meta_box_nonce');
+
+    $is_highlight = get_post_meta($post->ID, '_campaign_highlight', true);
+    $current_highlight = sbs_get_highlighted_campaign();
+
+?>
+    <label>
+        <input type="checkbox" name="campaign_highlight" value="1" <?php checked($is_highlight, '1'); ?> />
+        <?php _e('Set as highlighted campaign', 'sbs-portal'); ?>
+    </label>
+
+    <?php if ($current_highlight && $current_highlight['id'] != $post->ID): ?>
+        <p style="color: #d63638; font-size: 12px; margin-top: 8px;">
+            <?php printf(__('Note: "%s" is currently highlighted. Checking this will remove the highlight from that campaign.', 'sbs-portal'), esc_html($current_highlight['title'])); ?>
+        </p>
+    <?php endif; ?>
+
+    <p style="color: #666; font-size: 12px; margin-top: 8px;">
+        <?php _e('Only one campaign can be highlighted at a time. The highlighted campaign will appear in the popup banner.', 'sbs-portal'); ?>
+    </p>
+<?php
+}
+
+/**
+ * Save Campaign highlight meta box
+ */
+function sbs_save_campaign_highlight_meta_box($post_id)
+{
+    if (
+        !isset($_POST['sbs_campaign_highlight_meta_box_nonce']) ||
+        !wp_verify_nonce($_POST['sbs_campaign_highlight_meta_box_nonce'], 'sbs_campaign_highlight_meta_box')
+    ) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    $is_highlight = isset($_POST['campaign_highlight']) ? '1' : '0';
+
+    if ($is_highlight === '1') {
+        // Remove highlight from all other campaigns first
+        $args = array(
+            'post_type' => 'campaign',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => '_campaign_highlight',
+                    'value' => '1',
+                    'compare' => '='
+                )
+            )
+        );
+
+        $highlighted_campaigns = get_posts($args);
+        foreach ($highlighted_campaigns as $campaign) {
+            if ($campaign->ID != $post_id) {
+                update_post_meta($campaign->ID, '_campaign_highlight', '0');
+            }
+        }
+
+        // Set this campaign as highlighted
+        update_post_meta($post_id, '_campaign_highlight', '1');
+    } else {
+        update_post_meta($post_id, '_campaign_highlight', '0');
+    }
+}
+add_action('save_post', 'sbs_save_campaign_highlight_meta_box');
+
+/**
+ * Get the currently highlighted campaign
+ */
+function sbs_get_highlighted_campaign()
+{
+    $args = array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'meta_query' => array(
+            array(
+                'key' => '_campaign_highlight',
+                'value' => '1',
+                'compare' => '='
+            )
+        )
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        $post = $query->posts[0];
+        wp_reset_postdata();
+
+        return array(
+            'id' => $post->ID,
+            'title' => $post->post_title,
+            'featured_image' => has_post_thumbnail($post->ID) ? get_the_post_thumbnail_url($post->ID, 'full') : '',
+            'permalink' => get_permalink($post->ID),
+            'detail_url' => add_query_arg('post_id', $post->ID, home_url('/campaign-detail/'))
+        );
+    }
+
+    return null;
+}
+
+/**
  * Register Hero Item Post Type
  */
 function sbs_register_hero_item_post_type()
