@@ -18,7 +18,7 @@ $mock_data = sbs_get_mock_data();
 $navigation = isset($mock_data['navigation']) ? $mock_data['navigation'] : array();
 ?>
 
-<div class="nav-section">
+<div class="nav-section portal-sticky">
     <div class="d-flex align-items-center justify-content-end">
         <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 gap-2 gap-xxl-4">
             <li class="nav-item d-none d-xl-flex">

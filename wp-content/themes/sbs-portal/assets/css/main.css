@@ -27,6 +27,10 @@ body {
     z-index: 1000;
 }
 
+.portal-sticky {
+    position: fixed; 
+}
+
 /* Mega Search Box - Main Container */
 .mega-search-box {
     display: flex;

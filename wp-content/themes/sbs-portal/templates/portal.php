@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
         <div class="hero-overlay"></div>
 
         <div class="hero-navigation row-gap-0 p-0 row py-4 flex justify-content-end">
-            <div class="col-xl-6">
+            <div class="col-xl-6 mb-5">
                 <?php get_template_part('parts/portal-navigation'); ?>
             </div>
         </div>
