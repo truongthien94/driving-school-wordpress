@@ -25,10 +25,12 @@ body {
     padding: 0;
     position: relative;
     z-index: 1000;
+    width: 47.5%;
 }
 
 .portal-sticky {
-    position: fixed; 
+    position: fixed;
+
 }
 
 /* Mega Search Box - Main Container */
@@ -558,14 +560,14 @@ body {
 /* Mega Menu Body */
 .mega-menu-container {
     flex: 1;
-    padding:40px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
 
-.menu-footer-logo{
-    padding:40px;
+.menu-footer-logo {
+    padding: 40px;
 }
 
 /* Navigation Columns */
@@ -758,7 +760,7 @@ body {
 /* Mega Menu Footer */
 .mega-menu-footer {
     margin-top: auto;
-   
+
 }
 
 .mega-footer-links {
@@ -832,7 +834,7 @@ body {
     .brand-circle-image {
         width: 320px;
         height: 320px;
-       
+
         left: 20%;
     }
 
@@ -850,7 +852,7 @@ body {
 @media (max-width: 1024px) {
     .sbs-mega-menu {
         flex-direction: column;
-        width: 100vw!important;
+        width: 100vw !important;
         padding: 16px;
     }
 
@@ -902,26 +904,26 @@ body {
 
     .mega-nav-link {
         font-size: 20px;
-      
+
     }
 }
 
 @media (max-width: 768px) {
 
-    .mega-menu-header{
+    .mega-menu-header {
         padding: 20px;
     }
 
-    .mega-menu-container{
-        padding:20px;
+    .mega-menu-container {
+        padding: 20px;
     }
 
-    .menu-footer-logo{
-        padding:20px;
+    .menu-footer-logo {
+        padding: 20px;
     }
 
     .sbs-mega-menu {
-        width: 75vw!important;
+        width: 75vw !important;
         padding: 12px;
     }
 
@@ -1352,7 +1354,7 @@ body.mega-menu-open {
     z-index: 3;
 }
 
-.header-action{
+.header-action {
     white-space: nowrap;
 }
 
@@ -2600,7 +2602,7 @@ body.admin-bar .faq-title-bar {
         height: 350px;
     }
 
-    .mega-nav-column{
+    .mega-nav-column {
         padding-bottom: 20px;
         margin-bottom: 20px;
         border-bottom: 1px solid #E2E8F0;
