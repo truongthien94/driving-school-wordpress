@@ -1059,7 +1059,7 @@ body.mega-menu-open {
 @media (max-width: 1024px) {
     .faq-section {
         flex-direction: column;
-        gap: 24px;
+        gap: 0;
     }
 
     .faq-title-bar {
@@ -1072,6 +1072,7 @@ body.mega-menu-open {
         align-items: center;
         justify-content: space-between;
         padding: 16px 20px;
+        margin-bottom: 64px;
     }
 
     .faq-content-container {
@@ -3749,4 +3750,12 @@ body.admin-bar .faq-title-bar {
     .language-dropdown-menu-mobile.show {
         animation: none;
     }
+}
+
+.faq-japanese-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    color: white;
+    opacity: 0.3;
 }

@@ -205,30 +205,26 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Card Large - Enhanced with Bootstrap compatibility */
 .blog-card-large {
-    background: transparent;
-    border: none;
+    background: linear-gradient(135deg, rgba(252, 252, 253, 1) 0%, rgba(252, 252, 253, 0.83) 100%);
+    border: 1px solid rgba(252, 252, 253, 1);
     border-radius: 8px;
-    box-shadow: none;
-    backdrop-filter: none;
-    overflow: visible;
+    box-shadow: 0px 40px 64px -32px rgba(15, 15, 15, 0.1);
+    backdrop-filter: blur(32px);
+    overflow: hidden;
     transition: all 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 31px;
-    padding: 16px;
-    background-color: white;
 }
 
 .blog-card-large:hover {
-    transform: none;
-    box-shadow: none;
+    transform: translateY(-5px);
+    box-shadow: 0px 50px 80px -40px rgba(15, 15, 15, 0.15);
 }
 
 .blog-card-large-image {
     width: 100%;
     overflow: hidden;
-    border-radius: 4px;
 }
 
 .blog-card-large-image img {
@@ -247,6 +243,7 @@ Optimized for Bootstrap 5 integration
     flex-direction: column;
     gap: 8px;
     flex: 1;
+    padding: 16px;
 }
 
 .blog-card-large-title {
@@ -975,24 +972,19 @@ Optimized for Bootstrap 5 integration
 @media (max-width: 768px) {
     .blog-card-large {
         margin-bottom: 1rem;
+        height: auto;
     }
 
     .blog-card-large-content {
         height: auto;
         min-height: auto;
+        padding: 12px;
     }
 
     .blog-card-large-excerpt {
         height: auto;
         -webkit-line-clamp: 3;
-    }
-}
-
-/* Responsive Design for Blog Card Large */
-@media (max-width: 768px) {
-    .blog-card-large {
-        padding: 12px;
-        gap: 24px;
+        font-size: 14px;
     }
 
     .blog-card-large-image img {
@@ -1002,18 +994,12 @@ Optimized for Bootstrap 5 integration
     .blog-card-large-title {
         font-size: 16px;
     }
-
-    .blog-card-large-excerpt {
-        font-size: 14px;
-        height: 100px;
-        -webkit-line-clamp: 4;
-    }
 }
 
 @media (max-width: 576px) {
     .blog-card-large {
-        padding: 10px;
-        gap: 20px;
+        padding: 0;
+        gap: 0;
     }
 
     .blog-card-large-image img {
@@ -1026,14 +1012,18 @@ Optimized for Bootstrap 5 integration
 
     .blog-card-large-excerpt {
         font-size: 13px;
-        height: 80px;
+        height: auto;
         -webkit-line-clamp: 3;
     }
 
     .meta-tags {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
         gap: 6px;
+    }
+
+    .blog-card-large-content {
+        padding: 10px;
     }
 }
 

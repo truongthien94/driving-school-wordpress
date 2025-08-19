@@ -19,11 +19,11 @@ $faq_groups = sbs_get_faq_groups();
 
 <div id="faq-section" class="faq-section position-relative">
     <!-- FAQ Title Bar -->
-    <div class="faq-title-bar d-flex align-items-start p-3">
+    <div class="faq-title-bar p-3">
         <div class="faq-main-title">
             FAQ
         </div>
-        <div class="faq-vertical-text d-xl-none align-self-center">
+        <div class="faq-japanese-title d-xl-none align-self-center">
             よくある質問
         </div>
         <div class="faq-vertical-text d-none d-xl-block align-self-end">
