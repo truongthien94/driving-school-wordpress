@@ -314,6 +314,49 @@ function sbs_register_hero_item_post_type()
 add_action('init', 'sbs_register_hero_item_post_type');
 
 /**
+ * Register FAQ Group Post Type
+ */
+function sbs_register_faq_group_post_type()
+{
+    $labels = array(
+        'name'               => _x('FAQ Groups', 'post type general name', 'sbs-portal'),
+        'singular_name'      => _x('FAQ Group', 'post type singular name', 'sbs-portal'),
+        'menu_name'          => _x('FAQ Groups', 'admin menu', 'sbs-portal'),
+        'name_admin_bar'     => _x('FAQ Group', 'add new on admin bar', 'sbs-portal'),
+        'add_new'            => _x('Add New', 'faq group', 'sbs-portal'),
+        'add_new_item'       => __('Add New FAQ Group', 'sbs-portal'),
+        'new_item'           => __('New FAQ Group', 'sbs-portal'),
+        'edit_item'          => __('Edit FAQ Group', 'sbs-portal'),
+        'view_item'          => __('View FAQ Group', 'sbs-portal'),
+        'all_items'          => __('All FAQ Groups', 'sbs-portal'),
+        'search_items'       => __('Search FAQ Groups', 'sbs-portal'),
+        'not_found'          => __('No FAQ groups found.', 'sbs-portal'),
+        'not_found_in_trash' => __('No FAQ groups found in Trash.', 'sbs-portal')
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'description'        => __('FAQ Groups for organizing FAQs.', 'sbs-portal'),
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'faq-group'),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => 20,
+        'supports'           => array('title'),
+        'menu_icon'          => 'dashicons-format-chat',
+        'show_in_rest'       => true,
+    );
+
+    register_post_type('faq_group', $args);
+}
+add_action('init', 'sbs_register_faq_group_post_type');
+
+/**
  * Add custom meta boxes for Hero Items
  */
 function sbs_add_hero_item_meta_boxes()
@@ -440,6 +483,117 @@ function sbs_save_hero_item_meta_box($post_id)
     }
 }
 add_action('save_post', 'sbs_save_hero_item_meta_box');
+
+/**
+ * Add custom meta boxes for FAQ Groups
+ */
+function sbs_add_faq_group_meta_boxes()
+{
+    add_meta_box(
+        'sbs_faq_group_details',
+        __('FAQ Group Details', 'sbs-portal'),
+        'sbs_faq_group_meta_box_callback',
+        'faq_group',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'sbs_add_faq_group_meta_boxes');
+
+/**
+ * Meta box callback for FAQ Group
+ */
+function sbs_faq_group_meta_box_callback($post)
+{
+    wp_nonce_field('sbs_faq_group_meta_box', 'sbs_faq_group_meta_box_nonce');
+
+    $color = get_post_meta($post->ID, '_faq_group_color', true) ?: '#DD1F01';
+    $expanded = get_post_meta($post->ID, '_faq_group_expanded', true);
+    $order = get_post_meta($post->ID, '_faq_group_order', true);
+    $questions = get_post_meta($post->ID, '_faq_group_questions', true) ?: array();
+
+?>
+    <div id="faq-group-container">
+        <table class="form-table">
+            <tr>
+                <th scope="row"><label for="faq_group_color"><?php _e('Group Color', 'sbs-portal'); ?></label></th>
+                <td><input type="color" id="faq_group_color" name="faq_group_color" value="<?php echo esc_attr($color); ?>"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="faq_group_expanded"><?php _e('Expanded by Default', 'sbs-portal'); ?></label></th>
+                <td><input type="checkbox" id="faq_group_expanded" name="faq_group_expanded" value="1" <?php checked($expanded, '1'); ?>></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="faq_group_order"><?php _e('Display Order', 'sbs-portal'); ?></label></th>
+                <td><input type="number" id="faq_group_order" name="faq_group_order" value="<?php echo esc_attr($order); ?>" class="small-text" min="1"></td>
+            </tr>
+        </table>
+
+        <hr>
+        <h3><?php _e('Questions & Answers', 'sbs-portal'); ?></h3>
+        <div id="faq-questions-wrapper">
+            <?php if (!empty($questions)) : foreach ($questions as $index => $q) : ?>
+                    <div class="faq-question-item" data-index="<?php echo $index; ?>">
+                        <p>
+                            <label><strong><?php _e('Question', 'sbs-portal'); ?>:</strong></label>
+                            <input type="text" name="faq_questions[<?php echo $index; ?>][question]" value="<?php echo esc_attr($q['question']); ?>" class="large-text">
+                        </p>
+                        <p>
+                            <label><strong><?php _e('Brief Answer', 'sbs-portal'); ?>:</strong></label>
+                            <textarea name="faq_questions[<?php echo $index; ?>][answer]" class="large-text"><?php echo esc_textarea($q['answer']); ?></textarea>
+                        </p>
+                        <p>
+                            <label><strong><?php _e('Detailed Answer', 'sbs-portal'); ?>:</strong></label>
+                            <textarea name="faq_questions[<?php echo $index; ?>][detail]" class="large-text"><?php echo esc_textarea($q['detail']); ?></textarea>
+                        </p>
+                        <p>
+                            <label><strong><?php _e('Expanded by Default', 'sbs-portal'); ?>:</strong></label>
+                            <input type="checkbox" name="faq_questions[<?php echo $index; ?>][expanded]" value="1" <?php checked($q['expanded'] ?? '', '1'); ?>>
+                        </p>
+                        <button type="button" class="button remove-faq-question"><?php _e('Remove Question', 'sbs-portal'); ?></button>
+                        <hr>
+                    </div>
+            <?php endforeach;
+            endif; ?>
+        </div>
+        <button type="button" class="button" id="add-faq-question"><?php _e('Add Question', 'sbs-portal'); ?></button>
+    </div>
+    <script>
+        jQuery(document).ready(function($) {
+            var questionIndex = <?php echo count($questions); ?>;
+            $('#add-faq-question').on('click', function() {
+                var newQuestion = `
+                <div class="faq-question-item" data-index="${questionIndex}">
+                    <p>
+                        <label><strong><?php _e('Question', 'sbs-portal'); ?>:</strong></label>
+                        <input type="text" name="faq_questions[${questionIndex}][question]" value="" class="large-text">
+                    </p>
+                    <p>
+                        <label><strong><?php _e('Brief Answer', 'sbs-portal'); ?>:</strong></label>
+                        <textarea name="faq_questions[${questionIndex}][answer]" class="large-text"></textarea>
+                    </p>
+                    <p>
+                        <label><strong><?php _e('Detailed Answer', 'sbs-portal'); ?>:</strong></label>
+                        <textarea name="faq_questions[${questionIndex}][detail]" class="large-text"></textarea>
+                    </p>
+                     <p>
+                        <label><strong><?php _e('Expanded by Default', 'sbs-portal'); ?>:</strong></label>
+                        <input type="checkbox" name="faq_questions[${questionIndex}][expanded]" value="1">
+                    </p>
+                    <button type="button" class="button remove-faq-question"><?php _e('Remove Question', 'sbs-portal'); ?></button>
+                    <hr>
+                </div>`;
+                $('#faq-questions-wrapper').append(newQuestion);
+                questionIndex++;
+            });
+
+            $('#faq-questions-wrapper').on('click', '.remove-faq-question', function() {
+                $(this).closest('.faq-question-item').remove();
+            });
+        });
+    </script>
+<?php
+}
 
 /**
  * Add custom columns to Hero Items admin list
