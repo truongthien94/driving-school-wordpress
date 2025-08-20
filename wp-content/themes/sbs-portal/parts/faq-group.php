@@ -27,6 +27,7 @@ $expanded_class = $is_group_expanded ? 'expanded' : '';
 
 <div class="faq-group <?php echo esc_attr($expanded_class); ?>" data-group-id="<?php echo esc_attr($group['id']); ?>">
     <!-- Group Header -->
+    <div class="border-header-top-faq"></div>
     <div class="faq-group-header d-flex align-items-center gap-3 mb-3 user-select-none" style="cursor: pointer;" role="button" tabindex="0" aria-expanded="<?php echo $is_group_expanded ? 'true' : 'false'; ?>" aria-controls="faq-group-content-<?php echo esc_attr($group['id']); ?>">
         <div class="group-title-container d-flex justify-content-between align-items-center flex-grow-1 gap-3">
             <h3 class="group-title mb-0"><?php echo esc_html($group['title']); ?></h3>
