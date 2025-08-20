@@ -2316,7 +2316,7 @@ function sbs_get_available_languages()
         ),
         'id' => array(
             'name' => 'Indonesia',
-            'native_name' => 'Indonesia',
+            'native_name' => 'Bahasa Indonesia',
             'flag' => '🇮🇩',
             'locale' => 'id'
         )

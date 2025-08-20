@@ -42,7 +42,5 @@ $show_navigation = isset($args['show_navigation']) ? $args['show_navigation'] : 
                 <h1 class="fst-italic" style="white-space: nowrap;"><?php echo esc_html($subtitle); ?></h1>
             </div>
         </div>
-
-       
     </div>
 </section>

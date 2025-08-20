@@ -85,7 +85,6 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     get_template_part('parts/header-section', null, array(
         'title' => 'キャンペーン情報',
         'subtitle' => 'Campaign',
-        'breadcrumb_items' => array('キャンペーン一覧', $post_title),
         'show_navigation' => true
     ));
     ?>

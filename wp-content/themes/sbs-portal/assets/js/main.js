@@ -18,7 +18,6 @@
         initDesktopHoverDropdowns();
         initScrollEffects();
         initPortalEffects();
-        initFloatingAnimation();
         initFormValidation();
         initBannerCarousel();
     });
@@ -532,49 +531,6 @@
     /**
      * Initialize Floating Animation
      */
-    function initFloatingAnimation() {
-        // Enhanced floating animation for hero circle
-        const $heroCircle = $('.hero-circle-image');
-
-        // Mouse movement parallax effect
-        $(window).on('mousemove', function (e) {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-
-            const translateX = (mouseX - 0.5) * 20;
-            const translateY = (mouseY - 0.5) * 20;
-
-            $heroCircle.css({
-                'transform': `translate(${translateX}px, ${translateY}px)`
-            });
-        });
-
-        // Add rotation on scroll
-        $(window).on('scroll', function () {
-            const scrollTop = $(this).scrollTop();
-            const rotation = scrollTop * 0.1;
-
-            $heroCircle.find('img').css({
-                'transform': `rotate(${rotation}deg)`
-            });
-        });
-
-        // Add scale effect on window resize
-        $(window).on('resize', function () {
-            const windowWidth = $(this).width();
-            const scale = Math.min(1, windowWidth / 1440);
-
-            if (windowWidth < 768) {
-                $heroCircle.css({
-                    'transform': `scale(${scale * 0.6})`
-                });
-            } else {
-                $heroCircle.css({
-                    'transform': 'scale(1)'
-                });
-            }
-        });
-    }
 
     /**
      * Initialize Scroll Effects

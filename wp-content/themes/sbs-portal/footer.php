@@ -45,9 +45,9 @@ $footer_data = sbs_get_footer_data();
                     <ul class="column-links">
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">ごあいさつ</a></li>
                         <li><a href="#">企業情報</a></li>
-                        <li><a href="#">ニュース</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/news/?page=1&category=0&year=2025">ニュース</a></li>
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">SBSグループについて</a></li>
-                        <li><a href="#">採用</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/recruit/">採用</a></li>
                     </ul>
                 </div>
 

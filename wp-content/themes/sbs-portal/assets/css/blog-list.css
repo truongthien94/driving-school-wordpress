@@ -782,8 +782,18 @@ Optimized for Bootstrap 5 integration
 
 }
 
+.header-section-title h1 {
+    font-family: Cormorant Garamond;
+    font-weight: 700;
+    font-size: 52px;
+}
+
 .header-section-title h4 {
     display: inline;
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 24px;
 }
 
 .header-section-right .hero-circle-2 {
