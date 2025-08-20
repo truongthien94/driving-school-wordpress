@@ -44,7 +44,25 @@ $footer_data = sbs_get_footer_data();
                     <h3 class="column-title">探索</h3>
                     <ul class="column-links">
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">ごあいさつ</a></li>
-                        <li><a href="#">企業情報</a></li>
+                        <li>
+                            <div class="dropdown dropdown-footer">
+                                <!-- Dropdown Toggle Button -->
+                                <button class="dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLanguageList" aria-expanded="false" aria-controls="collapseLanguageList">
+                                    <span>企業情報</span>
+                                </button>
+                                <!-- Collapsible List Group -->
+                                <div class="collapse" id="collapseLanguageList">
+                                    <ul class="list-group ">
+                                        <li class="mt-3">
+                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">会社概要</a>
+                                        </li>
+                                        <li class="mt-3">
+                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">沿革</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/news/?page=1&category=0&year=2025">ニュース</a></li>
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">SBSグループについて</a></li>
                         <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/recruit/">採用</a></li>
