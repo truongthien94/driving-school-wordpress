@@ -427,7 +427,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 40px;
+    padding: 40px 40px 0 40px;
     position: relative;
     z-index: 10001;
     background: transparent;
@@ -587,7 +587,7 @@ body {
     font-weight: 600;
     font-size: 24px;
     line-height: 1.4em;
-    color: #1A1A1A;
+    color: #262626;
     margin: 0 0 20px 0;
     padding: 0;
     position: relative;
@@ -680,7 +680,7 @@ body {
     font-weight: 600;
     font-size: 24px;
     line-height: 1.5em;
-    color: #1A1A1A;
+    color: #262626;
     margin: 0 0 16px 0;
     padding: 0;
     position: relative;
@@ -872,7 +872,7 @@ body {
 @media (max-width: 768px) {
 
     .mega-menu-header {
-        padding: 20px;
+        padding: 20px 20px 0 20px;
     }
 
     .mega-menu-container {
@@ -1600,19 +1600,8 @@ body.mega-menu-open {
     display: block;
 }
 
-.language-option {
-    display: block;
-    padding: 8px 16px;
-    color: #262626;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
 
-.language-option:hover {
-    background: #F7F7F7;
-    color: #DD1F01;
-}
+
 
 .menu-button {
     background: #DD1F01;
@@ -3495,6 +3484,10 @@ body.admin-bar .faq-title-bar {
     z-index: 9999;
 }
 
+.list-group{
+
+}
+
 /* Enhanced Language Options */
 .language-option {
     display: flex;
@@ -3513,22 +3506,12 @@ body.admin-bar .faq-title-bar {
     font-size: 14px;
 }
 
-.language-option:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+.language-option span{
     color: #262626;
-    text-decoration: none;
-}
-
-.language-option:focus {
-    background-color: transparent;
-    color: #DD1F01;
-    outline: none;
-    box-shadow: none;
-    text-decoration: none;
 }
 
 .language-option.active {
-    background-color: rgba(0, 0, 0, 0.08);
+    background: transparent;
     color: #262626;
     font-weight: 600;
     position: relative;
@@ -3536,25 +3519,9 @@ body.admin-bar .faq-title-bar {
 
 .language-option.active::after {
     content: "✓";
-    position: absolute;
-    right: 16px;
-    color: #DD1F01;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.language-option.active::after {
-    content: "✓";
     margin-left: auto;
     color: #1976d2;
     font-weight: bold;
-}
-
-/* Loading State */
-.language-option .spinner-border-sm {
-    width: 14px;
-    height: 14px;
-    border-width: 2px;
 }
 
 /* Mobile Language Switcher Styles */
@@ -3568,9 +3535,6 @@ body.admin-bar .faq-title-bar {
         margin-left: 0;
     }
 
-    .language-option {
-        padding: 12px 20px;
-    }
 }
 
 /* Desktop-specific styles */
@@ -3605,48 +3569,18 @@ body.admin-bar .faq-title-bar {
     margin-left: 6px;
 }
 
-[dir="rtl"] .language-option {
-    text-align: right;
-}
-
-[dir="rtl"] .language-option.active::after {
-    margin-left: 0;
-    margin-right: auto;
-}
 
 /* Accessibility improvements */
-.language-option:focus {
-    outline: 2px solid #1976d2;
-    outline-offset: -2px;
-    background-color: #f8f9fa;
-    text-decoration: none;
-}
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .language-option {
-        border: 1px solid transparent;
-    }
 
-    .language-option:hover,
-    .language-option:focus {
-        border-color: #333;
-    }
 
-    .language-option.active {
-        border-color: #1976d2;
-        background-color: #fff;
-    }
-}
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
 
     .language-switcher,
     .language-switcher-mobile,
-    .language-option {
-        transition: none;
-    }
+
 
     .language-dropdown-menu.show,
     .language-dropdown-menu-mobile.show {
