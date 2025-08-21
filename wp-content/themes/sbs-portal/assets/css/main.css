@@ -1362,6 +1362,10 @@ body.mega-menu-open {
     color: #FFFFFF;
 }
 
+.btn-custom-nav span{
+    font-size: 16px;
+}
+
 /* Brand Message - Position below images */
 .brand-message {
     position: absolute;
@@ -1484,6 +1488,7 @@ body.mega-menu-open {
 .box-icon {
     width: 24px;
     height: 24px;
+    color: #C3C3C3;
     transition: color 0.3s ease;
 }
 

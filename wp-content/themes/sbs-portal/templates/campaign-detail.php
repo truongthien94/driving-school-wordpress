@@ -91,7 +91,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
     <section class="blog-detail-content">
         <div class="mb-5">
-            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('キャンペーン一覧', $post_title))); ?>
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array($post_title))); ?>
             <div class="row g-4">
                 <!-- Left: Main Article -->
                 <div class="col-md-9">
