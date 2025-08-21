@@ -3235,40 +3235,58 @@ add_action('pre_get_posts', 'sbs_blog_post_custom_orderby');
  */
 function sbs_get_blog_posts($limit = 10, $category = '')
 {
-    $args = array(
-        'post_type' => 'blog',
-        'posts_per_page' => $limit,
-        'post_status' => 'publish',
-        'meta_query' => array(
-            'relation' => 'AND',
-            // Status filter: include published OR missing status meta
+    $meta_query = array(
+        'relation' => 'AND',
+        // Status filter: include published OR missing status meta
+        array(
+            'relation' => 'OR',
             array(
-                'relation' => 'OR',
-                array(
-                    'key' => '_blog_post_status',
-                    'value' => 'published',
-                    'compare' => '='
-                ),
-                array(
-                    'key' => '_blog_post_status',
-                    'compare' => 'NOT EXISTS'
-                ),
-                array(
-                    'key' => '_blog_post_status',
-                    'value' => '',
-                    'compare' => '='
-                )
+                'key' => '_blog_post_status',
+                'value' => 'published',
+                'compare' => '='
+            ),
+            array(
+                'key' => '_blog_post_status',
+                'compare' => 'NOT EXISTS'
+            ),
+            array(
+                'key' => '_blog_post_status',
+                'value' => '',
+                'compare' => '='
             )
         )
     );
 
-    // Add category filter if specified
+    $args = array(
+        'post_type' => 'blog',
+        'posts_per_page' => $limit,
+        'post_status' => 'publish',
+        'meta_query' => $meta_query,
+    );
+
+    // If category provided, prefer taxonomy query (blog_category). Accept either single or multiple values.
     if (!empty($category)) {
-        $args['meta_query'][] = array(
-            'key' => '_blog_post_category',
-            'value' => $category,
-            'compare' => '='
-        );
+        $delimited = preg_split('/[|,;\s]+/', $category);
+        $categories = array_filter(array_map('trim', $delimited));
+
+        if (!empty($categories)) {
+            // Use tax_query to match term names or slugs
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'blog_category',
+                    'field' => 'name',
+                    'terms' => $categories,
+                    'operator' => 'IN'
+                )
+            );
+        } else {
+            // Fallback to meta_query if no taxonomy terms
+            $args['meta_query'][] = array(
+                'key' => '_blog_post_category',
+                'value' => $category,
+                'compare' => '='
+            );
+        }
     }
 
     // Order by custom order if exists, otherwise by date desc
@@ -3289,16 +3307,19 @@ function sbs_get_blog_posts($limit = 10, $category = '')
             $query->the_post();
             $post_id = get_the_ID();
 
+            // Use sbs_format_blog_post to ensure taxonomy preference and consistent shape
+            $formatted = sbs_format_blog_post($post_id, false);
+            // Keep content for this helper output
             $posts[] = array(
-                'id' => $post_id,
-                'title' => get_the_title(),
-                'excerpt' => get_the_excerpt(),
-                'content' => get_the_content(),
-                'featured_image' => has_post_thumbnail() ? get_the_post_thumbnail_url($post_id, 'full') : '',
-                'date' => get_the_date('Y-m-d'),
-                'category' => get_post_meta($post_id, '_blog_post_category', true),
-                'status' => get_post_meta($post_id, '_blog_post_status', true),
-                'permalink' => get_permalink()
+                'id' => $formatted['id'],
+                'title' => $formatted['title'],
+                'excerpt' => $formatted['excerpt'],
+                'content' => $formatted['content'],
+                'featured_image' => $formatted['featured_image'],
+                'date' => $formatted['date'],
+                'category' => $formatted['category'],
+                'status' => $formatted['status'],
+                'permalink' => $formatted['permalink']
             );
         }
         wp_reset_postdata();
@@ -4088,6 +4109,17 @@ function sbs_format_blog_post($post_id, $include_content = false)
         return array();
     }
 
+    // Prefer taxonomy term (blog_category) when available, fallback to legacy post meta
+    $category_term = '';
+    $terms = get_the_terms($post_id, 'blog_category');
+    if (!empty($terms) && !is_wp_error($terms)) {
+        // Use first term name (preserve label style from admin)
+        $first = reset($terms);
+        $category_term = $first->name;
+    } else {
+        $category_term = get_post_meta($post_id, '_blog_post_category', true);
+    }
+
     return array(
         'id' => $post_id,
         'title' => get_the_title($post_id),
@@ -4095,7 +4127,7 @@ function sbs_format_blog_post($post_id, $include_content = false)
         'content' => $include_content ? apply_filters('the_content', $post->post_content) : '',
         'featured_image' => has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'full') : '',
         'date' => get_the_date('Y-m-d', $post_id),
-        'category' => get_post_meta($post_id, '_blog_post_category', true),
+        'category' => $category_term ?: 'BLOG',
         'status' => get_post_meta($post_id, '_blog_post_status', true),
         'permalink' => get_permalink($post_id),
         'slug' => get_post_field('post_name', $post_id),

@@ -46,14 +46,30 @@ if ($related_posts->have_posts()) : ?>
 
         <div class="related-posts-grid">
             <?php while ($related_posts->have_posts()) : $related_posts->the_post(); ?>
-                <?php get_template_part('parts/blog-card', null, array(
+                <?php
+                $post_id = get_the_ID();
+                $terms = get_the_terms($post_id, 'blog_category');
+                $cat_label = 'BLOG';
+                if ($terms && !is_wp_error($terms)) {
+                    $first = reset($terms);
+                    if (!empty($first->name)) {
+                        $cat_label = $first->name;
+                    }
+                } else {
+                    $meta_cat = get_post_meta($post_id, '_blog_post_category', true);
+                    if (!empty($meta_cat)) {
+                        $cat_label = $meta_cat;
+                    }
+                }
+
+                get_template_part('parts/blog-card', null, array(
                     'post' => array(
-                        'id' => get_the_ID(),
+                        'id' => $post_id,
                         'title' => get_the_title(),
                         'excerpt' => get_the_excerpt(),
-                        'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured') ?: 'blog-featured-1.jpg',
+                        'featured_image' => get_the_post_thumbnail_url($post_id, 'sbs-blog-featured') ?: 'blog-featured-1.jpg',
                         'date' => get_the_date('Y-m-d'),
-                        'category' => 'BLOG'
+                        'category' => $cat_label
                     )
                 )); ?>
             <?php endwhile; ?>

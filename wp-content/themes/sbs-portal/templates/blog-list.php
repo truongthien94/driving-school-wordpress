@@ -89,26 +89,31 @@ if (!$blog_posts->have_posts()) {
                             while ($blog_posts->have_posts()) : $blog_posts->the_post();
                                 $post_count++;
 
-                                // Create post data array
-                                $post_data = array(
-                                    'id' => get_the_ID(),
-                                    'title' => get_the_title(),
-                                    'excerpt' => get_the_excerpt(),
-                                    'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'sbs-blog-featured'),
-                                    'date' => get_the_date('Y-m-d'),
-                                    'category' => 'BLOG' // Default to BLOG, can be enhanced with taxonomy
-                                );
-
-                                // Determine if it's a NEWS post based on categories
-                                $categories = get_the_terms(get_the_ID(), 'blog_category');
+                                // Create post data array and determine category via taxonomy first
+                                $post_id = get_the_ID();
+                                $categories = get_the_terms($post_id, 'blog_category');
+                                $cat_label = 'BLOG';
                                 if ($categories && !is_wp_error($categories)) {
-                                    foreach ($categories as $category) {
-                                        if (strtolower($category->name) === 'news') {
-                                            $post_data['category'] = 'NEWS';
-                                            break;
-                                        }
+                                    $first_term = reset($categories);
+                                    if (!empty($first_term->name)) {
+                                        $cat_label = $first_term->name;
+                                    }
+                                } else {
+                                    // Fallback to legacy meta
+                                    $meta_cat = get_post_meta($post_id, '_blog_post_category', true);
+                                    if (!empty($meta_cat)) {
+                                        $cat_label = $meta_cat;
                                     }
                                 }
+
+                                $post_data = array(
+                                    'id' => $post_id,
+                                    'title' => get_the_title(),
+                                    'excerpt' => get_the_excerpt(),
+                                    'featured_image' => get_the_post_thumbnail_url($post_id, 'sbs-blog-featured'),
+                                    'date' => get_the_date('Y-m-d'),
+                                    'category' => $cat_label
+                                );
                             ?>
 
                                 <!-- Blog Post Row (every 3 posts) -->
