@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 
 get_header(); ?>
 
-<main id="main" class="site-main">
+<main id="main" class="site-main" role="main">
     <?php get_template_part('templates/portal'); ?>
 </main><!-- #main -->
 

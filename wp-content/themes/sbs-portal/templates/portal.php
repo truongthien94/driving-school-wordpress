@@ -16,8 +16,11 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="sbs-portal">
+    <!-- SEO Hidden H1 for homepage -->
+    <h1 class="sr-only">SBS Driving School Portal - ドライビングスクール総合ポータルサイト</h1>
+
     <!-- SECTION 1: Hero Section -->
-    <section class="sbs-hero-section" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/hero-bg-main-f14c9b.jpg');">
+    <section class="sbs-hero-section" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/hero-bg-main-f14c9b.jpg');" role="banner" aria-label="SBS Driving School Portal Hero Section">
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
@@ -274,81 +277,282 @@ if (!defined('ABSPATH')) {
     $campaign_items = function_exists('sbs_get_campaign_items') ? sbs_get_campaign_items(10) : array();
     if (!empty($campaign_items)) :
     ?>
-        <section class="sbs-banner-carousel-section">
+        <section class="sbs-banner-carousel-section" aria-label="Campaign Banner Carousel" data-section="campaign-carousel">
             <div class="banner-carousel-container">
                 <div class="banner-carousel-track">
                     <?php foreach ($campaign_items as $item): ?>
-                        <a class="banner-item" data-banner-type="campaign" data-banner-id="<?php echo esc_attr($item['id']); ?>" href="<?php echo esc_url($item['detail_url'] ?? $item['permalink']); ?>">
+                        <a class="banner-item campaign-banner-item"
+                            data-banner-type="campaign"
+                            data-banner-id="<?php echo esc_attr($item['id']); ?>"
+                            data-campaign-title="<?php echo esc_attr($item['title']); ?>"
+                            data-campaign-image="<?php echo esc_attr(!empty($item['image_src']) ? $item['image_src'] : get_template_directory_uri() . '/assets/images/gallery-1.jpg'); ?>"
+                            href="<?php echo esc_url($item['detail_url'] ?? $item['permalink']); ?>"
+                            target="_blank"
+                            rel="noopener">
                             <?php if (!empty($item['image_src'])): ?>
-                                <img src="<?php echo esc_url($item['image_src']); ?>" alt="<?php echo esc_attr($item['title']); ?>" />
+                                <img src="<?php echo esc_url($item['image_src']); ?>"
+                                    alt="<?php echo esc_attr($item['title']); ?>"
+                                    loading="lazy"
+                                    onload="SBSCampaign.trackImpression(<?php echo esc_js($item['id']); ?>)" />
                             <?php else: ?>
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg" alt="<?php echo esc_attr($item['title']); ?>" />
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gallery-1.jpg"
+                                    alt="<?php echo esc_attr($item['title']); ?>"
+                                    loading="lazy"
+                                    onload="SBSCampaign.trackImpression(<?php echo esc_js($item['id']); ?>)" />
                             <?php endif; ?>
+                            <div class="campaign-overlay">
+                                <div class="campaign-info">
+                                    <h3 class="campaign-title"><?php echo esc_html($item['title']); ?></h3>
+                                    <span class="campaign-cta">詳細を見る</span>
+                                </div>
+                            </div>
                         </a>
                     <?php endforeach; ?>
                 </div>
+
             </div>
         </section>
     <?php endif; ?>
 
     <script>
-        (function() {
-            // Attach click tracking for campaign banner items
-            document.addEventListener('click', function(e) {
-                var anchor = e.target.closest('a.banner-item[data-banner-type="campaign"][data-banner-id]');
-                if (!anchor) return;
+        // Advanced Campaign Tracking System
+        window.SBSCampaign = (function() {
+            'use strict';
 
-                var id = anchor.getAttribute('data-banner-id');
-                var ref = window.location.pathname || '/';
-                var restUrl = (window.sbsThemeData && window.sbsThemeData.restUrl ? window.sbsThemeData.restUrl : '/wp-json/') + 'sbs/v1/campaign/track';
+            var config = {
+                restUrl: (window.sbsThemeData && window.sbsThemeData.restUrl ? window.sbsThemeData.restUrl : '/wp-json/') + 'sbs/v1/campaign/track',
+                impressionThreshold: 1000, // 1 second in viewport
+                maxRetries: 3,
+                retryDelay: 1000,
+                debug: <?php echo WP_DEBUG ? 'true' : 'false'; ?>
+            };
 
-                try {
-                    navigator.sendBeacon && navigator.sendBeacon.length; // just to reference API if available
-                } catch (err) {}
+            var tracked = {
+                impressions: new Set(),
+                clicks: new Set()
+            };
 
-                var payload = JSON.stringify({
-                    campaign_id: parseInt(id, 10),
+            var timers = {};
+            var retryQueue = [];
+
+            function log(message, data) {
+                if (config.debug) {
+                    console.log('[SBS Campaign]', message, data || '');
+                }
+            }
+
+            function sendTrackingData(payload, retryCount) {
+                retryCount = retryCount || 0;
+
+                return new Promise(function(resolve, reject) {
+                    // Use sendBeacon if available (best for page unload)
+                    if (navigator.sendBeacon && typeof payload === 'object') {
+                        var blob = new Blob([JSON.stringify(payload)], {
+                            type: 'application/json'
+                        });
+                        var success = navigator.sendBeacon(config.restUrl, blob);
+                        if (success) {
+                            resolve();
+                            return;
+                        }
+                    }
+
+                    // Fallback to fetch
+                    if (window.fetch) {
+                        fetch(config.restUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload),
+                                keepalive: true
+                            })
+                            .then(function(response) {
+                                if (response.ok) {
+                                    resolve();
+                                } else {
+                                    throw new Error('HTTP ' + response.status);
+                                }
+                            })
+                            .catch(function(error) {
+                                log('Fetch error:', error);
+                                if (retryCount < config.maxRetries) {
+                                    setTimeout(function() {
+                                        sendTrackingData(payload, retryCount + 1);
+                                    }, config.retryDelay * (retryCount + 1));
+                                } else {
+                                    reject(error);
+                                }
+                            });
+                    } else {
+                        // XHR fallback
+                        try {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', config.restUrl, true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                            xhr.onload = function() {
+                                if (xhr.status >= 200 && xhr.status < 300) {
+                                    resolve();
+                                } else {
+                                    reject(new Error('HTTP ' + xhr.status));
+                                }
+                            };
+                            xhr.onerror = function() {
+                                reject(new Error('Network error'));
+                            };
+                            xhr.send(JSON.stringify(payload));
+                        } catch (error) {
+                            reject(error);
+                        }
+                    }
+                });
+            }
+
+            function trackImpression(campaignId) {
+                if (!campaignId || tracked.impressions.has(campaignId)) {
+                    return;
+                }
+
+                tracked.impressions.add(campaignId);
+
+                var payload = {
+                    campaign_id: parseInt(campaignId, 10),
+                    type: 'impression',
+                    ref: window.location.pathname || '/',
+                    timestamp: Date.now(),
+                    user_agent: navigator.userAgent.substring(0, 200)
+                };
+
+                log('Tracking impression:', payload);
+
+                sendTrackingData(payload)
+                    .then(function() {
+                        log('Impression tracked successfully for campaign:', campaignId);
+                    })
+                    .catch(function(error) {
+                        log('Failed to track impression:', error);
+                        tracked.impressions.delete(campaignId); // Allow retry
+                    });
+            }
+
+            function trackClick(campaignId, element) {
+                if (!campaignId) return;
+
+                var clickKey = campaignId + '_' + Date.now();
+                if (tracked.clicks.has(clickKey)) return;
+
+                tracked.clicks.add(clickKey);
+
+                var payload = {
+                    campaign_id: parseInt(campaignId, 10),
                     type: 'click',
-                    ref: ref
+                    ref: window.location.pathname || '/',
+                    timestamp: Date.now(),
+                    target_url: element ? element.href : '',
+                    campaign_title: element ? element.getAttribute('data-campaign-title') : ''
+                };
+
+                log('Tracking click:', payload);
+
+                sendTrackingData(payload)
+                    .then(function() {
+                        log('Click tracked successfully for campaign:', campaignId);
+                    })
+                    .catch(function(error) {
+                        log('Failed to track click:', error);
+                    });
+            }
+
+            // Intersection Observer for better impression tracking
+            function setupIntersectionObserver() {
+                if (!window.IntersectionObserver) return;
+
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var campaignId = entry.target.getAttribute('data-banner-id');
+                            if (campaignId && !timers[campaignId]) {
+                                timers[campaignId] = setTimeout(function() {
+                                    trackImpression(campaignId);
+                                    delete timers[campaignId];
+                                }, config.impressionThreshold);
+                            }
+                        } else {
+                            var campaignId = entry.target.getAttribute('data-banner-id');
+                            if (timers[campaignId]) {
+                                clearTimeout(timers[campaignId]);
+                                delete timers[campaignId];
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.5,
+                    rootMargin: '0px'
                 });
 
-                // Prefer sendBeacon for non-blocking tracking during navigation
-                if (navigator.sendBeacon) {
-                    var blob = new Blob([payload], {
-                        type: 'application/json'
-                    });
-                    navigator.sendBeacon(restUrl, blob);
-                } else if (window.fetch) {
-                    fetch(restUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: payload,
-                        keepalive: true
-                    });
+                document.querySelectorAll('.campaign-banner-item').forEach(function(element) {
+                    observer.observe(element);
+                });
+            }
+
+            // Initialize tracking
+            function init() {
+                log('Initializing SBS Campaign Tracking');
+
+                // Click tracking
+                document.addEventListener('click', function(e) {
+                    var anchor = e.target.closest('a.campaign-banner-item[data-banner-id]');
+                    if (anchor) {
+                        var campaignId = anchor.getAttribute('data-banner-id');
+                        trackClick(campaignId, anchor);
+                    }
+                }, true);
+
+                // Setup intersection observer for impressions
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', setupIntersectionObserver);
                 } else {
-                    // Fallback XHR
-                    try {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', restUrl, true);
-                        xhr.setRequestHeader('Content-Type', 'application/json');
-                        xhr.send(payload);
-                    } catch (err) {}
+                    setupIntersectionObserver();
                 }
-            }, true);
+
+                // Track page unload to catch any pending impressions
+                window.addEventListener('beforeunload', function() {
+                    // Clear pending timers and track any campaigns currently in view
+                    Object.keys(timers).forEach(function(campaignId) {
+                        clearTimeout(timers[campaignId]);
+                        trackImpression(campaignId);
+                    });
+                });
+            }
+
+            // Public API
+            return {
+                trackImpression: trackImpression,
+                trackClick: trackClick,
+                init: init,
+                config: config,
+                getTrackedData: function() {
+                    return {
+                        impressions: Array.from(tracked.impressions),
+                        clicks: Array.from(tracked.clicks)
+                    };
+                }
+            };
         })();
+
+        // Auto-initialize
+        SBSCampaign.init();
     </script>
 
     <!-- SECTION 3: Blog Section -->
-    <section class="sbs-blog-section">
+    <section class="sbs-blog-section" aria-label="Latest Blog Posts and News">
         <div class="container">
             <?php get_template_part('parts/blog-section'); ?>
         </div>
     </section>
 
     <!-- SECTION 4: FAQ Section -->
-    <section class="sbs-faq-section">
+    <section class="sbs-faq-section" aria-label="Frequently Asked Questions">
         <div class="container">
             <?php get_template_part('parts/faq-section'); ?>
         </div>

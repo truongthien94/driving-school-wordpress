@@ -91,6 +91,436 @@ function sbs_enqueue_scripts()
 add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts', 100);
 
 /**
+ * SEO Functions and Meta Tags
+ */
+
+
+
+/**
+ * Generate JSON-LD structured data
+ */
+function sbs_generate_structured_data()
+{
+    $schema = array();
+
+    // Organization schema
+    $organization = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'EducationalOrganization',
+        'name' => 'SBS Driving School',
+        'alternateName' => 'SBSドライビングスクール',
+        'url' => home_url(),
+        'logo' => get_template_directory_uri() . '/assets/images/logo-circle.png',
+        'description' => 'SBS Driving School Portal - 姉崎・稲毛校の総合ポータルサイト',
+        'address' => array(
+            '@type' => 'PostalAddress',
+            'addressCountry' => 'JP',
+            'addressRegion' => '千葉県'
+        ),
+        'contactPoint' => array(
+            '@type' => 'ContactPoint',
+            'contactType' => 'customer service',
+            'availableLanguage' => array('Japanese', 'English')
+        )
+    );
+
+    if (is_front_page()) {
+        $schema[] = $organization;
+
+        // Website schema
+        $website = array(
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => get_bloginfo('name'),
+            'description' => get_bloginfo('description'),
+            'url' => home_url(),
+            'publisher' => array(
+                '@type' => 'Organization',
+                'name' => 'SBS Driving School'
+            )
+        );
+        $schema[] = $website;
+    }
+
+    if (is_singular('blog')) {
+        global $post;
+        if ($post) {
+            $article = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'Article',
+                'headline' => get_the_title(),
+                'description' => wp_trim_words(strip_tags($post->post_content), 30, '...'),
+                'datePublished' => get_the_date('c'),
+                'dateModified' => get_the_modified_date('c'),
+                'author' => array(
+                    '@type' => 'Organization',
+                    'name' => 'SBS Driving School'
+                ),
+                'publisher' => array(
+                    '@type' => 'Organization',
+                    'name' => 'SBS Driving School',
+                    'logo' => array(
+                        '@type' => 'ImageObject',
+                        'url' => get_template_directory_uri() . '/assets/images/logo-circle.png'
+                    )
+                )
+            );
+
+            if (has_post_thumbnail()) {
+                $article['image'] = get_the_post_thumbnail_url($post->ID, 'full');
+            }
+
+            $schema[] = $article;
+        }
+    }
+
+    if (!empty($schema)) {
+        foreach ($schema as $schema_item) {
+            echo '<script type="application/ld+json">' . json_encode($schema_item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+        }
+    }
+}
+
+/**
+ * Optimize page titles for SEO
+ */
+function sbs_custom_document_title_parts($title)
+{
+    if (is_front_page()) {
+        $title['title'] = 'SBS Driving School Portal';
+        $title['tagline'] = 'ドライビングスクール総合ポータルサイト';
+    } elseif (is_page('blog') || get_query_var('sbs_page') === 'blog-list') {
+        $title['title'] = 'ブログ・ニュース一覧';
+        $title['site'] = 'SBS Driving School';
+    } elseif (is_singular('blog')) {
+        // Keep default title for blog posts
+        $title['site'] = 'SBS Driving School';
+    }
+
+    return $title;
+}
+add_filter('document_title_parts', 'sbs_custom_document_title_parts');
+
+/**
+ * Add custom meta box for SEO on posts and pages
+ */
+function sbs_add_seo_meta_boxes()
+{
+    add_meta_box(
+        'sbs_seo_meta',
+        'SEO Settings',
+        'sbs_seo_meta_box_callback',
+        array('post', 'page', 'blog', 'campaign'),
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'sbs_add_seo_meta_boxes');
+
+/**
+ * SEO meta box callback
+ */
+function sbs_seo_meta_box_callback($post)
+{
+    wp_nonce_field('sbs_seo_meta_nonce', 'sbs_seo_meta_nonce');
+
+    $meta_description = get_post_meta($post->ID, '_sbs_meta_description', true);
+    $meta_keywords = get_post_meta($post->ID, '_sbs_meta_keywords', true);
+    $focus_keyword = get_post_meta($post->ID, '_sbs_focus_keyword', true);
+?>
+    <table class="form-table">
+        <tr>
+            <th><label for="sbs_meta_description">Meta Description</label></th>
+            <td>
+                <textarea id="sbs_meta_description" name="sbs_meta_description" rows="3" cols="50" maxlength="160"><?php echo esc_textarea($meta_description); ?></textarea>
+                <p class="description">Recommended length: 120-160 characters</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="sbs_meta_keywords">Meta Keywords</label></th>
+            <td>
+                <input type="text" id="sbs_meta_keywords" name="sbs_meta_keywords" value="<?php echo esc_attr($meta_keywords); ?>" size="50" />
+                <p class="description">Separate keywords with commas</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="sbs_focus_keyword">Focus Keyword</label></th>
+            <td>
+                <input type="text" id="sbs_focus_keyword" name="sbs_focus_keyword" value="<?php echo esc_attr($focus_keyword); ?>" size="30" />
+                <p class="description">Primary keyword for this content</p>
+            </td>
+        </tr>
+    </table>
+<?php
+}
+
+/**
+ * Save SEO meta box data
+ */
+function sbs_save_seo_meta_box($post_id)
+{
+    if (!isset($_POST['sbs_seo_meta_nonce']) || !wp_verify_nonce($_POST['sbs_seo_meta_nonce'], 'sbs_seo_meta_nonce')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (isset($_POST['sbs_meta_description'])) {
+        update_post_meta($post_id, '_sbs_meta_description', sanitize_textarea_field($_POST['sbs_meta_description']));
+    }
+
+    if (isset($_POST['sbs_meta_keywords'])) {
+        update_post_meta($post_id, '_sbs_meta_keywords', sanitize_text_field($_POST['sbs_meta_keywords']));
+    }
+
+    if (isset($_POST['sbs_focus_keyword'])) {
+        update_post_meta($post_id, '_sbs_focus_keyword', sanitize_text_field($_POST['sbs_focus_keyword']));
+    }
+}
+add_action('save_post', 'sbs_save_seo_meta_box');
+
+/**
+ * Update SEO meta tags function to use custom meta fields
+ */
+function sbs_generate_seo_meta_tags()
+{
+    global $post;
+
+    // Get current page info
+    $page_title = wp_get_document_title();
+    $site_name = get_bloginfo('name');
+    $site_description = get_bloginfo('description');
+    $current_url = home_url(add_query_arg(NULL, NULL));
+
+    // Default meta description
+    $meta_description = $site_description;
+    $meta_keywords = '';
+    $og_image = get_template_directory_uri() . '/assets/images/hero-bg-main-f14c9b.jpg';
+
+    // Check for custom meta fields first
+    if (is_singular() && $post) {
+        $custom_description = get_post_meta($post->ID, '_sbs_meta_description', true);
+        $custom_keywords = get_post_meta($post->ID, '_sbs_meta_keywords', true);
+
+        if (!empty($custom_description)) {
+            $meta_description = $custom_description;
+        }
+        if (!empty($custom_keywords)) {
+            $meta_keywords = $custom_keywords;
+        }
+    }
+
+    // Page-specific meta data
+    if (is_front_page()) {
+        if (empty($meta_description) || $meta_description === $site_description) {
+            $meta_description = 'SBS Driving School Portal - ドライビングスクール予約システム、求人マッチング、キャンペーン情報を一括管理。姉崎・稲毛校の最新情報をお届けします。';
+        }
+        if (empty($meta_keywords)) {
+            $meta_keywords = 'SBS自動車学校, ドライビングスクール, 姉崎, 稲毛, 予約システム, 求人マッチング, キャンペーン';
+        }
+    } elseif (is_singular('blog')) {
+        if ($post && empty($meta_description)) {
+            $meta_description = wp_trim_words(strip_tags($post->post_content), 30, '...');
+        }
+        if (has_post_thumbnail($post->ID)) {
+            $og_image = get_the_post_thumbnail_url($post->ID, 'full');
+        }
+    } elseif (is_page('blog') || get_query_var('sbs_page') === 'blog-list') {
+        if (empty($meta_description)) {
+            $meta_description = 'SBS Driving School最新ニュース・ブログ記事一覧。教習所の最新情報、キャンペーン、お役立ち情報をお届けします。';
+        }
+        if (empty($meta_keywords)) {
+            $meta_keywords = 'SBS, ブログ, ニュース, 教習所, 最新情報, キャンペーン';
+        }
+    }
+
+    // Output meta tags
+?>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<?php echo esc_attr($meta_description); ?>">
+    <?php if ($meta_keywords): ?>
+        <meta name="keywords" content="<?php echo esc_attr($meta_keywords); ?>">
+    <?php endif; ?>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo esc_url($current_url); ?>">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="<?php echo is_front_page() ? 'website' : 'article'; ?>">
+    <meta property="og:title" content="<?php echo esc_attr($page_title); ?>">
+    <meta property="og:description" content="<?php echo esc_attr($meta_description); ?>">
+    <meta property="og:url" content="<?php echo esc_url($current_url); ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr($site_name); ?>">
+    <meta property="og:image" content="<?php echo esc_url($og_image); ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr($page_title); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr($meta_description); ?>">
+    <meta name="twitter:image" content="<?php echo esc_url($og_image); ?>">
+
+    <!-- Additional SEO Meta -->
+    <meta name="theme-color" content="#f14c9b">
+    <meta name="msapplication-TileColor" content="#f14c9b">
+<?php
+}
+
+/**
+ * Add XML Sitemap functionality
+ */
+function sbs_enable_xml_sitemaps()
+{
+    // Add sitemap rewrite rules
+    add_rewrite_rule('^sitemap\.xml$', 'index.php?sbs_sitemap=1', 'top');
+    add_rewrite_rule('^sitemap-posts\.xml$', 'index.php?sbs_sitemap=posts', 'top');
+    add_rewrite_rule('^sitemap-pages\.xml$', 'index.php?sbs_sitemap=pages', 'top');
+}
+add_action('init', 'sbs_enable_xml_sitemaps');
+
+/**
+ * Flush rewrite rules on theme activation
+ */
+function sbs_flush_rewrites()
+{
+    sbs_enable_xml_sitemaps();
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'sbs_flush_rewrites');
+
+/**
+ * Add sitemap query vars
+ */
+function sbs_add_sitemap_query_vars($vars)
+{
+    $vars[] = 'sbs_sitemap';
+    return $vars;
+}
+add_filter('query_vars', 'sbs_add_sitemap_query_vars');
+
+/**
+ * Handle sitemap requests
+ */
+function sbs_handle_sitemap_request()
+{
+    global $wp_query;
+
+    if (get_query_var('sbs_sitemap')) {
+        $sitemap_type = get_query_var('sbs_sitemap');
+
+        header('Content-Type: application/xml; charset=utf-8');
+
+        if ($sitemap_type === '1') {
+            // Main sitemap index
+            sbs_generate_sitemap_index();
+        } elseif ($sitemap_type === 'posts') {
+            // Posts sitemap
+            sbs_generate_posts_sitemap();
+        } elseif ($sitemap_type === 'pages') {
+            // Pages sitemap
+            sbs_generate_pages_sitemap();
+        }
+
+        exit;
+    }
+}
+add_action('template_redirect', 'sbs_handle_sitemap_request');
+
+/**
+ * Generate sitemap index
+ */
+function sbs_generate_sitemap_index()
+{
+    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    echo '<sitemap><loc>' . home_url('/sitemap-pages.xml') . '</loc></sitemap>' . "\n";
+    echo '<sitemap><loc>' . home_url('/sitemap-posts.xml') . '</loc></sitemap>' . "\n";
+    echo '</sitemapindex>';
+}
+
+/**
+ * Generate posts sitemap
+ */
+function sbs_generate_posts_sitemap()
+{
+    $posts = get_posts(array(
+        'numberposts' => -1,
+        'post_type' => array('blog', 'campaign'),
+        'post_status' => 'publish'
+    ));
+
+    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+    foreach ($posts as $post) {
+        echo '<url>' . "\n";
+        echo '<loc>' . get_permalink($post->ID) . '</loc>' . "\n";
+        echo '<lastmod>' . get_the_modified_date('Y-m-d\TH:i:s+00:00', $post->ID) . '</lastmod>' . "\n";
+        echo '<changefreq>weekly</changefreq>' . "\n";
+        echo '<priority>0.8</priority>' . "\n";
+        echo '</url>' . "\n";
+    }
+
+    echo '</urlset>';
+}
+
+/**
+ * Generate pages sitemap
+ */
+function sbs_generate_pages_sitemap()
+{
+    $pages = get_pages(array(
+        'post_status' => 'publish'
+    ));
+
+    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+    // Add homepage
+    echo '<url>' . "\n";
+    echo '<loc>' . home_url('/') . '</loc>' . "\n";
+    echo '<lastmod>' . date('Y-m-d\TH:i:s+00:00') . '</lastmod>' . "\n";
+    echo '<changefreq>weekly</changefreq>' . "\n";
+    echo '<priority>1.0</priority>' . "\n";
+    echo '</url>' . "\n";
+
+    // Add custom pages
+    $custom_pages = array(
+        '/blog-list/' => array('priority' => '0.8', 'changefreq' => 'daily'),
+    );
+
+    foreach ($custom_pages as $url => $config) {
+        echo '<url>' . "\n";
+        echo '<loc>' . home_url($url) . '</loc>' . "\n";
+        echo '<lastmod>' . date('Y-m-d\TH:i:s+00:00') . '</lastmod>' . "\n";
+        echo '<changefreq>' . $config['changefreq'] . '</changefreq>' . "\n";
+        echo '<priority>' . $config['priority'] . '</priority>' . "\n";
+        echo '</url>' . "\n";
+    }
+
+    // Add WordPress pages
+    foreach ($pages as $page) {
+        echo '<url>' . "\n";
+        echo '<loc>' . get_permalink($page->ID) . '</loc>' . "\n";
+        echo '<lastmod>' . get_the_modified_date('Y-m-d\TH:i:s+00:00', $page->ID) . '</lastmod>' . "\n";
+        echo '<changefreq>monthly</changefreq>' . "\n";
+        echo '<priority>0.6</priority>' . "\n";
+        echo '</url>' . "\n";
+    }
+
+    echo '</urlset>';
+}
+
+/**
  * Register Custom Post Types
  */
 
@@ -150,6 +580,24 @@ function sbs_add_campaign_meta_boxes()
         'side',
         'high'
     );
+
+    add_meta_box(
+        'sbs_campaign_metrics',
+        __('Campaign Metrics', 'sbs-portal'),
+        'sbs_campaign_metrics_meta_box_callback',
+        'campaign',
+        'side',
+        'default'
+    );
+
+    add_meta_box(
+        'sbs_campaign_settings',
+        __('Campaign Settings', 'sbs-portal'),
+        'sbs_campaign_settings_meta_box_callback',
+        'campaign',
+        'normal',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'sbs_add_campaign_meta_boxes');
 
@@ -182,56 +630,141 @@ function sbs_campaign_highlight_meta_box_callback($post)
 }
 
 /**
- * Save Campaign highlight meta box
+ * Save Campaign meta boxes
  */
-function sbs_save_campaign_highlight_meta_box($post_id)
+function sbs_save_campaign_meta_boxes($post_id)
 {
-    if (
-        !isset($_POST['sbs_campaign_highlight_meta_box_nonce']) ||
-        !wp_verify_nonce($_POST['sbs_campaign_highlight_meta_box_nonce'], 'sbs_campaign_highlight_meta_box')
-    ) {
-        return;
-    }
-
+    // Check if user has permissions to save data
     if (!current_user_can('edit_post', $post_id)) {
         return;
     }
 
+    // Check if not an autosave
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
 
-    $is_highlight = isset($_POST['campaign_highlight']) ? '1' : '0';
+    // Save campaign highlight
+    if (
+        isset($_POST['sbs_campaign_highlight_meta_box_nonce']) &&
+        wp_verify_nonce($_POST['sbs_campaign_highlight_meta_box_nonce'], 'sbs_campaign_highlight_meta_box')
+    ) {
 
-    if ($is_highlight === '1') {
-        // Remove highlight from all other campaigns first
-        $args = array(
-            'post_type' => 'campaign',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_campaign_highlight',
-                    'value' => '1',
-                    'compare' => '='
+        $is_highlight = isset($_POST['campaign_highlight']) ? '1' : '0';
+
+        if ($is_highlight === '1') {
+            // Remove highlight from all other campaigns first
+            $args = array(
+                'post_type' => 'campaign',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => '_campaign_highlight',
+                        'value' => '1',
+                        'compare' => '='
+                    )
                 )
-            )
-        );
+            );
 
-        $highlighted_campaigns = get_posts($args);
-        foreach ($highlighted_campaigns as $campaign) {
-            if ($campaign->ID != $post_id) {
-                update_post_meta($campaign->ID, '_campaign_highlight', '0');
+            $highlighted_campaigns = get_posts($args);
+            foreach ($highlighted_campaigns as $campaign) {
+                if ($campaign->ID != $post_id) {
+                    update_post_meta($campaign->ID, '_campaign_highlight', '0');
+                }
             }
+
+            // Set this campaign as highlighted
+            update_post_meta($post_id, '_campaign_highlight', '1');
+        } else {
+            update_post_meta($post_id, '_campaign_highlight', '0');
+        }
+    }
+
+    // Save campaign settings
+    if (
+        isset($_POST['sbs_campaign_settings_meta_box_nonce']) &&
+        wp_verify_nonce($_POST['sbs_campaign_settings_meta_box_nonce'], 'sbs_campaign_settings_meta_box')
+    ) {
+
+        // Save campaign type
+        if (isset($_POST['campaign_type'])) {
+            update_post_meta($post_id, '_campaign_type', sanitize_text_field($_POST['campaign_type']));
         }
 
-        // Set this campaign as highlighted
-        update_post_meta($post_id, '_campaign_highlight', '1');
-    } else {
-        update_post_meta($post_id, '_campaign_highlight', '0');
+        // Save start date
+        if (isset($_POST['campaign_start_date'])) {
+            update_post_meta($post_id, '_campaign_start_date', sanitize_text_field($_POST['campaign_start_date']));
+        }
+
+        // Save end date
+        if (isset($_POST['campaign_end_date'])) {
+            update_post_meta($post_id, '_campaign_end_date', sanitize_text_field($_POST['campaign_end_date']));
+        }
+
+        // Save external URL
+        if (isset($_POST['campaign_external_url'])) {
+            update_post_meta($post_id, '_campaign_external_url', esc_url_raw($_POST['campaign_external_url']));
+        }
+
+        // Save target audience
+        if (isset($_POST['campaign_target_audience'])) {
+            update_post_meta($post_id, '_campaign_target_audience', sanitize_textarea_field($_POST['campaign_target_audience']));
+        }
+
+        // Save tracking enabled
+        $tracking_enabled = isset($_POST['campaign_tracking_enabled']) ? '1' : '0';
+        update_post_meta($post_id, '_campaign_tracking_enabled', $tracking_enabled);
+
+        // Save max impressions
+        if (isset($_POST['campaign_max_impressions'])) {
+            update_post_meta($post_id, '_campaign_max_impressions', absint($_POST['campaign_max_impressions']));
+        }
+
+        // Save max clicks
+        if (isset($_POST['campaign_max_clicks'])) {
+            update_post_meta($post_id, '_campaign_max_clicks', absint($_POST['campaign_max_clicks']));
+        }
     }
 }
-add_action('save_post', 'sbs_save_campaign_highlight_meta_box');
+add_action('save_post', 'sbs_save_campaign_meta_boxes');
+
+/**
+ * AJAX handler to reset campaign metrics
+ */
+function sbs_ajax_reset_campaign_metrics()
+{
+    // Check nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'sbs_reset_metrics')) {
+        wp_die(json_encode(array('success' => false, 'message' => 'Security check failed')));
+    }
+
+    // Check permissions
+    if (!current_user_can('edit_posts')) {
+        wp_die(json_encode(array('success' => false, 'message' => 'Insufficient permissions')));
+    }
+
+    $campaign_id = absint($_POST['campaign_id']);
+    if (!$campaign_id) {
+        wp_die(json_encode(array('success' => false, 'message' => 'Invalid campaign ID')));
+    }
+
+    // Check if campaign exists
+    $post = get_post($campaign_id);
+    if (!$post || $post->post_type !== 'campaign') {
+        wp_die(json_encode(array('success' => false, 'message' => 'Campaign not found')));
+    }
+
+    // Reset metrics
+    update_post_meta($campaign_id, '_campaign_impressions', 0);
+    update_post_meta($campaign_id, '_campaign_clicks', 0);
+
+    wp_die(json_encode(array(
+        'success' => true,
+        'message' => 'Metrics reset successfully'
+    )));
+}
+add_action('wp_ajax_sbs_reset_campaign_metrics', 'sbs_ajax_reset_campaign_metrics');
 
 /**
  * Get the currently highlighted campaign
@@ -267,6 +800,239 @@ function sbs_get_highlighted_campaign()
     }
 
     return null;
+}
+
+/**
+ * Campaign metrics meta box callback
+ */
+function sbs_campaign_metrics_meta_box_callback($post)
+{
+    $impressions = (int) get_post_meta($post->ID, '_campaign_impressions', true);
+    $clicks = (int) get_post_meta($post->ID, '_campaign_clicks', true);
+    $ctr = $impressions > 0 ? round(($clicks / $impressions) * 100, 2) : 0;
+
+    $created_date = get_the_date('Y-m-d', $post->ID);
+    $days_active = max(1, floor((time() - strtotime($created_date)) / DAY_IN_SECONDS));
+    $avg_impressions_per_day = round($impressions / $days_active, 1);
+    $avg_clicks_per_day = round($clicks / $days_active, 1);
+
+?>
+    <div class="campaign-metrics-container">
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-number"><?php echo number_format($impressions); ?></div>
+                <div class="metric-label"><?php _e('Total Impressions', 'sbs-portal'); ?></div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-number"><?php echo number_format($clicks); ?></div>
+                <div class="metric-label"><?php _e('Total Clicks', 'sbs-portal'); ?></div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-number"><?php echo $ctr; ?>%</div>
+                <div class="metric-label"><?php _e('Click-Through Rate', 'sbs-portal'); ?></div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-number"><?php echo $avg_impressions_per_day; ?></div>
+                <div class="metric-label"><?php _e('Avg. Impressions/Day', 'sbs-portal'); ?></div>
+            </div>
+        </div>
+
+        <div class="metrics-actions">
+            <button type="button" class="button" id="reset-campaign-metrics" data-campaign-id="<?php echo $post->ID; ?>">
+                <?php _e('Reset Metrics', 'sbs-portal'); ?>
+            </button>
+            <button type="button" class="button button-primary" id="refresh-campaign-metrics" data-campaign-id="<?php echo $post->ID; ?>">
+                <?php _e('Refresh', 'sbs-portal'); ?>
+            </button>
+        </div>
+
+        <div class="metrics-info">
+            <p><small>
+                    <?php printf(__('Campaign active for %d days since %s', 'sbs-portal'), $days_active, $created_date); ?>
+                </small></p>
+        </div>
+    </div>
+
+    <style>
+        .campaign-metrics-container {
+            padding: 10px 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .metric-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2271b1;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .metrics-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .metrics-info {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+    </style>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('#refresh-campaign-metrics').on('click', function() {
+                location.reload();
+            });
+
+            $('#reset-campaign-metrics').on('click', function() {
+                if (confirm('<?php _e('Are you sure you want to reset all metrics for this campaign? This action cannot be undone.', 'sbs-portal'); ?>')) {
+                    var campaignId = $(this).data('campaign-id');
+                    $.post(ajaxurl, {
+                        action: 'sbs_reset_campaign_metrics',
+                        campaign_id: campaignId,
+                        nonce: '<?php echo wp_create_nonce('sbs_reset_metrics'); ?>'
+                    }, function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert('<?php _e('Failed to reset metrics. Please try again.', 'sbs-portal'); ?>');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<?php
+}
+
+/**
+ * Campaign settings meta box callback
+ */
+function sbs_campaign_settings_meta_box_callback($post)
+{
+    wp_nonce_field('sbs_campaign_settings_meta_box', 'sbs_campaign_settings_meta_box_nonce');
+
+    $start_date = get_post_meta($post->ID, '_campaign_start_date', true);
+    $end_date = get_post_meta($post->ID, '_campaign_end_date', true);
+    $target_audience = get_post_meta($post->ID, '_campaign_target_audience', true);
+    $campaign_type = get_post_meta($post->ID, '_campaign_type', true);
+    $external_url = get_post_meta($post->ID, '_campaign_external_url', true);
+    $tracking_enabled = get_post_meta($post->ID, '_campaign_tracking_enabled', true) ?: '1';
+    $max_impressions = get_post_meta($post->ID, '_campaign_max_impressions', true);
+    $max_clicks = get_post_meta($post->ID, '_campaign_max_clicks', true);
+
+?>
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="campaign_type"><?php _e('Campaign Type', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <select name="campaign_type" id="campaign_type">
+                    <option value="promotion" <?php selected($campaign_type, 'promotion'); ?>><?php _e('Promotion', 'sbs-portal'); ?></option>
+                    <option value="announcement" <?php selected($campaign_type, 'announcement'); ?>><?php _e('Announcement', 'sbs-portal'); ?></option>
+                    <option value="event" <?php selected($campaign_type, 'event'); ?>><?php _e('Event', 'sbs-portal'); ?></option>
+                    <option value="course" <?php selected($campaign_type, 'course'); ?>><?php _e('Course', 'sbs-portal'); ?></option>
+                    <option value="other" <?php selected($campaign_type, 'other'); ?>><?php _e('Other', 'sbs-portal'); ?></option>
+                </select>
+                <p class="description"><?php _e('Select the type of campaign', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="campaign_start_date"><?php _e('Start Date', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <input type="date" name="campaign_start_date" id="campaign_start_date" value="<?php echo esc_attr($start_date); ?>" />
+                <p class="description"><?php _e('When should this campaign start being displayed?', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="campaign_end_date"><?php _e('End Date', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <input type="date" name="campaign_end_date" id="campaign_end_date" value="<?php echo esc_attr($end_date); ?>" />
+                <p class="description"><?php _e('When should this campaign stop being displayed?', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="campaign_external_url"><?php _e('External URL', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <input type="url" name="campaign_external_url" id="campaign_external_url" value="<?php echo esc_attr($external_url); ?>" class="large-text" />
+                <p class="description"><?php _e('Optional: External URL to redirect to instead of campaign detail page', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="campaign_target_audience"><?php _e('Target Audience', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <textarea name="campaign_target_audience" id="campaign_target_audience" rows="3" class="large-text"><?php echo esc_textarea($target_audience); ?></textarea>
+                <p class="description"><?php _e('Describe the target audience for this campaign', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="campaign_tracking_enabled"><?php _e('Enable Tracking', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="campaign_tracking_enabled" id="campaign_tracking_enabled" value="1" <?php checked($tracking_enabled, '1'); ?> />
+                    <?php _e('Track impressions and clicks for this campaign', 'sbs-portal'); ?>
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="max_impressions"><?php _e('Max Impressions', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <input type="number" name="campaign_max_impressions" id="max_impressions" value="<?php echo esc_attr($max_impressions); ?>" min="0" />
+                <p class="description"><?php _e('Stop displaying after this many impressions (0 = unlimited)', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="max_clicks"><?php _e('Max Clicks', 'sbs-portal'); ?></label>
+            </th>
+            <td>
+                <input type="number" name="campaign_max_clicks" id="max_clicks" value="<?php echo esc_attr($max_clicks); ?>" min="0" />
+                <p class="description"><?php _e('Stop displaying after this many clicks (0 = unlimited)', 'sbs-portal'); ?></p>
+            </td>
+        </tr>
+    </table>
+<?php
 }
 
 /**
@@ -1101,6 +1867,134 @@ function sbs_create_sample_banner_items()
 add_action('after_switch_theme', 'sbs_create_sample_banner_items');
 
 /**
+ * Add custom columns to Campaign admin list
+ */
+function sbs_add_campaign_admin_columns($columns)
+{
+    $new_columns = array();
+
+    // Keep existing columns in order
+    foreach ($columns as $key => $value) {
+        $new_columns[$key] = $value;
+
+        // Add custom columns after title
+        if ($key === 'title') {
+            $new_columns['campaign_type'] = __('Type', 'sbs-portal');
+            $new_columns['campaign_impressions'] = __('Impressions', 'sbs-portal');
+            $new_columns['campaign_clicks'] = __('Clicks', 'sbs-portal');
+            $new_columns['campaign_ctr'] = __('CTR', 'sbs-portal');
+            $new_columns['campaign_status'] = __('Status', 'sbs-portal');
+        }
+    }
+
+    return $new_columns;
+}
+add_filter('manage_campaign_posts_columns', 'sbs_add_campaign_admin_columns');
+
+/**
+ * Display custom column content for Campaign
+ */
+function sbs_campaign_admin_column_content($column, $post_id)
+{
+    switch ($column) {
+        case 'campaign_type':
+            $type = get_post_meta($post_id, '_campaign_type', true);
+            echo esc_html($type ? ucfirst($type) : '—');
+            break;
+
+        case 'campaign_impressions':
+            $impressions = (int) get_post_meta($post_id, '_campaign_impressions', true);
+            echo '<strong>' . number_format($impressions) . '</strong>';
+            break;
+
+        case 'campaign_clicks':
+            $clicks = (int) get_post_meta($post_id, '_campaign_clicks', true);
+            echo '<strong>' . number_format($clicks) . '</strong>';
+            break;
+
+        case 'campaign_ctr':
+            $impressions = (int) get_post_meta($post_id, '_campaign_impressions', true);
+            $clicks = (int) get_post_meta($post_id, '_campaign_clicks', true);
+            $ctr = $impressions > 0 ? round(($clicks / $impressions) * 100, 2) : 0;
+
+            $color = 'black';
+            if ($ctr >= 5) $color = 'green';
+            elseif ($ctr >= 2) $color = 'orange';
+            elseif ($ctr > 0) $color = 'red';
+
+            echo '<span style="color: ' . $color . '; font-weight: bold;">' . $ctr . '%</span>';
+            break;
+
+        case 'campaign_status':
+            $start_date = get_post_meta($post_id, '_campaign_start_date', true);
+            $end_date = get_post_meta($post_id, '_campaign_end_date', true);
+            $tracking_enabled = get_post_meta($post_id, '_campaign_tracking_enabled', true);
+            $is_highlighted = get_post_meta($post_id, '_campaign_highlight', true) === '1';
+
+            $today = date('Y-m-d');
+            $status_parts = array();
+
+            // Check if campaign is active based on dates
+            if ($start_date && $start_date > $today) {
+                $status_parts[] = '<span style="color: orange;">Scheduled</span>';
+            } elseif ($end_date && $end_date < $today) {
+                $status_parts[] = '<span style="color: red;">Expired</span>';
+            } else {
+                $status_parts[] = '<span style="color: green;">Active</span>';
+            }
+
+            // Check other statuses
+            if ($is_highlighted) {
+                $status_parts[] = '<span style="color: blue;">★ Featured</span>';
+            }
+
+            if ($tracking_enabled !== '1') {
+                $status_parts[] = '<span style="color: gray;">No Tracking</span>';
+            }
+
+            echo implode('<br>', $status_parts);
+            break;
+    }
+}
+add_action('manage_campaign_posts_custom_column', 'sbs_campaign_admin_column_content', 10, 2);
+
+/**
+ * Make Campaign columns sortable
+ */
+function sbs_campaign_sortable_columns($columns)
+{
+    $columns['campaign_type'] = 'campaign_type';
+    $columns['campaign_impressions'] = 'campaign_impressions';
+    $columns['campaign_clicks'] = 'campaign_clicks';
+    return $columns;
+}
+add_filter('manage_edit-campaign_sortable_columns', 'sbs_campaign_sortable_columns');
+
+/**
+ * Handle custom sorting for Campaign
+ */
+function sbs_campaign_custom_orderby($query)
+{
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    $orderby = $query->get('orderby');
+
+    if ($orderby === 'campaign_type') {
+        $query->set('meta_key', '_campaign_type');
+        $query->set('orderby', 'meta_value');
+    } elseif ($orderby === 'campaign_impressions') {
+        $query->set('meta_key', '_campaign_impressions');
+        $query->set('orderby', 'meta_value_num');
+    } elseif ($orderby === 'campaign_clicks') {
+        $query->set('meta_key', '_campaign_clicks');
+        $query->set('orderby', 'meta_value_num');
+    }
+}
+add_action('pre_get_posts', 'sbs_campaign_custom_orderby');
+
+/**
  * Get Campaign posts for banner carousel
  *
  * @param int $limit Maximum number of campaigns to retrieve
@@ -1108,12 +2002,66 @@ add_action('after_switch_theme', 'sbs_create_sample_banner_items');
  */
 function sbs_get_campaign_items(int $limit = 10): array
 {
+    $today = date('Y-m-d');
+
     $args = array(
         'post_type' => 'campaign',
         'post_status' => 'publish',
         'posts_per_page' => $limit,
         'orderby' => 'date',
         'order' => 'DESC',
+        'meta_query' => array(
+            'relation' => 'AND',
+            // Only show campaigns that are not expired
+            array(
+                'relation' => 'OR',
+                array(
+                    'key' => '_campaign_end_date',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key' => '_campaign_end_date',
+                    'value' => '',
+                    'compare' => '='
+                ),
+                array(
+                    'key' => '_campaign_end_date',
+                    'value' => $today,
+                    'compare' => '>='
+                )
+            ),
+            // Only show campaigns that have started or have no start date
+            array(
+                'relation' => 'OR',
+                array(
+                    'key' => '_campaign_start_date',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key' => '_campaign_start_date',
+                    'value' => '',
+                    'compare' => '='
+                ),
+                array(
+                    'key' => '_campaign_start_date',
+                    'value' => $today,
+                    'compare' => '<='
+                )
+            ),
+            // Only show campaigns with tracking enabled (or no setting = default enabled)
+            array(
+                'relation' => 'OR',
+                array(
+                    'key' => '_campaign_tracking_enabled',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key' => '_campaign_tracking_enabled',
+                    'value' => '1',
+                    'compare' => '='
+                )
+            )
+        )
     );
 
     $query = new WP_Query($args);
@@ -1124,13 +2072,30 @@ function sbs_get_campaign_items(int $limit = 10): array
             $query->the_post();
             $post_id = get_the_ID();
 
+            // Check max impressions/clicks limits
+            $max_impressions = (int) get_post_meta($post_id, '_campaign_max_impressions', true);
+            $max_clicks = (int) get_post_meta($post_id, '_campaign_max_clicks', true);
+            $current_impressions = (int) get_post_meta($post_id, '_campaign_impressions', true);
+            $current_clicks = (int) get_post_meta($post_id, '_campaign_clicks', true);
+
+            // Skip if limits exceeded
+            if (($max_impressions > 0 && $current_impressions >= $max_impressions) ||
+                ($max_clicks > 0 && $current_clicks >= $max_clicks)
+            ) {
+                continue;
+            }
+
             $image_src = has_post_thumbnail($post_id)
                 ? get_the_post_thumbnail_url($post_id, 'full')
                 : '';
 
             $slug = get_post_field('post_name', $post_id);
-            // Build campaign-detail link by ID to avoid title/slug mismatch
-            $detail_url = add_query_arg('post_id', $post_id, home_url('/campaign-detail/'));
+
+            // Check for external URL
+            $external_url = get_post_meta($post_id, '_campaign_external_url', true);
+            $detail_url = !empty($external_url)
+                ? $external_url
+                : add_query_arg('post_id', $post_id, home_url('/campaign-detail/'));
 
             $items[] = array(
                 'id' => $post_id,
@@ -1139,6 +2104,9 @@ function sbs_get_campaign_items(int $limit = 10): array
                 'permalink' => get_permalink($post_id),
                 'slug' => $slug,
                 'detail_url' => $detail_url,
+                'external_url' => $external_url,
+                'campaign_type' => get_post_meta($post_id, '_campaign_type', true),
+                'target_audience' => get_post_meta($post_id, '_campaign_target_audience', true),
             );
         }
         wp_reset_postdata();
@@ -1431,6 +2399,16 @@ function sbs_add_admin_menu()
         'sbs-rewrite-rules',
         'sbs_rewrite_rules_page'
     );
+
+    // Add Campaign Analytics dashboard
+    add_submenu_page(
+        'edit.php?post_type=campaign',
+        'Campaign Analytics',
+        'Analytics',
+        'edit_posts',
+        'sbs-campaign-analytics',
+        'sbs_campaign_analytics_page'
+    );
 }
 add_action('admin_menu', 'sbs_add_admin_menu');
 
@@ -1461,6 +2439,405 @@ function sbs_rewrite_rules_page()
             <li><strong>Blog List:</strong> <a href="<?php echo home_url('/blog-list/'); ?>" target="_blank"><?php echo home_url('/blog-list/'); ?></a></li>
         </ul>
     </div>
+<?php
+}
+
+/**
+ * Campaign Analytics Dashboard Page
+ */
+function sbs_campaign_analytics_page()
+{
+    // Get all campaigns
+    $campaigns = get_posts(array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC'
+    ));
+
+    $total_impressions = 0;
+    $total_clicks = 0;
+    $active_campaigns = 0;
+    $today = date('Y-m-d');
+
+    foreach ($campaigns as $campaign) {
+        $impressions = (int) get_post_meta($campaign->ID, '_campaign_impressions', true);
+        $clicks = (int) get_post_meta($campaign->ID, '_campaign_clicks', true);
+        $end_date = get_post_meta($campaign->ID, '_campaign_end_date', true);
+        $tracking_enabled = get_post_meta($campaign->ID, '_campaign_tracking_enabled', true) !== '0';
+
+        $total_impressions += $impressions;
+        $total_clicks += $clicks;
+
+        if ($tracking_enabled && (!$end_date || $end_date >= $today)) {
+            $active_campaigns++;
+        }
+    }
+
+    $overall_ctr = $total_impressions > 0 ? round(($total_clicks / $total_impressions) * 100, 2) : 0;
+
+?>
+    <div class="wrap">
+        <h1>Campaign Analytics Dashboard</h1>
+
+        <div class="sbs-analytics-summary">
+            <div class="analytics-cards">
+                <div class="analytics-card">
+                    <div class="card-number"><?php echo number_format($total_impressions); ?></div>
+                    <div class="card-label">Total Impressions</div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="card-number"><?php echo number_format($total_clicks); ?></div>
+                    <div class="card-label">Total Clicks</div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="card-number"><?php echo $overall_ctr; ?>%</div>
+                    <div class="card-label">Overall CTR</div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="card-number"><?php echo $active_campaigns; ?></div>
+                    <div class="card-label">Active Campaigns</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sbs-campaigns-table">
+            <h2>Campaign Performance</h2>
+            <table class="wp-list-table widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Impressions</th>
+                        <th>Clicks</th>
+                        <th>CTR</th>
+                        <th>Last Activity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($campaigns as $campaign):
+                        $impressions = (int) get_post_meta($campaign->ID, '_campaign_impressions', true);
+                        $clicks = (int) get_post_meta($campaign->ID, '_campaign_clicks', true);
+                        $ctr = $impressions > 0 ? round(($clicks / $impressions) * 100, 2) : 0;
+                        $type = get_post_meta($campaign->ID, '_campaign_type', true) ?: 'general';
+                        $start_date = get_post_meta($campaign->ID, '_campaign_start_date', true);
+                        $end_date = get_post_meta($campaign->ID, '_campaign_end_date', true);
+                        $tracking_enabled = get_post_meta($campaign->ID, '_campaign_tracking_enabled', true) !== '0';
+                        $last_activity = (int) get_post_meta($campaign->ID, '_campaign_last_activity', true);
+
+                        // Determine status
+                        $status = 'Active';
+                        $status_class = 'status-active';
+
+                        if (!$tracking_enabled) {
+                            $status = 'Tracking Disabled';
+                            $status_class = 'status-disabled';
+                        } elseif ($start_date && $start_date > $today) {
+                            $status = 'Scheduled';
+                            $status_class = 'status-scheduled';
+                        } elseif ($end_date && $end_date < $today) {
+                            $status = 'Expired';
+                            $status_class = 'status-expired';
+                        }
+
+                        $last_activity_text = $last_activity ? human_time_diff($last_activity) . ' ago' : 'Never';
+                    ?>
+                        <tr>
+                            <td>
+                                <strong><?php echo esc_html($campaign->post_title); ?></strong>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="<?php echo get_edit_post_link($campaign->ID); ?>">Edit</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td><?php echo esc_html(ucfirst($type)); ?></td>
+                            <td>
+                                <span class="campaign-status <?php echo $status_class; ?>">
+                                    <?php echo esc_html($status); ?>
+                                </span>
+                            </td>
+                            <td><?php echo number_format($impressions); ?></td>
+                            <td><?php echo number_format($clicks); ?></td>
+                            <td>
+                                <span class="ctr-value <?php echo $ctr >= 2 ? 'ctr-good' : ($ctr >= 1 ? 'ctr-fair' : 'ctr-poor'); ?>">
+                                    <?php echo $ctr; ?>%
+                                </span>
+                            </td>
+                            <td><?php echo esc_html($last_activity_text); ?></td>
+                            <td>
+                                <button type="button" class="button button-small view-analytics"
+                                    data-campaign-id="<?php echo $campaign->ID; ?>">
+                                    View Analytics
+                                </button>
+                                <button type="button" class="button button-small reset-metrics"
+                                    data-campaign-id="<?php echo $campaign->ID; ?>"
+                                    data-campaign-title="<?php echo esc_attr($campaign->post_title); ?>">
+                                    Reset
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Analytics Modal -->
+        <div id="analytics-modal" class="analytics-modal" style="display: none;">
+            <div class="analytics-modal-content">
+                <div class="analytics-modal-header">
+                    <h3 id="analytics-modal-title">Campaign Analytics</h3>
+                    <span class="analytics-modal-close">&times;</span>
+                </div>
+                <div class="analytics-modal-body">
+                    <div id="analytics-loading">Loading analytics data...</div>
+                    <div id="analytics-content" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sbs-analytics-summary {
+            margin: 20px 0;
+        }
+
+        .analytics-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .analytics-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2271b1;
+            margin-bottom: 8px;
+        }
+
+        .card-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .campaign-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-disabled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-scheduled {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-expired {
+            background: #f1f3f4;
+            color: #5f6368;
+        }
+
+        .ctr-value {
+            font-weight: bold;
+        }
+
+        .ctr-good {
+            color: #28a745;
+        }
+
+        .ctr-fair {
+            color: #ffc107;
+        }
+
+        .ctr-poor {
+            color: #dc3545;
+        }
+
+        .analytics-modal {
+            position: fixed;
+            z-index: 100000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .analytics-modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .analytics-modal-header {
+            padding: 20px;
+            background: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .analytics-modal-close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .analytics-modal-body {
+            padding: 20px;
+        }
+
+        .sbs-campaigns-table {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <script>
+        jQuery(document).ready(function($) {
+            // View Analytics
+            $('.view-analytics').on('click', function() {
+                var campaignId = $(this).data('campaign-id');
+                var campaignTitle = $(this).closest('tr').find('strong').text();
+
+                $('#analytics-modal-title').text('Analytics: ' + campaignTitle);
+                $('#analytics-modal').show();
+                $('#analytics-loading').show();
+                $('#analytics-content').hide();
+
+                // Fetch analytics data
+                $.get('<?php echo rest_url('sbs/v1/campaign/'); ?>' + campaignId + '/analytics?days=30')
+                    .done(function(data) {
+                        var html = '<div class="analytics-summary">';
+                        html += '<div class="analytics-grid">';
+                        html += '<div class="metric"><div class="metric-number">' + data.period_stats.impressions.toLocaleString() + '</div><div class="metric-label">Impressions (30 days)</div></div>';
+                        html += '<div class="metric"><div class="metric-number">' + data.period_stats.clicks.toLocaleString() + '</div><div class="metric-label">Clicks (30 days)</div></div>';
+                        html += '<div class="metric"><div class="metric-number">' + data.period_stats.ctr + '%</div><div class="metric-label">CTR (30 days)</div></div>';
+                        html += '<div class="metric"><div class="metric-number">' + data.period_stats.avg_impressions_per_day + '</div><div class="metric-label">Avg Impressions/Day</div></div>';
+                        html += '</div></div>';
+
+                        if (data.daily_stats && Object.keys(data.daily_stats).length > 0) {
+                            html += '<h4>Daily Performance</h4>';
+                            html += '<table class="wp-list-table widefat">';
+                            html += '<thead><tr><th>Date</th><th>Impressions</th><th>Clicks</th><th>CTR</th></tr></thead><tbody>';
+
+                            Object.keys(data.daily_stats).slice(-10).forEach(function(date) {
+                                var stat = data.daily_stats[date];
+                                html += '<tr>';
+                                html += '<td>' + stat.date + '</td>';
+                                html += '<td>' + stat.impressions + '</td>';
+                                html += '<td>' + stat.clicks + '</td>';
+                                html += '<td>' + stat.ctr + '%</td>';
+                                html += '</tr>';
+                            });
+
+                            html += '</tbody></table>';
+                        }
+
+                        $('#analytics-content').html(html);
+                        $('#analytics-loading').hide();
+                        $('#analytics-content').show();
+                    })
+                    .fail(function() {
+                        $('#analytics-content').html('<p>Failed to load analytics data.</p>');
+                        $('#analytics-loading').hide();
+                        $('#analytics-content').show();
+                    });
+            });
+
+            // Reset Metrics
+            $('.reset-metrics').on('click', function() {
+                var campaignId = $(this).data('campaign-id');
+                var campaignTitle = $(this).data('campaign-title');
+
+                if (confirm('Are you sure you want to reset all metrics for "' + campaignTitle + '"? This action cannot be undone.')) {
+                    $.post(ajaxurl, {
+                        action: 'sbs_reset_campaign_metrics',
+                        campaign_id: campaignId,
+                        nonce: '<?php echo wp_create_nonce('sbs_reset_metrics'); ?>'
+                    }, function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert('Failed to reset metrics. Please try again.');
+                        }
+                    });
+                }
+            });
+
+            // Close Modal
+            $('.analytics-modal-close, .analytics-modal').on('click', function(e) {
+                if (e.target === this) {
+                    $('#analytics-modal').hide();
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .metric-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2271b1;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
 <?php
 }
 
@@ -2628,6 +4005,40 @@ function sbs_register_rest_routes()
             'permission_callback' => '__return_true',
         )
     );
+
+    // Campaign analytics endpoint
+    register_rest_route(
+        'sbs/v1',
+        '/campaign/(?P<id>\d+)/analytics',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaign_analytics',
+            'permission_callback' => function () {
+                return current_user_can('edit_posts');
+            },
+            'args' => array(
+                'days' => array(
+                    'default' => 30,
+                    'sanitize_callback' => 'absint',
+                ),
+                'type' => array(
+                    'default' => 'both',
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
+            ),
+        )
+    );
+
+    // Bulk campaign status check
+    register_rest_route(
+        'sbs/v1',
+        '/campaigns/status',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'sbs_api_get_campaigns_status',
+            'permission_callback' => '__return_true',
+        )
+    );
 }
 add_action('rest_api_init', 'sbs_register_rest_routes');
 
@@ -2745,47 +4156,125 @@ function sbs_api_get_campaign_detail(WP_REST_Request $request)
 
 /**
  * POST /sbs/v1/campaign/track
- * Body: { campaign_id: int, type: impression|click, ref?: string }
+ * Body: { campaign_id: int, type: impression|click, ref?: string, timestamp?: int, user_agent?: string, target_url?: string }
  */
 function sbs_api_track_campaign(WP_REST_Request $request)
 {
     $campaign_id = absint($request->get_param('campaign_id'));
     $type = strtolower((string) $request->get_param('type'));
     $ref = sanitize_text_field((string) $request->get_param('ref'));
+    $timestamp = absint($request->get_param('timestamp')) ?: time();
+    $user_agent = sanitize_text_field((string) $request->get_param('user_agent'));
+    $target_url = esc_url_raw((string) $request->get_param('target_url'));
+    $campaign_title = sanitize_text_field((string) $request->get_param('campaign_title'));
 
     if (!$campaign_id || !in_array($type, array('impression', 'click'), true)) {
         return new WP_Error('invalid_params', 'campaign_id and valid type are required', array('status' => 400));
     }
 
     $post = get_post($campaign_id);
-    if (!$post || $post->post_type !== 'campaign') {
+    if (!$post || $post->post_type !== 'campaign' || $post->post_status !== 'publish') {
         return new WP_Error('not_found', 'Campaign not found', array('status' => 404));
     }
 
-    // Basic throttling by IP + campaign + type
+    // Check if tracking is enabled for this campaign
+    $tracking_enabled = get_post_meta($campaign_id, '_campaign_tracking_enabled', true);
+    if ($tracking_enabled === '0') {
+        return rest_ensure_response(array(
+            'success' => true,
+            'message' => 'Tracking disabled for this campaign',
+            'tracking_disabled' => true
+        ));
+    }
+
+    // Check date limits
+    $start_date = get_post_meta($campaign_id, '_campaign_start_date', true);
+    $end_date = get_post_meta($campaign_id, '_campaign_end_date', true);
+    $today = date('Y-m-d');
+
+    if (($start_date && $start_date > $today) || ($end_date && $end_date < $today)) {
+        return rest_ensure_response(array(
+            'success' => true,
+            'message' => 'Campaign not active',
+            'campaign_inactive' => true
+        ));
+    }
+
+    // Check impression/click limits
+    $meta_key = ($type === 'impression') ? '_campaign_impressions' : '_campaign_clicks';
+    $current = (int) get_post_meta($campaign_id, $meta_key, true);
+
+    $max_key = ($type === 'impression') ? '_campaign_max_impressions' : '_campaign_max_clicks';
+    $max_limit = (int) get_post_meta($campaign_id, $max_key, true);
+
+    if ($max_limit > 0 && $current >= $max_limit) {
+        return rest_ensure_response(array(
+            'success' => true,
+            'message' => 'Campaign limit reached',
+            'limit_reached' => true,
+            'current' => $current,
+            'limit' => $max_limit
+        ));
+    }
+
+    // Enhanced throttling by IP + campaign + type + user agent hash
     $ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '0.0.0.0';
-    $key_base = sprintf('sbs_campaign_%s_%d_%s', $type, $campaign_id, md5($ip . '|' . $ref));
+    $user_hash = substr(md5($user_agent . '|' . $ip), 0, 8);
+    $key_base = sprintf('sbs_campaign_%s_%d_%s', $type, $campaign_id, $user_hash);
     $throttle_key = $key_base . '_ts';
-    $cooldown = ($type === 'impression') ? MINUTE_IN_SECONDS * 15 : MINUTE_IN_SECONDS * 5; // 15m impressions, 5m clicks
+    $cooldown = ($type === 'impression') ? MINUTE_IN_SECONDS * 10 : MINUTE_IN_SECONDS * 3; // 10m impressions, 3m clicks
     $last_ts = get_transient($throttle_key);
 
     if ($last_ts) {
-        // Already counted recently
-        return rest_ensure_response(array('success' => true, 'throttled' => true));
+        return rest_ensure_response(array(
+            'success' => true,
+            'throttled' => true,
+            'cooldown_remaining' => $cooldown - (time() - $last_ts)
+        ));
     }
 
-    $meta_key = ($type === 'impression') ? '_campaign_impressions' : '_campaign_clicks';
-    $current = (int) get_post_meta($campaign_id, $meta_key, true);
+    // Track the event
     $new_value = $current + 1;
     update_post_meta($campaign_id, $meta_key, $new_value);
 
+    // Store detailed tracking data in separate option for analytics
+    $tracking_data = get_option('sbs_campaign_tracking_' . $campaign_id, array());
+    if (!is_array($tracking_data)) {
+        $tracking_data = array();
+    }
+
+    if (!isset($tracking_data[$type])) {
+        $tracking_data[$type] = array();
+    }
+
+    // Limit stored data to last 1000 entries per type
+    if (count($tracking_data[$type]) >= 1000) {
+        $tracking_data[$type] = array_slice($tracking_data[$type], -900); // Keep last 900
+    }
+
+    $tracking_data[$type][] = array(
+        'timestamp' => $timestamp,
+        'ref' => $ref,
+        'ip_hash' => substr(md5($ip), 0, 8), // Store only hash for privacy
+        'user_agent_hash' => substr(md5($user_agent), 0, 8),
+        'target_url' => $target_url,
+        'date' => date('Y-m-d H:i:s', $timestamp)
+    );
+
+    update_option('sbs_campaign_tracking_' . $campaign_id, $tracking_data);
+
     set_transient($throttle_key, time(), $cooldown);
+
+    // Update last activity
+    update_post_meta($campaign_id, '_campaign_last_activity', time());
 
     return rest_ensure_response(array(
         'success' => true,
         'campaign_id' => $campaign_id,
         'type' => $type,
         'count' => $new_value,
+        'timestamp' => $timestamp,
+        'remaining_limit' => $max_limit > 0 ? max(0, $max_limit - $new_value) : null
     ));
 }
 
@@ -2931,4 +4420,196 @@ function sbs_api_get_blog_detail(WP_REST_Request $request)
     }
 
     return rest_ensure_response(sbs_format_blog_post($id, true));
+}
+
+/**
+ * GET /sbs/v1/campaign/{id}/analytics
+ */
+function sbs_api_get_campaign_analytics(WP_REST_Request $request)
+{
+    $id = absint($request['id']);
+    $days = max(1, min(365, (int) $request->get_param('days')));
+    $type = (string) $request->get_param('type');
+
+    if (!$id) {
+        return new WP_Error('invalid_id', 'Invalid campaign id', array('status' => 400));
+    }
+
+    $post = get_post($id);
+    if (!$post || $post->post_type !== 'campaign') {
+        return new WP_Error('not_found', 'Campaign not found', array('status' => 404));
+    }
+
+    // Get tracking data
+    $tracking_data = get_option('sbs_campaign_tracking_' . $id, array());
+    $cutoff_time = time() - ($days * DAY_IN_SECONDS);
+
+    $analytics = array(
+        'campaign_id' => $id,
+        'campaign_title' => get_the_title($id),
+        'period_days' => $days,
+        'total_impressions' => (int) get_post_meta($id, '_campaign_impressions', true),
+        'total_clicks' => (int) get_post_meta($id, '_campaign_clicks', true),
+        'last_activity' => (int) get_post_meta($id, '_campaign_last_activity', true),
+        'campaign_settings' => array(
+            'type' => get_post_meta($id, '_campaign_type', true),
+            'start_date' => get_post_meta($id, '_campaign_start_date', true),
+            'end_date' => get_post_meta($id, '_campaign_end_date', true),
+            'max_impressions' => (int) get_post_meta($id, '_campaign_max_impressions', true),
+            'max_clicks' => (int) get_post_meta($id, '_campaign_max_clicks', true),
+            'tracking_enabled' => get_post_meta($id, '_campaign_tracking_enabled', true) !== '0'
+        ),
+        'daily_stats' => array(),
+        'hourly_stats' => array(),
+        'recent_activity' => array()
+    );
+
+    if (!empty($tracking_data)) {
+        // Process daily stats
+        $daily_impressions = array();
+        $daily_clicks = array();
+
+        foreach (['impression', 'click'] as $event_type) {
+            if (!isset($tracking_data[$event_type])) continue;
+
+            foreach ($tracking_data[$event_type] as $event) {
+                if ($event['timestamp'] < $cutoff_time) continue;
+
+                $date = date('Y-m-d', $event['timestamp']);
+                $hour = date('H', $event['timestamp']);
+
+                // Daily stats
+                if ($event_type === 'impression') {
+                    $daily_impressions[$date] = ($daily_impressions[$date] ?? 0) + 1;
+                } else {
+                    $daily_clicks[$date] = ($daily_clicks[$date] ?? 0) + 1;
+                }
+
+                // Hourly stats (last 24h only)
+                if ($event['timestamp'] > time() - DAY_IN_SECONDS) {
+                    $hour_key = date('Y-m-d H:00', $event['timestamp']);
+                    if (!isset($analytics['hourly_stats'][$hour_key])) {
+                        $analytics['hourly_stats'][$hour_key] = array('impressions' => 0, 'clicks' => 0);
+                    }
+                    $analytics['hourly_stats'][$hour_key][$event_type . 's']++;
+                }
+
+                // Recent activity (last 100 events)
+                if (count($analytics['recent_activity']) < 100) {
+                    $analytics['recent_activity'][] = array(
+                        'type' => $event_type,
+                        'timestamp' => $event['timestamp'],
+                        'date' => $event['date'],
+                        'ref' => $event['ref']
+                    );
+                }
+            }
+        }
+
+        // Combine daily stats
+        $all_dates = array_unique(array_merge(array_keys($daily_impressions), array_keys($daily_clicks)));
+        foreach ($all_dates as $date) {
+            $impressions = $daily_impressions[$date] ?? 0;
+            $clicks = $daily_clicks[$date] ?? 0;
+            $ctr = $impressions > 0 ? round(($clicks / $impressions) * 100, 2) : 0;
+
+            $analytics['daily_stats'][$date] = array(
+                'date' => $date,
+                'impressions' => $impressions,
+                'clicks' => $clicks,
+                'ctr' => $ctr
+            );
+        }
+
+        // Sort by date
+        ksort($analytics['daily_stats']);
+        ksort($analytics['hourly_stats']);
+
+        // Sort recent activity by timestamp desc
+        usort($analytics['recent_activity'], function ($a, $b) {
+            return $b['timestamp'] - $a['timestamp'];
+        });
+    }
+
+    // Calculate summary stats
+    $period_impressions = array_sum(array_column($analytics['daily_stats'], 'impressions'));
+    $period_clicks = array_sum(array_column($analytics['daily_stats'], 'clicks'));
+    $period_ctr = $period_impressions > 0 ? round(($period_clicks / $period_impressions) * 100, 2) : 0;
+
+    $analytics['period_stats'] = array(
+        'impressions' => $period_impressions,
+        'clicks' => $period_clicks,
+        'ctr' => $period_ctr,
+        'avg_impressions_per_day' => $days > 0 ? round($period_impressions / $days, 1) : 0,
+        'avg_clicks_per_day' => $days > 0 ? round($period_clicks / $days, 1) : 0
+    );
+
+    return rest_ensure_response($analytics);
+}
+
+/**
+ * GET /sbs/v1/campaigns/status
+ */
+function sbs_api_get_campaigns_status(WP_REST_Request $request)
+{
+    $campaigns = get_posts(array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'fields' => 'ids'
+    ));
+
+    $status_data = array();
+    $today = date('Y-m-d');
+
+    foreach ($campaigns as $campaign_id) {
+        $start_date = get_post_meta($campaign_id, '_campaign_start_date', true);
+        $end_date = get_post_meta($campaign_id, '_campaign_end_date', true);
+        $tracking_enabled = get_post_meta($campaign_id, '_campaign_tracking_enabled', true) !== '0';
+        $max_impressions = (int) get_post_meta($campaign_id, '_campaign_max_impressions', true);
+        $max_clicks = (int) get_post_meta($campaign_id, '_campaign_max_clicks', true);
+        $current_impressions = (int) get_post_meta($campaign_id, '_campaign_impressions', true);
+        $current_clicks = (int) get_post_meta($campaign_id, '_campaign_clicks', true);
+        $last_activity = (int) get_post_meta($campaign_id, '_campaign_last_activity', true);
+
+        // Determine status
+        $status = 'active';
+        $status_reason = '';
+
+        if (!$tracking_enabled) {
+            $status = 'disabled';
+            $status_reason = 'Tracking disabled';
+        } elseif ($start_date && $start_date > $today) {
+            $status = 'scheduled';
+            $status_reason = 'Starts ' . $start_date;
+        } elseif ($end_date && $end_date < $today) {
+            $status = 'expired';
+            $status_reason = 'Ended ' . $end_date;
+        } elseif ($max_impressions > 0 && $current_impressions >= $max_impressions) {
+            $status = 'limit_reached';
+            $status_reason = 'Impression limit reached';
+        } elseif ($max_clicks > 0 && $current_clicks >= $max_clicks) {
+            $status = 'limit_reached';
+            $status_reason = 'Click limit reached';
+        }
+
+        $status_data[] = array(
+            'id' => $campaign_id,
+            'title' => get_the_title($campaign_id),
+            'status' => $status,
+            'status_reason' => $status_reason,
+            'tracking_enabled' => $tracking_enabled,
+            'impressions' => $current_impressions,
+            'clicks' => $current_clicks,
+            'last_activity' => $last_activity,
+            'limits' => array(
+                'max_impressions' => $max_impressions,
+                'max_clicks' => $max_clicks,
+                'impressions_remaining' => $max_impressions > 0 ? max(0, $max_impressions - $current_impressions) : null,
+                'clicks_remaining' => $max_clicks > 0 ? max(0, $max_clicks - $current_clicks) : null
+            )
+        );
+    }
+
+    return rest_ensure_response($status_data);
 }
