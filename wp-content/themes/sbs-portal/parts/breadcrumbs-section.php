@@ -16,13 +16,13 @@ if (!defined('ABSPATH')) {
 }
 
 // Get parameters with defaults
-$breadcrumb_items = isset($args['breadcrumb_items']) ? $args['breadcrumb_items'] : array('ブログ一覧');
+$breadcrumb_items = isset($args['breadcrumb_items']) ? $args['breadcrumb_items'] : array(__('Blog List', 'sbs-portal'));
 ?>
 
 <div class="blog-breadcrumbs mb-1">
     <div class="breadcrumb-list d-flex align-items-center">
         <div class="breadcrumb-item">
-            <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link text-decoration-none">ポータル</a>
+            <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link text-decoration-none"><?php echo __('Portal', 'sbs-portal'); ?></a>
         </div>
 
         <?php foreach ($breadcrumb_items as $index => $item): ?>

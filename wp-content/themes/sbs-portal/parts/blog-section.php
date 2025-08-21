@@ -26,13 +26,13 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
                 <div class="logo-icon d-flex align-items-center justify-content-center">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-logo-small.png" alt="SBS Logo" class="img-fluid" />
                 </div>
-                <h2 class="section-title mb-0">ブログ</h2>
+                <h2 class="section-title mb-0"><?php echo __('Blog', 'sbs-portal'); ?></h2>
             </div>
             <p class="section-subtitle mb-0">BLOG and NEWS</p>
         </div>
         <div class="header-action">
             <a href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog-list/')); ?>" class="view-all-button btn btn-outline-secondary btn-sm text-decoration-none">
-                すべて表示
+                <?php echo __('View All', 'sbs-portal'); ?>
             </a>
         </div>
     </div>
@@ -60,7 +60,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
             <?php endforeach;
         else: ?>
             <div class="no-posts text-center py-5">
-                <p class="text-muted mb-0">No blog posts available yet.</p>
+                <p class="text-muted mb-0"><?php echo __('No blog posts available yet.', 'sbs-portal'); ?></p>
             </div>
         <?php endif; ?>
     </div>

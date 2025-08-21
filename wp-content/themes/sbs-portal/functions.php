@@ -19,7 +19,9 @@ if (!defined('ABSPATH')) {
  */
 function sbs_setup()
 {
-    // Make theme available for translation
+    // Make theme available for translation.
+    // Translations are stored in the /languages/ directory.
+    // Note: After updating .po files, you must compile them into .mo files for the translations to take effect.
     load_theme_textdomain('sbs-portal', get_template_directory() . '/languages');
 
     // Add theme support
@@ -86,6 +88,26 @@ function sbs_enqueue_scripts()
         'templateDirectoryUri' => get_template_directory_uri(),
         'restUrl' => esc_url_raw(rest_url()),
     ));
+
+    // Localize language data
+    $current_lang = sbs_get_current_language();
+    wp_localize_script('sbs-script', 'sbsLanguage', array(
+        'current' => $current_lang,
+        'available' => sbs_get_available_languages(),
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('sbs_nonce')
+    ));
+
+    // Enqueue language-specific CSS if exists
+    $lang_css_path = get_template_directory() . '/assets/css/languages/' . $current_lang . '.css';
+    if (file_exists($lang_css_path)) {
+        wp_enqueue_style(
+            'sbs-language-' . $current_lang,
+            get_template_directory_uri() . '/assets/css/languages/' . $current_lang . '.css',
+            array('sbs-style'),
+            '1.0.0'
+        );
+    }
 }
 // Load our assets late to reduce chance of being overridden by plugins
 add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts', 100);
@@ -2312,34 +2334,124 @@ function sbs_get_available_languages()
             'name' => 'English',
             'native_name' => 'English',
             'flag' => '🇺🇸',
-            'locale' => 'en'
+            'locale' => 'en_US'
         ),
         'id' => array(
             'name' => 'Indonesia',
             'native_name' => 'Bahasa Indonesia',
             'flag' => '🇮🇩',
-            'locale' => 'id'
+            'locale' => 'id_ID'
         )
     );
 }
 
 /**
- * Get current language
+ * Debug function to check language settings
+ */
+function sbs_debug_language()
+{
+    if (isset($_GET['debug_lang']) && current_user_can('manage_options')) {
+        echo '<pre>';
+        echo "Current Language: " . sbs_get_current_language() . "\n";
+        echo "Available Languages: " . print_r(sbs_get_available_languages(), true) . "\n";
+        echo "Cookie sbs_language: " . (isset($_COOKIE['sbs_language']) ? $_COOKIE['sbs_language'] : 'not set') . "\n";
+        echo "Session sbs_language: " . (isset($_SESSION['sbs_language']) ? $_SESSION['sbs_language'] : 'not set') . "\n";
+        echo '</pre>';
+        exit;
+    }
+}
+add_action('init', 'sbs_debug_language');
+
+/**
+ * Admin notice to detect missing .mo translation files for the theme
+ * Helps developers/users diagnose why __('...') strings don't change after switching language
+ */
+function sbs_check_translation_files_notice()
+{
+    if (!is_admin() || !current_user_can('manage_options')) {
+        return;
+    }
+
+    $languages = sbs_get_available_languages();
+    $missing = array();
+    $lang_dir = get_template_directory() . '/languages';
+
+    foreach ($languages as $code => $info) {
+        // WordPress expects files named: {domain}-{locale}.mo, e.g. sbs-portal-en_US.mo
+        $expected = $lang_dir . '/sbs-portal-' . $info['locale'] . '.mo';
+        if (!file_exists($expected)) {
+            // also check shorter locale (e.g. 'ja' files)
+            $expected_short = $lang_dir . '/sbs-portal-' . $code . '.mo';
+            if (!file_exists($expected_short)) {
+                $missing[$code] = array(
+                    'locale' => $info['locale'],
+                    'paths' => array($expected, $expected_short),
+                );
+            }
+        }
+    }
+
+    if (!empty($missing)) {
+        $cmds = array();
+        // WP-CLI command (recommended if WP-CLI is available)
+        $cmds[] = "# Generate .mo files from .po using WP-CLI (run from WP root):";
+        $cmds[] = "wp i18n make-mo wp-content/themes/sbs-portal/languages/*.po";
+        $cmds[] = "";
+        $cmds[] = "# Or, using msgfmt (macOS/Linux) for each .po file:";
+        foreach ($missing as $code => $info) {
+            $po = get_template_directory() . '/languages/' . $code . '.po';
+            $mo = get_template_directory() . '/languages/sbs-portal-' . $info['locale'] . '.mo';
+            $cmds[] = sprintf("msgfmt %s -o %s", $po, $mo);
+        }
+
+        $message = '<strong>SBS Portal:</strong> Missing compiled translation (.mo) files were detected for the theme.';
+        $message .= '<br/>Without .mo files, WordPress cannot apply translated strings even after switching locale.';
+        $message .= '<br/><br/><code>' . esc_html(implode("\n", $cmds)) . '</code>';
+
+        echo '<div class="notice notice-warning is-dismissible"><p>' . $message . '</p></div>';
+    }
+}
+add_action('admin_notices', 'sbs_check_translation_files_notice');
+
+/**
+ * Get current language - Improved Version
  */
 function sbs_get_current_language()
 {
-    // Get from session/cookie first, then default to Japanese
-    $current_lang = isset($_SESSION['sbs_language']) ? $_SESSION['sbs_language'] : 'ja';
+    // If Polylang is active, defer to it for the current language
+    if (function_exists('pll_current_language')) {
+        $lang = pll_current_language('slug'); // returns 'ja', 'en', 'id' etc.
+        if ($lang) {
+            return $lang;
+        }
+    }
 
-    // Also check if stored in cookie
+    // Initialize session if not started
+    if (!session_id()) {
+        session_start();
+    }
+
+    $current_lang = 'ja'; // Default to Japanese
+
+    // Priority 1: Check cookie (most persistent)
     if (isset($_COOKIE['sbs_language'])) {
         $current_lang = sanitize_text_field($_COOKIE['sbs_language']);
     }
 
-    // Validate language exists
+    // Priority 2: Check session (current session only)
+    if (isset($_SESSION['sbs_language'])) {
+        $current_lang = sanitize_text_field($_SESSION['sbs_language']);
+    }
+
+    // Priority 3: Check URL parameter (for direct links)
+    if (isset($_GET['lang'])) {
+        $current_lang = sanitize_text_field($_GET['lang']);
+    }
+
+    // Validate language exists in our available languages
     $available_languages = sbs_get_available_languages();
     if (!array_key_exists($current_lang, $available_languages)) {
-        $current_lang = 'ja'; // fallback to Japanese
+        $current_lang = 'ja'; // Always fallback to Japanese
     }
 
     return $current_lang;
@@ -2363,12 +2475,6 @@ function sbs_set_current_language($language_code)
         // Also set cookie for persistence (30 days)
         setcookie('sbs_language', $language_code, time() + (30 * 24 * 60 * 60), '/');
 
-        // Change WordPress locale
-        add_filter('locale', function () use ($language_code) {
-            $languages = sbs_get_available_languages();
-            return $languages[$language_code]['locale'];
-        });
-
         return true;
     }
 
@@ -2376,28 +2482,57 @@ function sbs_set_current_language($language_code)
 }
 
 /**
- * Handle language switching via AJAX
+ * Handle language switching via AJAX - Improved Version
  */
 function sbs_ajax_switch_language()
 {
-    // Verify nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'sbs_nonce')) {
-        wp_die(json_encode(array('success' => false, 'message' => 'Security check failed')));
-    }
+    // Set proper content type
+    header('Content-Type: application/json');
 
-    $language_code = sanitize_text_field($_POST['language']);
+    try {
+        // Verify nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'sbs_nonce')) {
+            wp_send_json_error('Security check failed');
+            return;
+        }
 
-    if (sbs_set_current_language($language_code)) {
-        wp_die(json_encode(array(
-            'success' => true,
-            'message' => 'Language switched successfully',
-            'language' => $language_code
-        )));
-    } else {
-        wp_die(json_encode(array(
-            'success' => false,
-            'message' => 'Invalid language code'
-        )));
+        // Validate language parameter
+        if (!isset($_POST['language'])) {
+            wp_send_json_error('Language parameter missing');
+            return;
+        }
+
+        $language_code = sanitize_text_field($_POST['language']);
+
+        // Validate language code
+        $available_languages = sbs_get_available_languages();
+        if (!array_key_exists($language_code, $available_languages)) {
+            wp_send_json_error('Invalid language code: ' . $language_code);
+            return;
+        }
+
+        // Set the language
+        if (sbs_set_current_language($language_code)) {
+            $response = array(
+                'message' => 'Language switched successfully',
+                'language' => $language_code,
+                'language_name' => $available_languages[$language_code]['native_name']
+            );
+
+            // If Polylang is active, provide a redirect URL for the chosen language
+            if (function_exists('pll_home_url')) {
+                $pll_url = pll_home_url($language_code);
+                if ($pll_url) {
+                    $response['redirect_url'] = esc_url_raw($pll_url);
+                }
+            }
+
+            wp_send_json_success($response);
+        } else {
+            wp_send_json_error('Failed to set language');
+        }
+    } catch (Exception $e) {
+        wp_send_json_error('Server error: ' . $e->getMessage());
     }
 }
 add_action('wp_ajax_switch_language', 'sbs_ajax_switch_language');
@@ -2408,11 +2543,11 @@ add_action('wp_ajax_nopriv_switch_language', 'sbs_ajax_switch_language');
  */
 function sbs_init_session()
 {
-    if (!session_id()) {
+    if (!session_id() && !headers_sent()) {
         session_start();
     }
 }
-add_action('init', 'sbs_init_session');
+add_action('init', 'sbs_init_session', 1);
 
 /**
  * Apply current language locale
@@ -2450,33 +2585,7 @@ function sbs_get_text($key, $translations = array())
     return $key;
 }
 
-/**
- * Enqueue language-specific styles and scripts
- */
-function sbs_enqueue_language_assets()
-{
-    $current_lang = sbs_get_current_language();
 
-    // Enqueue language-specific CSS if exists
-    $lang_css_path = get_template_directory() . '/assets/css/languages/' . $current_lang . '.css';
-    if (file_exists($lang_css_path)) {
-        wp_enqueue_style(
-            'sbs-language-' . $current_lang,
-            get_template_directory_uri() . '/assets/css/languages/' . $current_lang . '.css',
-            array('sbs-style'),
-            '1.0.0'
-        );
-    }
-
-    // Add current language to localized script data
-    wp_localize_script('sbs-script', 'sbsLanguage', array(
-        'current' => $current_lang,
-        'available' => sbs_get_available_languages(),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('sbs_nonce')
-    ));
-}
-add_action('wp_enqueue_scripts', 'sbs_enqueue_language_assets');
 
 /**
  * ============================================================================

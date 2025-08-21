@@ -289,3 +289,127 @@ msgstr "Berlaku Sampai"
 
 msgid "Terms and Conditions"
 msgstr "Syarat dan Ketentuan"
+
+# Portal and Navigation
+msgid "Portal"
+msgstr "Portal"
+
+msgid "Add description"
+msgstr "Tambahkan deskripsi"
+
+# Blog specific terms
+msgid "No blog posts available yet."
+msgstr "Belum ada postingan blog."
+
+msgid "View All"
+msgstr "Lihat Semua"
+
+msgid "Blog List"
+msgstr "Daftar Blog"
+
+msgid "No posts currently available."
+msgstr "Tidak ada postingan saat ini."
+
+msgid "Page"
+msgstr "Halaman"
+
+msgid "Course Information"
+msgstr "Informasi Kursus"
+
+msgid "Lesson List"
+msgstr "Daftar Pelajaran"
+
+msgid "Lesson details are being prepared."
+msgstr "Detail pelajaran sedang disiapkan."
+
+msgid "No related posts."
+msgstr "Tidak ada postingan terkait."
+
+# Campaign specific terms  
+msgid "Campaign Information"
+msgstr "Informasi Kampanye"
+
+msgid "Campaign List"
+msgstr "Daftar Kampanye"
+
+msgid "No related campaigns."
+msgstr "Tidak ada kampanye terkait."
+
+msgid "Campaign Not Found"
+msgstr "Kampanye Tidak Ditemukan"
+
+msgid "This campaign could not be found."
+msgstr "Kampanye ini tidak dapat ditemukan."
+
+msgid "Campaign content not available."
+msgstr "Konten kampanye tidak tersedia."
+
+# FAQ specific terms
+msgid "No FAQs available yet."
+msgstr "Belum ada FAQ."
+
+# Forms and interactions
+msgid "Title"
+msgstr "Judul"
+
+msgid "Content"
+msgstr "Konten"
+
+msgid "Description"
+msgstr "Deskripsi"
+
+msgid "Image"
+msgstr "Gambar"
+
+msgid "Link"
+msgstr "Tautan"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "Actions"
+msgstr "Tindakan"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Delete"
+msgstr "Hapus"
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Update"
+msgstr "Perbarui"
+
+msgid "Add New"
+msgstr "Tambah Baru"
+
+# Error messages
+msgid "Error occurred"
+msgstr "Terjadi kesalahan"
+
+msgid "Please try again"
+msgstr "Silakan coba lagi"
+
+msgid "Invalid data"
+msgstr "Data tidak valid"
+
+# Success messages
+msgid "Successfully saved"
+msgstr "Berhasil disimpan"
+
+msgid "Successfully updated"
+msgstr "Berhasil diperbarui"
+
+msgid "Successfully deleted"
+msgstr "Berhasil dihapus"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "Konten artikel ini sedang disiapkan. Informasi detail akan dipublikasikan nanti."
+
+msgid "Detailed information will be published later."
+msgstr "Informasi detail akan dipublikasikan nanti."

@@ -23,40 +23,24 @@ $mock_data = sbs_get_mock_data();
             <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 gap-2 gap-xxl-4">
                 <li class="nav-item d-none d-xl-flex">
                     <a class="nav-link active" aria-current="page" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
-                        <?php echo sbs_get_text('greeting', array(
-                            'ja' => 'ごあいさつ',
-                            'en' => 'Greeting',
-                            'id' => 'Salam'
-                        )); ?>
+                        <?php echo __('Greeting', 'sbs-portal'); ?>
                     </a>
                 </li>
                 <li class="nav-item dropdown d-none d-xl-flex">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span>
-                            <?php echo sbs_get_text('company_info', array(
-                                'ja' => '企業情報',
-                                'en' => 'Company Info',
-                                'id' => 'Info Perusahaan'
-                            )); ?>
+                            <?php echo __('Company Information', 'sbs-portal'); ?>
                         </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">
-                                <?php echo sbs_get_text('company_overview', array(
-                                    'ja' => '会社概要',
-                                    'en' => 'Company Overview',
-                                    'id' => 'Gambaran Perusahaan'
-                                )); ?>
+                                <?php echo __('Company Overview', 'sbs-portal'); ?>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">
-                                <?php echo sbs_get_text('history', array(
-                                    'ja' => '沿革',
-                                    'en' => 'History',
-                                    'id' => 'Sejarah'
-                                )); ?>
+                                <?php echo __('History', 'sbs-portal'); ?>
                             </a>
                         </li>
                     </ul>
@@ -64,47 +48,53 @@ $mock_data = sbs_get_mock_data();
 
                 <li class="nav-item  d-none d-xl-flex">
                     <a class="nav-link  active" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">
-                        <?php echo sbs_get_text('about_sbs_group', array(
-                            'ja' => 'SBSグループについて',
-                            'en' => 'About SBS Group',
-                            'id' => 'Tentang Grup SBS'
-                        )); ?>
+                        <?php echo __('About SBS Group', 'sbs-portal'); ?>
                     </a>
                 </li>
 
                 <li class="nav-item dropdown d-none d-xl-flex">
-                    <?php
-                    $current_lang = sbs_get_current_language();
-                    $available_languages = sbs_get_available_languages();
-                    $current_lang_data = $available_languages[$current_lang];
-                    ?>
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php echo $current_lang_data['native_name']; ?>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <?php foreach ($available_languages as $lang_code => $lang_data): ?>
-                            <li>
-                                <a class="dropdown-item language-option <?php echo ($lang_code === $current_lang) ? 'active' : ''; ?>"
-                                    href="#"
-                                    data-language="<?php echo esc_attr($lang_code); ?>"
-                                    data-locale="<?php echo esc_attr($lang_data['locale']); ?>">
-                                    <span class="flag-icon"><?php echo $lang_data['flag']; ?></span>
-                                    <span class="lang-name"><?php echo $lang_data['native_name']; ?></span>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <?php if (function_exists('pll_the_languages')) : ?>
+                        <div class="polylang-switcher">
+                            <?php
+                            // Display as dropdown with flags and names
+                            pll_the_languages(array(
+                                'dropdown' => 1,
+                                'show_flags' => 1,
+                                'show_names' => 1,
+                                'hide_if_empty' => 0,
+                            ));
+                            ?>
+                        </div>
+                    <?php else : ?>
+                        <?php
+                        $current_lang = sbs_get_current_language();
+                        $available_languages = sbs_get_available_languages();
+                        $current_lang_data = $available_languages[$current_lang];
+                        ?>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php echo $current_lang_data['native_name']; ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($available_languages as $lang_code => $lang_data): ?>
+                                <li>
+                                    <a class="dropdown-item language-option <?php echo ($lang_code === $current_lang) ? 'active' : ''; ?>"
+                                        href="#"
+                                        data-language="<?php echo esc_attr($lang_code); ?>"
+                                        data-locale="<?php echo esc_attr($lang_data['locale']); ?>">
+                                        <span class="flag-icon"><?php echo $lang_data['flag']; ?></span>
+                                        <span class="lang-name"><?php echo $lang_data['native_name']; ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item">
                     <nav class="navbar">
                         <div class="container-fluid">
                             <button class="navbar-toggler btn-custom-nav p-2 d-flex gap-2" type="button"
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                                <span class="d-none d-xl-flex align-items-center"><?php echo sbs_get_text('menu', array(
-                                                                                        'ja' => 'Menu',
-                                                                                        'en' => 'Menu',
-                                                                                        'id' => 'Menu'
-                                                                                    )); ?></span>
+                                <span class="d-none d-xl-flex align-items-center"><?php echo __('Menu', 'sbs-portal'); ?></span>
                                 <span><?php echo sbs_get_icon('align-justify'); ?></span>
                             </button>
 
@@ -146,35 +136,53 @@ $mock_data = sbs_get_mock_data();
                                             ?>
                                             <div class="dropdown mega-language-dropdown">
                                                 <!-- Dropdown Toggle Button -->
-                                                <button class="language-switcher-mega dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLanguageList" aria-expanded="false" aria-controls="collapseLanguageList">
-                                                    <span><?php echo $current_lang_data_mobile['native_name']; ?></span>
-                                                </button>
-                                                <!-- Collapsible List Group -->
-                                                <div class="collapse" id="collapseLanguageList">
-                                                    <ul class="list-group mt-2">
-                                                        <?php foreach ($available_languages_mobile as $lang_code => $lang_data): ?>
-                                                            <li class="list-group-item language-option <?php echo ($lang_code === $current_lang_mobile) ? 'active' : ''; ?>">
-                                                                <a href="#"
-                                                                    data-language="<?php echo esc_attr($lang_code); ?>"
-                                                                    data-locale="<?php echo esc_attr($lang_data['locale']); ?>"
-                                                                    class="d-flex align-items-center gap-2 text-decoration-none">
-                                                                    <span class="flag-icon"><?php echo $lang_data['flag']; ?></span>
-                                                                    <span class="lang-name"><?php echo $lang_data['native_name']; ?></span>
-                                                                </a>
-                                                            </li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
-                                                </div>
+                                                <?php if (function_exists('pll_the_languages')) : ?>
+                                                    <?php
+                                                    // Show a collapsed list using raw output so we can format mobile list
+                                                    $langs = pll_the_languages(array('raw' => 1));
+                                                    ?>
+                                                    <button class="language-switcher-mega dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLanguageList" aria-expanded="false" aria-controls="collapseLanguageList">
+                                                        <span><?php echo esc_html($langs[pll_current_language('slug')]['name'] ?? ''); ?></span>
+                                                    </button>
+                                                    <div class="collapse" id="collapseLanguageList">
+                                                        <ul class="list-group mt-2">
+                                                            <?php foreach ($langs as $code => $data) : ?>
+                                                                <li class="list-group-item">
+                                                                    <a href="<?php echo esc_url($data['url']); ?>" class="d-flex align-items-center gap-2 text-decoration-none">
+                                                                        <span class="flag-icon"><?php echo $data['flag']; ?></span>
+                                                                        <span class="lang-name"><?php echo esc_html($data['name']); ?></span>
+                                                                    </a>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <!-- fallback to theme language list -->
+                                                    <button class="language-switcher-mega dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLanguageList" aria-expanded="false" aria-controls="collapseLanguageList">
+                                                        <span><?php echo $current_lang_data_mobile['native_name']; ?></span>
+                                                    </button>
+                                                    <div class="collapse" id="collapseLanguageList">
+                                                        <ul class="list-group mt-2">
+                                                            <?php foreach ($available_languages_mobile as $lang_code => $lang_data): ?>
+                                                                <li class="list-group-item language-option <?php echo ($lang_code === $current_lang_mobile) ? 'active' : ''; ?>">
+                                                                    <a href="#"
+                                                                        data-language="<?php echo esc_attr($lang_code); ?>"
+                                                                        data-locale="<?php echo esc_attr($lang_data['locale']); ?>"
+                                                                        class="d-flex align-items-center gap-2 text-decoration-none">
+                                                                        <span class="flag-icon"><?php echo $lang_data['flag']; ?></span>
+                                                                        <span class="lang-name"><?php echo $lang_data['native_name']; ?></span>
+                                                                    </a>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="close-button-container">
                                             <button type="button" class="mega-menu-close" data-bs-dismiss="offcanvas" aria-label="Close">
                                                 <span class="close-text d-none d-xl-block">
-                                                    <?php echo sbs_get_text('close', array(
-                                                        'ja' => 'Close',
-                                                        'en' => 'Close',
-                                                        'id' => 'Close'
-                                                    )); ?>
+                                                    <?php echo __('Close', 'sbs-portal'); ?>
                                                 </span>
                                                 <?php echo sbs_get_icon('icon-x'); ?>
                                             </button>
@@ -189,50 +197,30 @@ $mock_data = sbs_get_mock_data();
                                             <div class="mega-nav-column">
                                                 <div class="mega-nav-section">
                                                     <h3 class="mega-section-title">
-                                                        <?php echo sbs_get_text('portal', array(
-                                                            'ja' => 'ポータル',
-                                                            'en' => 'Portal',
-                                                            'id' => 'Portal'
-                                                        )); ?>
+                                                        <?php echo __('Portal', 'sbs-portal'); ?>
                                                     </h3>
 
                                                     <ul class="mega-nav-list mb-4">
                                                         <li>
                                                             <a class="mega-nav-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
-                                                                <?php echo sbs_get_text('greeting', array(
-                                                                    'ja' => 'ごあいさつ',
-                                                                    'en' => 'Greeting',
-                                                                    'id' => 'Salam'
-                                                                )); ?>
+                                                                <?php echo __('Greeting', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                     </ul>
 
                                                     <div class="mega-nav-subsection gap-0 mb-4">
                                                         <h4 class="mega-subsection-title">
-                                                            <?php echo sbs_get_text('company_info', array(
-                                                                'ja' => '企業情報',
-                                                                'en' => 'Company Information',
-                                                                'id' => 'Informasi Perusahaan'
-                                                            )); ?>
+                                                            <?php echo __('Company Information', 'sbs-portal'); ?>
                                                         </h4>
                                                         <ul class="mega-nav-sublist">
                                                             <li>
                                                                 <a class="mega-nav-sublink" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">
-                                                                    <?php echo sbs_get_text('company_overview', array(
-                                                                        'ja' => '会社概要',
-                                                                        'en' => 'Company Overview',
-                                                                        'id' => 'Gambaran Perusahaan'
-                                                                    )); ?>
+                                                                    <?php echo __('Company Overview', 'sbs-portal'); ?>
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a class="mega-nav-sublink" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">
-                                                                    <?php echo sbs_get_text('history', array(
-                                                                        'ja' => '沿革',
-                                                                        'en' => 'History',
-                                                                        'id' => 'Sejarah'
-                                                                    )); ?>
+                                                                    <?php echo __('History', 'sbs-portal'); ?>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -241,11 +229,7 @@ $mock_data = sbs_get_mock_data();
                                                     <ul class="mega-nav-list">
                                                         <li>
                                                             <a class="mega-nav-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">
-                                                                <?php echo sbs_get_text('about_sbs_group', array(
-                                                                    'ja' => 'SBSグループについて',
-                                                                    'en' => 'About SBS Group',
-                                                                    'id' => 'Tentang Grup SBS'
-                                                                )); ?>
+                                                                <?php echo __('About SBS Group', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -256,66 +240,38 @@ $mock_data = sbs_get_mock_data();
                                             <div class="mega-nav-column">
                                                 <div class="mega-nav-section">
                                                     <a class="mega-section-title hover-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk">
-                                                        <?php echo sbs_get_text('sbs_auto', array(
-                                                            'ja' => 'SBS自動車',
-                                                            'en' => 'SBS Auto',
-                                                            'id' => 'SBS Auto'
-                                                        )); ?>
+                                                        <?php echo __('SBS Auto', 'sbs-portal'); ?>
                                                     </a>
 
                                                     <ul class="mega-nav-list">
                                                         <li>
                                                             <a class="mega-nav-link large" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">
-                                                                <?php echo sbs_get_text('sbs_driving_school_anesaki', array(
-                                                                    'ja' => 'SBSドライビングスクール姉崎',
-                                                                    'en' => 'SBS Driving School Anesaki',
-                                                                    'id' => 'SBS Driving School Anesaki'
-                                                                )); ?>
+                                                                <?php echo __('SBS Driving School', 'sbs-portal'); ?> Anesaki
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="mega-nav-link main" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage">
-                                                                <?php echo sbs_get_text('sbs_driving_school_inage', array(
-                                                                    'ja' => 'SBSドライビングスクール稲毛',
-                                                                    'en' => 'SBS Driving School Inage',
-                                                                    'id' => 'SBS Driving School Inage'
-                                                                )); ?>
+                                                                <?php echo __('SBS Driving School', 'sbs-portal'); ?> Inage
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="mega-nav-link" href="https://anesaki.sbs-drivingschool.co.jp">
-                                                                <?php echo sbs_get_text('anesaki_details', array(
-                                                                    'ja' => '姉崎詳細',
-                                                                    'en' => 'Anesaki Details',
-                                                                    'id' => 'Detail Anesaki'
-                                                                )); ?>
+                                                                Anesaki <?php echo __('View Details', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="mega-nav-link" href="https://inage.sbs-drivingschool.co.jp">
-                                                                <?php echo sbs_get_text('inage_details', array(
-                                                                    'ja' => '稲毛詳細',
-                                                                    'en' => 'Inage Details',
-                                                                    'id' => 'Detail Inage'
-                                                                )); ?>
+                                                                Inage <?php echo __('View Details', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="mega-nav-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/reservation-course">
-                                                                <?php echo sbs_get_text('reservation_system', array(
-                                                                    'ja' => '予約システム',
-                                                                    'en' => 'Reservation System',
-                                                                    'id' => 'Sistem Reservasi'
-                                                                )); ?>
+                                                                <?php echo __('Booking System', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="mega-nav-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/matching">
-                                                                <?php echo sbs_get_text('matching_system', array(
-                                                                    'ja' => 'マッチングシステム',
-                                                                    'en' => 'Matching System',
-                                                                    'id' => 'Sistem Matching'
-                                                                )); ?>
+                                                                <?php echo __('Matching System', 'sbs-portal'); ?>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -327,18 +283,10 @@ $mock_data = sbs_get_mock_data();
                                         <div class="mega-menu-footer">
                                             <div class="mega-footer-links">
                                                 <a class="mega-footer-link primary" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/site-usage">
-                                                    <?php echo sbs_get_text('terms_of_use', array(
-                                                        'ja' => '利用規約',
-                                                        'en' => 'Terms of Use',
-                                                        'id' => 'Syarat Penggunaan'
-                                                    )); ?>
+                                                    <?php echo __('Terms of Service', 'sbs-portal'); ?>
                                                 </a>
                                                 <a class="mega-footer-link" href="https://dev.sbs-ds.com/<?php echo $current_lang_mobile; ?>/privacy-policy">
-                                                    <?php echo sbs_get_text('privacy', array(
-                                                        'ja' => 'プライバシー',
-                                                        'en' => 'Privacy',
-                                                        'id' => 'Privasi'
-                                                    )); ?>
+                                                    <?php echo __('Privacy Policy', 'sbs-portal'); ?>
                                                 </a>
                                             </div>
                                         </div>

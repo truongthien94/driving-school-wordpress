@@ -98,79 +98,102 @@
      * Initialize Language Switcher
      */
     function initLanguageSwitcher() {
+        // Check if sbsLanguage object is available
+        if (typeof sbsLanguage === 'undefined') {
+            console.error('sbsLanguage object is not defined. Language switching will not work.');
+            // Fallback to sbs_ajax if available
+            if (typeof sbs_ajax !== 'undefined') {
+                window.sbsLanguage = {
+                    ajaxUrl: sbs_ajax.ajax_url,
+                    nonce: sbs_ajax.nonce,
+                    current: 'ja'
+                };
+                console.log('Using fallback sbsLanguage object');
+            } else {
+                return;
+            }
+        }
+
         // Handle language option clicks
         $('.language-option').on('click', function (e) {
             e.preventDefault();
 
-            const languageCode = $(this).data('language');
-            const languageName = $(this).find('.lang-name').text();
-            const languageFlag = $(this).find('.flag-icon').text();
+            const $option = $(this);
+            const languageCode = $option.data('language');
+            const languageName = $option.find('.lang-name').text();
+            const languageFlag = $option.find('.flag-icon').text();
 
             // Don't switch if same language
-            if ($(this).hasClass('active')) {
+            if ($option.hasClass('active')) {
                 return;
             }
 
+            // Add loading class to handle UI state
+            $option.addClass('loading');
+
             // Show loading state
-            const originalText = $(this).text();
-            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+            const originalHtml = $option.html();
+            $option.html('<div class="d-flex align-items-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span><span>Loading...</span></div>');
+
+            const restoreButton = () => {
+                $option.html(originalHtml);
+                $option.removeClass('loading'); // Remove loading class on restore
+            };
 
             // Send AJAX request to switch language
             $.ajax({
-                url: sbsLanguage.ajaxUrl,
+                url: sbsLanguage.ajaxUrl || (sbs_ajax && sbs_ajax.ajax_url) || '/wp-admin/admin-ajax.php',
                 type: 'POST',
                 data: {
                     action: 'switch_language',
                     language: languageCode,
                     nonce: sbsLanguage.nonce
                 },
+                dataType: 'json',
+                timeout: 10000, // 10 second timeout
                 success: function (response) {
-                    try {
-                        const data = JSON.parse(response);
-                        if (data.success) {
-                            // Update current language display
-                            $('.language-switcher .lang-name').text(languageName);
-                            $('.language-switcher .flag-icon').text(languageFlag);
-                            $('.language-switcher-mobile .lang-name').text(languageName);
-                            $('.language-switcher-mobile .flag-icon').text(languageFlag);
+                    if (response && response.success) {
+                        // Update current language display
+                        $('.language-switcher .lang-name').text(languageName);
+                        $('.language-switcher .flag-icon').text(languageFlag);
+                        $('.language-switcher-mobile .lang-name').text(languageName);
+                        $('.language-switcher-mobile .flag-icon').text(languageFlag);
 
-                            // Update active states
-                            $('.language-option').removeClass('active');
-                            $('.language-option[data-language="' + languageCode + '"]').addClass('active');
+                        // Update active states
+                        $('.language-option').removeClass('active');
+                        $('.language-option[data-language="' + languageCode + '"]').addClass('active');
 
-                            // Close dropdowns
-                            $('.dropdown-menu').removeClass('show');
+                        // Close dropdowns
+                        $('.dropdown-menu').removeClass('show');
+                        $('#collapseLanguageList').removeClass('show');
 
-                            // Reload page to show new language content
+                        // If server returned a redirect_url (Polylang), go there.
+                        if (response.data && response.data.redirect_url) {
+                            setTimeout(function () {
+                                window.location.href = response.data.redirect_url;
+                            }, 250);
+                        } else {
+                            // Fallback: reload page to show new language content
                             setTimeout(function () {
                                 window.location.reload();
                             }, 300);
-
-                        } else {
-                            console.error('Language switch failed:', data.message);
-                            alert('Language switch failed. Please try again.');
                         }
-                    } catch (e) {
-                        console.error('Invalid JSON response:', e);
+
+                    } else {
+                        console.error('Language switch failed:', response ? response.data : 'No response data');
                         alert('Language switch failed. Please try again.');
+                        restoreButton();
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    alert('Language switch failed. Please try again.');
-                },
-                complete: function () {
-                    // Restore original text if still on page
-                    setTimeout(function () {
-                        $('.language-option').each(function () {
-                            const $option = $(this);
-                            if ($option.find('.spinner-border').length > 0) {
-                                const flag = $option.data('flag');
-                                const name = $option.data('name');
-                                $option.html('<span class="flag-icon">' + flag + '</span><span class="lang-name">' + name + '</span>');
-                            }
-                        });
-                    }, 1000);
+                    console.error('AJAX error details:', {
+                        status: status,
+                        error: error,
+                        xhr: xhr,
+                        responseText: xhr.responseText
+                    });
+                    alert('An error occurred while switching languages. Please try again.');
+                    restoreButton();
                 }
             });
         });

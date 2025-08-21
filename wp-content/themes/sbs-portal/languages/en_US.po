@@ -289,3 +289,127 @@ msgstr "Valid Until"
 
 msgid "Terms and Conditions"
 msgstr "Terms and Conditions"
+
+# Portal and Navigation
+msgid "Portal"
+msgstr "Portal"
+
+msgid "Add description"
+msgstr "Add description"
+
+# Blog specific terms
+msgid "No blog posts available yet."
+msgstr "No blog posts available yet."
+
+msgid "View All"
+msgstr "View All"
+
+msgid "Blog List"
+msgstr "Blog List"
+
+msgid "No posts currently available."
+msgstr "No posts currently available."
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Course Information"
+msgstr "Course Information"
+
+msgid "Lesson List"
+msgstr "Lesson List"
+
+msgid "Lesson details are being prepared."
+msgstr "Lesson details are being prepared."
+
+msgid "No related posts."
+msgstr "No related posts."
+
+# Campaign specific terms  
+msgid "Campaign Information"
+msgstr "Campaign Information"
+
+msgid "Campaign List"
+msgstr "Campaign List"
+
+msgid "No related campaigns."
+msgstr "No related campaigns."
+
+msgid "Campaign Not Found"
+msgstr "Campaign Not Found"
+
+msgid "This campaign could not be found."
+msgstr "This campaign could not be found."
+
+msgid "Campaign content not available."
+msgstr "Campaign content not available."
+
+# FAQ specific terms
+msgid "No FAQs available yet."
+msgstr "No FAQs available yet."
+
+# Forms and interactions
+msgid "Title"
+msgstr "Title"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Add New"
+msgstr "Add New"
+
+# Error messages
+msgid "Error occurred"
+msgstr "Error occurred"
+
+msgid "Please try again"
+msgstr "Please try again"
+
+msgid "Invalid data"
+msgstr "Invalid data"
+
+# Success messages
+msgid "Successfully saved"
+msgstr "Successfully saved"
+
+msgid "Successfully updated"
+msgstr "Successfully updated"
+
+msgid "Successfully deleted"
+msgstr "Successfully deleted"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "This article content is being prepared. Detailed information will be published later."
+
+msgid "Detailed information will be published later."
+msgstr "Detailed information will be published later."

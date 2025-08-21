@@ -54,12 +54,12 @@ if (!$campaign_post) {
         $mock_post = $mock_campaign_posts[0];
         $post_title = $mock_post['title'];
         $post_date = $mock_post['date'];
-        $post_content = $mock_post['content'] ?? 'Campaign content not available.';
+        $post_content = $mock_post['content'] ?? __('Campaign content not available.', 'sbs-portal');
         $featured_image = get_template_directory_uri() . '/assets/images/' . $mock_post['featured_image'];
     } else {
-        $post_title = 'Campaign Not Found';
+        $post_title = __('Campaign Not Found', 'sbs-portal');
         $post_date = date('Y-m-d');
-        $post_content = 'This campaign could not be found.';
+        $post_content = __('This campaign could not be found.', 'sbs-portal');
         $featured_image = get_template_directory_uri() . '/assets/images/campaign-detail.png';
     }
 } else {
@@ -83,7 +83,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     <?php
     // Use reusable header section with campaign specific parameters
     get_template_part('parts/header-section', null, array(
-        'title' => 'キャンペーン情報',
+        'title' => __('Campaign Information', 'sbs-portal'),
         'subtitle' => 'Campaign',
         'show_navigation' => true
     ));
@@ -91,7 +91,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
     <section class="blog-detail-content">
         <div class="mb-5">
-            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array('キャンペーン一覧', $post_title))); ?>
+            <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array(__('Campaign List', 'sbs-portal'), $post_title))); ?>
             <div class="row g-4">
                 <!-- Left: Main Article -->
                 <div class="col-md-9">
@@ -105,7 +105,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                         </div>
 
                         <div class="mb-4">
-                            <h5 class="fw-bold">コース情報</h5>
+                            <h5 class="fw-bold"><?php echo __('Course Information', 'sbs-portal'); ?></h5>
                             <div class="campaign-text-block">
                                 <?php echo apply_filters('the_content', $post_content); ?>
                             </div>
@@ -150,7 +150,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                 endwhile;
                                 wp_reset_postdata();
                             else:
-                                echo '<div class="no-related-posts"><p>関連キャンペーンはありません。</p></div>';
+                                echo '<div class="no-related-posts"><p>' . __('No related campaigns.', 'sbs-portal') . '</p></div>';
                             endif;
                             ?>
                         </div>

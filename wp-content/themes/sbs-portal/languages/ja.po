@@ -289,3 +289,127 @@ msgstr "有効期限"
 
 msgid "Terms and Conditions"
 msgstr "利用条件"
+
+# Portal and Navigation
+msgid "Portal"
+msgstr "ポータル"
+
+msgid "Add description"
+msgstr "説明を追加"
+
+# Blog specific terms
+msgid "No blog posts available yet."
+msgstr "ブログ投稿はまだありません。"
+
+msgid "View All"
+msgstr "すべて表示"
+
+msgid "Blog List"
+msgstr "ブログ一覧"
+
+msgid "No posts currently available."
+msgstr "現在、投稿はありません。"
+
+msgid "Page"
+msgstr "ページ"
+
+msgid "Course Information"
+msgstr "コース情報"
+
+msgid "Lesson List"
+msgstr "レッスン一覧"
+
+msgid "Lesson details are being prepared."
+msgstr "レッスンの詳細情報は準備中です。"
+
+msgid "No related posts."
+msgstr "関連記事はありません。"
+
+# Campaign specific terms  
+msgid "Campaign Information"
+msgstr "キャンペーン情報"
+
+msgid "Campaign List"
+msgstr "キャンペーン一覧"
+
+msgid "No related campaigns."
+msgstr "関連キャンペーンはありません。"
+
+msgid "Campaign Not Found"
+msgstr "キャンペーンが見つかりません"
+
+msgid "This campaign could not be found."
+msgstr "このキャンペーンは見つかりませんでした。"
+
+msgid "Campaign content not available."
+msgstr "キャンペーン内容は利用できません。"
+
+# FAQ specific terms
+msgid "No FAQs available yet."
+msgstr "FAQはまだありません。"
+
+# Forms and interactions
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Content"
+msgstr "内容"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Image"
+msgstr "画像"
+
+msgid "Link"
+msgstr "リンク"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Actions"
+msgstr "アクション"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Update"
+msgstr "更新"
+
+msgid "Add New"
+msgstr "新規追加"
+
+# Error messages
+msgid "Error occurred"
+msgstr "エラーが発生しました"
+
+msgid "Please try again"
+msgstr "再度お試しください"
+
+msgid "Invalid data"
+msgstr "無効なデータです"
+
+# Success messages
+msgid "Successfully saved"
+msgstr "正常に保存されました"
+
+msgid "Successfully updated"
+msgstr "正常に更新されました"
+
+msgid "Successfully deleted"
+msgstr "正常に削除されました"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "この記事の内容は準備中です。詳細情報は後日公開予定です。"
+
+msgid "Detailed information will be published later."
+msgstr "詳細情報は後日公開予定です。"

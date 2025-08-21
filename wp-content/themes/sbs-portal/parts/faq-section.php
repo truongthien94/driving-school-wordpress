@@ -24,10 +24,20 @@ $faq_groups = sbs_get_faq_groups();
             FAQ
         </div>
         <div class="faq-japanese-title d-xl-none align-self-center">
-            よくある質問
+            <?php echo __('Frequently Asked Questions', 'sbs-portal'); ?>
         </div>
         <div class="faq-vertical-text d-none d-xl-block align-self-end">
-            よ<br>く<br>あ<br>る<br>ご<br>質<br>問
+            <?php
+            $faq_text = __('Frequently Asked Questions', 'sbs-portal');
+            // For Japanese, use vertical layout
+            if (get_locale() === 'ja') {
+                echo 'よ<br>く<br>あ<br>る<br>ご<br>質<br>問';
+            } else {
+                // For other languages, split into characters/words
+                $chars = mb_str_split($faq_text);
+                echo implode('<br>', array_slice($chars, 0, 7));
+            }
+            ?>
         </div>
     </div>
 
@@ -41,7 +51,7 @@ $faq_groups = sbs_get_faq_groups();
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="no-faqs text-center py-4">
-                    <p class="text-muted mb-0">FAQはまだありません。</p>
+                    <p class="text-muted mb-0"><?php echo __('No FAQs available yet.', 'sbs-portal'); ?></p>
                 </div>
             <?php endif; ?>
         </div>
