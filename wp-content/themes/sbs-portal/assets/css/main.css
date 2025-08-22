@@ -1252,7 +1252,6 @@ body.mega-menu-open {
 /* ROW 1: Hero Container - 50/50 Split Layout */
 .hero-container {
     z-index: 2;
-    /* margin: 0 auto; */
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -1889,6 +1888,21 @@ body.mega-menu-open {
     line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Blockquote Styles for Campaign and Blog Content */
+.campaign-text-block blockquote,
+.blog-detail-content-text blockquote {
+    border-left: 4px solid #DD1F01;
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #555555;
+}
+
+.campaign-text-block blockquote p,
+.blog-detail-content-text blockquote p {
+    margin-bottom: 0;
 }
 
 /* Blog card meta - simplified for Bootstrap */

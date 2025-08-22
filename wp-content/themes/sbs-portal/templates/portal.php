@@ -165,7 +165,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <div class="row portal-box-container hero-container row-gap-0 row-gap-0 p-0">
+        <div class="row portal-box-container hero-container row-gap-0 p-0 ms-1 mb-5">
             <?php
             // Get all hero items for the bottom row (items 4-7)
             $all_hero_items = sbs_get_hero_items(7);

@@ -10,3 +10,4 @@ git pull --ff-only
 git stash pop  
 
 ./scripts/deploy.sh
+./scripts/deploy_stg.sh
