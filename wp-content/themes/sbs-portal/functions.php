@@ -91,6 +91,118 @@ function sbs_enqueue_scripts()
 add_action('wp_enqueue_scripts', 'sbs_enqueue_scripts', 100);
 
 /**
+ * Enqueue admin-specific scripts and styles.
+ */
+function sbs_enqueue_admin_scripts($hook)
+{
+    global $typenow;
+
+    // Target the 'campaign' post type edit/new screens
+    if ('campaign' === $typenow && in_array($hook, array('post.php', 'post-new.php'))) {
+        wp_enqueue_script(
+            'sbs-admin-campaign-validation',
+            get_template_directory_uri() . '/assets/js/admin-campaign.js',
+            array('jquery', 'wp-data'),
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'sbs_enqueue_admin_scripts');
+
+/**
+ * Fix image upload issues and increase limits
+ */
+function sbs_fix_image_upload_limits()
+{
+    // Increase memory limit for image processing
+    if (function_exists('ini_set')) {
+        @ini_set('memory_limit', '512M');
+        @ini_set('max_execution_time', 300);
+        @ini_set('max_input_time', 300);
+    }
+
+    // Increase upload file size limits
+    if (function_exists('ini_set')) {
+        @ini_set('upload_max_filesize', '64M');
+        @ini_set('post_max_size', '64M');
+        @ini_set('max_file_uploads', '20');
+    }
+}
+add_action('init', 'sbs_fix_image_upload_limits');
+
+/**
+ * Disable WordPress image size validation
+ */
+function sbs_disable_image_size_validation($sizes, $metadata, $attachment_id)
+{
+    // Remove size validation for large images
+    if (isset($sizes['large']) && isset($sizes['medium'])) {
+        // Keep only essential sizes
+        return array(
+            'thumbnail' => $sizes['thumbnail'],
+            'medium' => $sizes['medium'],
+            'large' => $sizes['large']
+        );
+    }
+    return $sizes;
+}
+add_filter('wp_generate_attachment_metadata', 'sbs_disable_image_size_validation', 10, 3);
+
+/**
+ * Increase image quality and disable compression
+ */
+function sbs_improve_image_quality($quality, $mime_type)
+{
+    // Set high quality for JPEG images
+    if ($mime_type === 'image/jpeg') {
+        return 95;
+    }
+    // Set high quality for PNG images
+    if ($mime_type === 'image/png') {
+        return 9;
+    }
+    return $quality;
+}
+add_filter('wp_editor_set_quality', 'sbs_improve_image_quality', 10, 2);
+
+/**
+ * Disable WordPress automatic image resizing for large images
+ */
+function sbs_disable_large_image_resize($sizes, $metadata, $attachment_id)
+{
+    // Get original image dimensions
+    if (isset($metadata['width']) && isset($metadata['height'])) {
+        $width = $metadata['width'];
+        $height = $metadata['height'];
+
+        // If image is larger than 2560px, don't create additional sizes
+        if ($width > 2560 || $height > 2560) {
+            // Only keep thumbnail and medium sizes
+            return array(
+                'thumbnail' => $sizes['thumbnail'],
+                'medium' => $sizes['medium']
+            );
+        }
+    }
+
+    return $sizes;
+}
+add_filter('wp_generate_attachment_metadata', 'sbs_disable_large_image_resize', 15, 3);
+
+/**
+ * Add custom image sizes for better performance
+ */
+function sbs_add_custom_image_sizes()
+{
+    // Add optimized image sizes
+    add_image_size('sbs-optimized-large', 1920, 1080, false);
+    add_image_size('sbs-optimized-medium', 1200, 675, false);
+    add_image_size('sbs-optimized-small', 800, 450, false);
+}
+add_action('after_setup_theme', 'sbs_add_custom_image_sizes');
+
+/**
  * SEO Functions and Meta Tags
  */
 
@@ -464,7 +576,7 @@ function sbs_generate_posts_sitemap()
     foreach ($posts as $post) {
         echo '<url>' . "\n";
         echo '<loc>' . get_permalink($post->ID) . '</loc>' . "\n";
-        echo '<lastmod>' . get_the_modified_date('Y-m-d\TH:i:s+00:00', $post->ID) . '</lastmod>' . "\n";
+        echo '<lastmod>' . get_the_modified_date('c', $post->ID) . '</lastmod>' . "\n";
         echo '<changefreq>weekly</changefreq>' . "\n";
         echo '<priority>0.8</priority>' . "\n";
         echo '</url>' . "\n";
@@ -488,7 +600,7 @@ function sbs_generate_pages_sitemap()
     // Add homepage
     echo '<url>' . "\n";
     echo '<loc>' . home_url('/') . '</loc>' . "\n";
-    echo '<lastmod>' . date('Y-m-d\TH:i:s+00:00') . '</lastmod>' . "\n";
+    echo '<lastmod>' . wp_date('c') . '</lastmod>' . "\n";
     echo '<changefreq>weekly</changefreq>' . "\n";
     echo '<priority>1.0</priority>' . "\n";
     echo '</url>' . "\n";
@@ -501,7 +613,7 @@ function sbs_generate_pages_sitemap()
     foreach ($custom_pages as $url => $config) {
         echo '<url>' . "\n";
         echo '<loc>' . home_url($url) . '</loc>' . "\n";
-        echo '<lastmod>' . date('Y-m-d\TH:i:s+00:00') . '</lastmod>' . "\n";
+        echo '<lastmod>' . wp_date('c') . '</lastmod>' . "\n";
         echo '<changefreq>' . $config['changefreq'] . '</changefreq>' . "\n";
         echo '<priority>' . $config['priority'] . '</priority>' . "\n";
         echo '</url>' . "\n";
@@ -511,7 +623,7 @@ function sbs_generate_pages_sitemap()
     foreach ($pages as $page) {
         echo '<url>' . "\n";
         echo '<loc>' . get_permalink($page->ID) . '</loc>' . "\n";
-        echo '<lastmod>' . get_the_modified_date('Y-m-d\TH:i:s+00:00', $page->ID) . '</lastmod>' . "\n";
+        echo '<lastmod>' . get_the_modified_date('c', $page->ID) . '</lastmod>' . "\n";
         echo '<changefreq>monthly</changefreq>' . "\n";
         echo '<priority>0.6</priority>' . "\n";
         echo '</url>' . "\n";
@@ -812,7 +924,7 @@ function sbs_campaign_metrics_meta_box_callback($post)
     $ctr = $impressions > 0 ? round(($clicks / $impressions) * 100, 2) : 0;
 
     $created_date = get_the_date('Y-m-d', $post->ID);
-    $days_active = max(1, floor((time() - strtotime($created_date)) / DAY_IN_SECONDS));
+    $days_active = max(1, floor((current_time('timestamp') - strtotime($created_date)) / DAY_IN_SECONDS));
     $avg_impressions_per_day = round($impressions / $days_active, 1);
     $avg_clicks_per_day = round($clicks / $days_active, 1);
 
@@ -1931,7 +2043,7 @@ function sbs_campaign_admin_column_content($column, $post_id)
             $tracking_enabled = get_post_meta($post_id, '_campaign_tracking_enabled', true);
             $is_highlighted = get_post_meta($post_id, '_campaign_highlight', true) === '1';
 
-            $today = date('Y-m-d');
+            $today = wp_date('Y-m-d');
             $status_parts = array();
 
             // Check if campaign is active based on dates
@@ -2002,7 +2114,7 @@ add_action('pre_get_posts', 'sbs_campaign_custom_orderby');
  */
 function sbs_get_campaign_items(int $limit = 10): array
 {
-    $today = date('Y-m-d');
+    $today = wp_date('Y-m-d');
 
     $args = array(
         'post_type' => 'campaign',
@@ -2459,7 +2571,7 @@ function sbs_campaign_analytics_page()
     $total_impressions = 0;
     $total_clicks = 0;
     $active_campaigns = 0;
-    $today = date('Y-m-d');
+    $today = wp_date('Y-m-d');
 
     foreach ($campaigns as $campaign) {
         $impressions = (int) get_post_meta($campaign->ID, '_campaign_impressions', true);
@@ -4222,7 +4334,7 @@ function sbs_api_track_campaign(WP_REST_Request $request)
     // Check date limits
     $start_date = get_post_meta($campaign_id, '_campaign_start_date', true);
     $end_date = get_post_meta($campaign_id, '_campaign_end_date', true);
-    $today = date('Y-m-d');
+    $today = wp_date('Y-m-d');
 
     if (($start_date && $start_date > $today) || ($end_date && $end_date < $today)) {
         return rest_ensure_response(array(
@@ -4290,7 +4402,7 @@ function sbs_api_track_campaign(WP_REST_Request $request)
         'ip_hash' => substr(md5($ip), 0, 8), // Store only hash for privacy
         'user_agent_hash' => substr(md5($user_agent), 0, 8),
         'target_url' => $target_url,
-        'date' => date('Y-m-d H:i:s', $timestamp)
+        'date' => wp_date('Y-m-d H:i:s', $timestamp)
     );
 
     update_option('sbs_campaign_tracking_' . $campaign_id, $tracking_data);
@@ -4507,8 +4619,8 @@ function sbs_api_get_campaign_analytics(WP_REST_Request $request)
             foreach ($tracking_data[$event_type] as $event) {
                 if ($event['timestamp'] < $cutoff_time) continue;
 
-                $date = date('Y-m-d', $event['timestamp']);
-                $hour = date('H', $event['timestamp']);
+                $date = wp_date('Y-m-d', $event['timestamp']);
+                $hour = wp_date('H', $event['timestamp']);
 
                 // Daily stats
                 if ($event_type === 'impression') {
@@ -4519,7 +4631,7 @@ function sbs_api_get_campaign_analytics(WP_REST_Request $request)
 
                 // Hourly stats (last 24h only)
                 if ($event['timestamp'] > time() - DAY_IN_SECONDS) {
-                    $hour_key = date('Y-m-d H:00', $event['timestamp']);
+                    $hour_key = wp_date('Y-m-d H:00', $event['timestamp']);
                     if (!isset($analytics['hourly_stats'][$hour_key])) {
                         $analytics['hourly_stats'][$hour_key] = array('impressions' => 0, 'clicks' => 0);
                     }
@@ -4592,7 +4704,7 @@ function sbs_api_get_campaigns_status(WP_REST_Request $request)
     ));
 
     $status_data = array();
-    $today = date('Y-m-d');
+    $today = wp_date('Y-m-d');
 
     foreach ($campaigns as $campaign_id) {
         $start_date = get_post_meta($campaign_id, '_campaign_start_date', true);

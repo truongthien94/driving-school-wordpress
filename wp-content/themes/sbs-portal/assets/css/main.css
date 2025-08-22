@@ -64,7 +64,7 @@ body {
     border-radius: 8px;
     padding: 0;
     position: relative;
-    width: 47.5%;
+    width: calc(50% - 25px);
     z-index: 1000;
 }
 
@@ -356,7 +356,7 @@ body {
     box-sizing: border-box;
 }
 
-.brand-logo-dark img{
+.brand-logo-dark img {
     position: absolute;
     top: 67%;
 }
@@ -383,7 +383,7 @@ body {
     justify-content: space-evenly;
 }
 
-.brand-vertical-text{
+.brand-vertical-text {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -955,6 +955,7 @@ body.mega-menu-open {
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
+
     .mega-nav-link,
     .mega-nav-sublink {
         border: 1px solid transparent;
@@ -1251,9 +1252,10 @@ body.mega-menu-open {
 /* ROW 1: Hero Container - 50/50 Split Layout */
 .hero-container {
     z-index: 2;
-    max-width: 1500px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 /* Left Column (50%) - Logo & Brand Message */
@@ -1291,7 +1293,6 @@ body.mega-menu-open {
 
 .hero-navigation {
     z-index: 10000;
-    max-width: 1500px;
     width: 100%;
     float: right;
     margin: 0 auto;
@@ -1325,7 +1326,7 @@ body.mega-menu-open {
     color: #FFFFFF;
 }
 
-.btn-custom-nav span{
+.btn-custom-nav span {
     font-size: 16px;
 }
 
@@ -2483,6 +2484,8 @@ body.admin-bar .faq-title-bar {
 @media (max-width: 1200px) {
     .hero-container {
         min-height: 50vh;
+        padding-left: 3rem;
+        padding-right: 3rem;
     }
 
     .mega-menu-close {
@@ -2546,7 +2549,6 @@ body.admin-bar .faq-title-bar {
 
     /* Hero Section - Stack columns vertically */
     .hero-container {
-
         flex-direction: column;
         min-height: auto;
     }
@@ -2696,10 +2698,11 @@ body.admin-bar .faq-title-bar {
     }
 
     .hero-container {
-
         gap: 20px;
         flex-direction: column;
         min-height: auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 
     .hero-left-column {

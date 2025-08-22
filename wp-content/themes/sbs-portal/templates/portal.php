@@ -24,7 +24,9 @@ if (!defined('ABSPATH')) {
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
-        <div class="hero-navigation row-gap-0 p-0 row py-4 flex justify-content-end">
+        <div class="hero-navigation hero-container row py-4 flex justify-content-end">
+            <div class="col-xl-6">
+            </div>
             <div class="col-xl-6">
                 <?php get_template_part('parts/portal-navigation'); ?>
             </div>
@@ -163,7 +165,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <div class="row portal-box-container hero-container row-gap-0 ">
+        <div class="row portal-box-container hero-container row-gap-0 " style="padding-right: 0px;">
             <?php
             // Get all hero items for the bottom row (items 4-7)
             $all_hero_items = sbs_get_hero_items(7);

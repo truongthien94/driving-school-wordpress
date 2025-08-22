@@ -17,12 +17,16 @@ $highlighted_campaign = sbs_get_highlighted_campaign();
             <?php if ($highlighted_campaign && !empty($highlighted_campaign['featured_image'])): ?>
                 <a href="<?php echo esc_url($highlighted_campaign['detail_url']); ?>"
                     data-campaign-id="<?php echo esc_attr($highlighted_campaign['id']); ?>"
-                    class="popup-campaign-link">
+                    class="popup-campaign-link"
+                    style="display: block; width: 100%; height: 100%; overflow: hidden; position: relative;">
                     <img src="<?php echo esc_url($highlighted_campaign['featured_image']); ?>"
-                        alt="<?php echo esc_attr($highlighted_campaign['title']); ?>" />
+                        alt="<?php echo esc_attr($highlighted_campaign['title']); ?>"
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
                 </a>
             <?php else: ?>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ads.png" alt="SBS Background" />
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ads.png"
+                    alt="SBS Background"
+                    style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
             <?php endif; ?>
         </div>
     </div>
