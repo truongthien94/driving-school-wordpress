@@ -15,12 +15,150 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# Main Navigation & Basic Elements
+msgid "Greeting"
+msgstr "Greetings"
+
+msgid "Greetings"
+msgstr "Greetings"
+
+msgid "Company Information"
+msgstr "Company Information"
+
+msgid "About SBS Group"
+msgstr "About SBS Group"
+
+msgid "English"
+msgstr "English"
+
+msgid "日本語"
+msgstr "日本語"
+
+msgid "Bahasa Indonesia"
+msgstr "Bahasa Indonesia"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Show All"
+msgstr "Show All"
+
+msgid "SBS Driving School"
+msgstr "SBS Driving School"
+
+msgid "For Your Dreams."
+msgstr "For Your Dreams."
+
+msgid "With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates."
+msgstr "With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates."
+
+# Explore Section
+msgid "Explore"
+msgstr "Explore"
+
+msgid "News"
+msgstr "News"
+
+msgid "Recruitment"
+msgstr "Recruitment"
+
+msgid "Reservation"
+msgstr "Reservation"
+
+msgid "Reservation System"
+msgstr "Reservation System"
+
+msgid "Course"
+msgstr "Course"
+
+msgid "Accommodation"
+msgstr "Accommodation"
+
+# School Information
+msgid "SBS School"
+msgstr "SBS School"
+
+msgid "SBS Driving School Inage"
+msgstr "SBS Driving School Inage"
+
+msgid "SBS Driving School Anesaki"
+msgstr "SBS Driving School Anesaki"
+
+msgid "Tel: 043-259-6371"
+msgstr "Tel: 043-259-6371"
+
+msgid "Tel: 0436-61-1131"
+msgstr "Tel: 0436-61-1131"
+
+# Contact & Footer
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Terms of Use"
+msgstr "Terms of Use"
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "Privacy"
+msgstr "Privacy"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+msgstr "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+
+msgid "Close"
+msgstr "Close"
+
+# Additional Navigation Items
+msgid "portal"
+msgstr "Portal"
+
+msgid "Portal"
+msgstr "Portal"
+
+msgid "Blog List"
+msgstr "Blog List"
+
+msgid "Campaign Information"
+msgstr "Campaign Information"
+
+msgid "Page top"
+msgstr "Page top"
+
+# Additional Company Information
+msgid "Company Overview"
+msgstr "Company Overview"
+
+msgid "History"
+msgstr "History"
+
+# School Details
+msgid "Anesaki Details"
+msgstr "Anesaki Details"
+
+msgid "Inage Details"
+msgstr "Inage Details"
+
+msgid "SBS Auto"
+msgstr "SBS Auto"
+
+msgid "Matching System"
+msgstr "Matching System"
+
+# WordPress Default
 msgid "Primary Menu"
 msgstr "Primary Menu"
 
 msgid "Footer Menu"
 msgstr "Footer Menu"
 
+# FAQ System
 msgctxt "Post Type General Name"
 msgid "FAQs"
 msgstr "FAQs"
@@ -56,236 +194,66 @@ msgstr "View FAQ"
 msgid "Search FAQs"
 msgstr "Search FAQs"
 
-msgid "FAQs"
-msgstr "FAQs"
+msgid "No FAQs found."
+msgstr "No FAQs found."
 
-msgid "Frequently Asked Questions"
-msgstr "Frequently Asked Questions"
+msgid "No FAQs found in Trash."
+msgstr "No FAQs found in Trash."
 
-msgid "Greeting"
-msgstr "Greeting"
+msgid "Parent FAQ:"
+msgstr "Parent FAQ:"
 
-msgid "Company Information"
-msgstr "Company Information"
+# Campaign System
+msgctxt "Post Type General Name"
+msgid "Campaigns"
+msgstr "Campaigns"
 
-msgid "Company Overview"
-msgstr "Company Overview"
-
-msgid "History"
-msgstr "History"
-
-msgid "About SBS Group"
-msgstr "About SBS Group"
-
-msgid "Japanese"
-msgstr "Japanese"
-
-msgid "Menu"
-msgstr "Menu"
-
-# Common navigation terms
-msgid "Home"
-msgstr "Home"
-
-msgid "About"
-msgstr "About"
-
-msgid "Services"
-msgstr "Services"
-
-msgid "Contact"
-msgstr "Contact"
-
-msgid "News"
-msgstr "News"
-
-msgid "Blog"
-msgstr "Blog"
+msgctxt "Post Type Singular Name"
+msgid "Campaign"
+msgstr "Campaign"
 
 msgid "Campaign"
 msgstr "Campaign"
 
-# Language names
-msgid "English"
-msgstr "English"
+msgid "All Campaigns"
+msgstr "All Campaigns"
 
-msgid "Indonesian"
-msgstr "Indonesian"
+msgid "Add New Campaign"
+msgstr "Add New Campaign"
 
-# Common UI terms
-msgid "Read More"
-msgstr "Read More"
+msgid "New Campaign"
+msgstr "New Campaign"
 
-msgid "Learn More"
-msgstr "Learn More"
+msgid "Edit Campaign"
+msgstr "Edit Campaign"
 
-msgid "Contact Us"
-msgstr "Contact Us"
+msgid "Update Campaign"
+msgstr "Update Campaign"
 
-msgid "Get Started"
-msgstr "Get Started"
+msgid "View Campaign"
+msgstr "View Campaign"
 
-msgid "Apply Now"
-msgstr "Apply Now"
+msgid "Search Campaigns"
+msgstr "Search Campaigns"
 
-msgid "Book Now"
-msgstr "Book Now"
+msgid "No Campaigns found."
+msgstr "No Campaigns found."
 
-msgid "View Details"
-msgstr "View Details"
+msgid "No Campaigns found in Trash."
+msgstr "No Campaigns found in Trash."
 
-msgid "Previous"
-msgstr "Previous"
+# Taxonomy
+msgid "FAQ Categories"
+msgstr "FAQ Categories"
 
-msgid "Next"
-msgstr "Next"
+msgid "FAQ Category"
+msgstr "FAQ Category"
 
-msgid "Close"
-msgstr "Close"
+msgid "Campaign Categories"
+msgstr "Campaign Categories"
 
-msgid "Open"
-msgstr "Open"
+msgid "Campaign Category"
+msgstr "Campaign Category"
 
-msgid "Submit"
-msgstr "Submit"
-
-msgid "Search"
-msgstr "Search"
-
-msgid "Filter"
-msgstr "Filter"
-
-msgid "Sort"
-msgstr "Sort"
-
-msgid "Category"
-msgstr "Category"
-
-msgid "Date"
-msgstr "Date"
-
-msgid "Featured"
-msgstr "Featured"
-
-msgid "Latest"
-msgstr "Latest"
-
-msgid "Popular"
-msgstr "Popular"
-
-# SBS specific terms
-msgid "SBS Driving School"
-msgstr "SBS Driving School"
-
-msgid "SBS Auto"
-msgstr "SBS Auto"
-
-msgid "Driving License"
-msgstr "Driving License"
-
-msgid "Driving Course"
-msgstr "Driving Course"
-
-msgid "Instructor"
-msgstr "Instructor"
-
-msgid "Practice"
-msgstr "Practice"
-
-msgid "Theory"
-msgstr "Theory"
-
-msgid "Examination"
-msgstr "Examination"
-
-msgid "Registration"
-msgstr "Registration"
-
-msgid "Schedule"
-msgstr "Schedule"
-
-msgid "Booking System"
-msgstr "Booking System"
-
-msgid "Matching System"
-msgstr "Matching System"
-
-# Hero section
-msgid "Welcome to SBS Portal"
-msgstr "Welcome to SBS Portal"
-
-msgid "Your Gateway to Quality Driving Education"
-msgstr "Your Gateway to Quality Driving Education"
-
-msgid "Professional driving instruction with modern facilities and experienced instructors"
-msgstr "Professional driving instruction with modern facilities and experienced instructors"
-
-# Footer
-msgid "All rights reserved"
-msgstr "All rights reserved"
-
-msgid "Privacy Policy"
-msgstr "Privacy Policy"
-
-msgid "Terms of Service"
-msgstr "Terms of Service"
-
-msgid "Sitemap"
-msgstr "Sitemap"
-
-# Blog
-msgid "Blog Posts"
-msgstr "Blog Posts"
-
-msgid "Latest News"
-msgstr "Latest News"
-
-msgid "Read Article"
-msgstr "Read Article"
-
-msgid "Published on"
-msgstr "Published on"
-
-msgid "By"
-msgstr "By"
-
-msgid "In"
-msgstr "In"
-
-msgid "Tags"
-msgstr "Tags"
-
-msgid "Related Posts"
-msgstr "Related Posts"
-
-# FAQ
-msgid "Question"
-msgstr "Question"
-
-msgid "Answer"
-msgstr "Answer"
-
-msgid "Show Answer"
-msgstr "Show Answer"
-
-msgid "Hide Answer"
-msgstr "Hide Answer"
-
-# Campaign
-msgid "Special Offers"
-msgstr "Special Offers"
-
-msgid "Limited Time"
-msgstr "Limited Time"
-
-msgid "Discount"
-msgstr "Discount"
-
-msgid "Save"
-msgstr "Save"
-
-msgid "Valid Until"
-msgstr "Valid Until"
-
-msgid "Terms and Conditions"
-msgstr "Terms and Conditions"
+msgid "No Related Campaigns Found."
+msgstr "No Related Campaigns Found."

@@ -1049,6 +1049,26 @@ body.mega-menu-open {
     z-index: 10003;
 }
 
+/* Ensure language dropdown items are clickable */
+.language-option {
+    position: relative;
+    z-index: 10004;
+    pointer-events: auto;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
+
+.language-option:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+}
+
+.language-option.active {
+    background-color: rgba(221, 31, 1, 0.1);
+    color: #DD1F01;
+}
+
 /* Company dropdown positioning */
 .nav-item.dropdown .company-dropdown-menu {
     left: 0;

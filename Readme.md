@@ -11,3 +11,7 @@ git stash pop
 
 ./scripts/deploy.sh
 ./scripts/deploy_stg.sh
+
+cd wp-content/themes/sbs-portal/languages && msgfmt -o ja.mo ja.po && msgfmt -o en_US.mo en_US.po && msgfmt -o id_ID.mo id_ID.po && echo "Recompiled .mo files successfully"
+
+msgfmt -o ja.mo ja.po && msgfmt -o en_US.mo en_US.po && msgfmt -o id_ID.mo id_ID.po && echo "Recompiled .mo files successfully"

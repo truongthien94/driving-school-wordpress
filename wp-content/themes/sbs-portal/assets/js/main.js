@@ -10,6 +10,8 @@
 
     // DOM Ready
     $(document).ready(function () {
+
+
         initFAQAccordion();
         initLanguageSwitcher();
         initFloatButtons();
@@ -20,6 +22,16 @@
         initPortalEffects();
         initFormValidation();
         initBannerCarousel();
+
+        // Manual Bootstrap dropdown initialization if needed
+        if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+            $('.dropdown-toggle').each(function () {
+                new bootstrap.Dropdown(this);
+            });
+
+        }
+
+
     });
 
     /**
@@ -98,9 +110,22 @@
      * Initialize Language Switcher
      */
     function initLanguageSwitcher() {
-        // Handle language option clicks
-        $('.language-option').on('click', function (e) {
+        // Always attach event handlers, even if sbsLanguage is not available yet
+        if (typeof sbsLanguage === 'undefined') {
+
+            // Create a minimal fallback object
+            window.sbsLanguage = {
+                ajaxUrl: window.location.origin + '/wp-admin/admin-ajax.php',
+                nonce: 'temp',
+                current: 'ja',
+                available: {}
+            };
+        }
+
+        // Handle language option clicks using event delegation
+        $(document).on('click', '.language-option', function (e) {
             e.preventDefault();
+            e.stopPropagation();
 
             const languageCode = $(this).data('language');
             const languageName = $(this).find('.lang-name').text();
@@ -112,8 +137,10 @@
             }
 
             // Show loading state
-            const originalText = $(this).text();
-            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+            const $this = $(this);
+            const originalHtml = $this.html();
+            $this.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...');
+            $this.prop('disabled', true);
 
             // Send AJAX request to switch language
             $.ajax({
@@ -124,53 +151,55 @@
                     language: languageCode,
                     nonce: sbsLanguage.nonce
                 },
+                timeout: 10000, // 10 second timeout
                 success: function (response) {
                     try {
-                        const data = JSON.parse(response);
+                        // Check if response is already an object
+                        const data = typeof response === 'string' ? JSON.parse(response) : response;
+
                         if (data.success) {
-                            // Update current language display
-                            $('.language-switcher .lang-name').text(languageName);
-                            $('.language-switcher .flag-icon').text(languageFlag);
-                            $('.language-switcher-mobile .lang-name').text(languageName);
-                            $('.language-switcher-mobile .flag-icon').text(languageFlag);
+                            // Update current language display in all dropdowns
+                            $('.nav-link.dropdown-toggle').each(function () {
+                                if ($(this).find('.lang-name, .flag-icon').length > 0) {
+                                    $(this).html(languageFlag + ' ' + languageName);
+                                }
+                            });
 
                             // Update active states
                             $('.language-option').removeClass('active');
                             $('.language-option[data-language="' + languageCode + '"]').addClass('active');
 
-                            // Close dropdowns
-                            $('.dropdown-menu').removeClass('show');
+                            // Close all dropdowns
+                            $('.dropdown-menu, .collapse').removeClass('show');
+                            $('.offcanvas').removeClass('show');
+                            $('.dropdown').removeClass('show');
 
                             // Reload page to show new language content
                             setTimeout(function () {
                                 window.location.reload();
-                            }, 300);
+                            }, 100);
 
                         } else {
-                            console.error('Language switch failed:', data.message);
                             alert('Language switch failed. Please try again.');
+                            $this.html(originalHtml);
+                            $this.prop('disabled', false);
                         }
                     } catch (e) {
-                        console.error('Invalid JSON response:', e);
+                        console.error('Invalid response:', e, response);
                         alert('Language switch failed. Please try again.');
+                        $this.html(originalHtml);
+                        $this.prop('disabled', false);
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    alert('Language switch failed. Please try again.');
-                },
-                complete: function () {
-                    // Restore original text if still on page
+                    // Fallback: Try to switch language via cookie and reload
+                    document.cookie = 'sbs_language=' + languageCode + '; path=/; max-age=2592000';
+
+                    // Alert user and reload
+                    alert('Language switching via fallback method...');
                     setTimeout(function () {
-                        $('.language-option').each(function () {
-                            const $option = $(this);
-                            if ($option.find('.spinner-border').length > 0) {
-                                const flag = $option.data('flag');
-                                const name = $option.data('name');
-                                $option.html('<span class="flag-icon">' + flag + '</span><span class="lang-name">' + name + '</span>');
-                            }
-                        });
-                    }, 1000);
+                        window.location.reload();
+                    }, 500);
                 }
             });
         });
@@ -180,6 +209,29 @@
             if (!$(e.target).closest('.dropdown').length) {
                 $('.dropdown-menu').removeClass('show');
             }
+        });
+
+        // Alternative method - handle dropdown toggle clicks manually if Bootstrap fails
+        $('.dropdown-toggle').on('click', function (e) {
+            const $dropdown = $(this).closest('.dropdown');
+            const $menu = $dropdown.find('.dropdown-menu');
+
+            // Toggle dropdown
+            if ($menu.hasClass('show')) {
+                $menu.removeClass('show');
+                $dropdown.removeClass('show');
+            } else {
+                // Close other dropdowns first
+                $('.dropdown-menu').removeClass('show');
+                $('.dropdown').removeClass('show');
+
+                // Open this dropdown
+                $menu.addClass('show');
+                $dropdown.addClass('show');
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
         });
     }
 
@@ -222,7 +274,6 @@
         // Float chat button
         $floatChat.on('click', function () {
             // Add chat functionality here
-            console.log('Chat button clicked');
             // You can open a chat widget or redirect to chat page
         });
 
@@ -343,7 +394,6 @@
         // Handle mega menu navigation links
         $('.mega-nav-link, .mega-nav-sublink, .mega-footer-link').on('click', function (e) {
             // Add any navigation handling here
-            console.log('Navigation link clicked:', $(this).text());
         });
 
         // Handle mega menu show/hide events
@@ -501,7 +551,6 @@
         // Menu button effects
         $('.menu-button').on('click', function () {
             // Add menu functionality here
-            console.log('Menu clicked');
         });
 
         // Portal box click effects
@@ -813,12 +862,10 @@
         // Float buttons functionality
         $('.float-chat').on('click', function () {
             // Add chat functionality here
-            console.log('Chat button clicked');
         });
 
         $('.float-contact').on('click', function () {
             // Add contact functionality here  
-            console.log('Contact button clicked');
         });
 
         // Enhanced back to top for blog list

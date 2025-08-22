@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 <div class="sbs-portal">
     <!-- SEO Hidden H1 for homepage -->
-    <h1 class="sr-only">SBS Driving School Portal - ドライビングスクール総合ポータルサイト</h1>
+    <h1 class="sr-only"><?php _e('SBS Driving School', 'sbs-portal'); ?> <?php _e('Portal', 'sbs-portal'); ?> - ドライビングスクール総合ポータルサイト</h1>
 
     <!-- SECTION 1: Hero Section -->
     <section class="sbs-hero-section" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/hero-bg-main-f14c9b.jpg');" role="banner" aria-label="SBS Driving School Portal Hero Section">
@@ -124,7 +124,7 @@ if (!defined('ABSPATH')) {
                                     <?php echo sbs_get_icon('car'); ?>
                                 </div>
                                 <div class="box-info flex-grow-1">
-                                    <h3 class="box-title mb-1">SBS自動車</h3>
+                                    <h3 class="box-title mb-1"><?php _e('SBS Auto', 'sbs-portal'); ?></h3>
                                     <p class="box-description mb-0">Add description</p>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@ if (!defined('ABSPATH')) {
                                         <?php echo sbs_get_icon('bus'); ?>
                                     </div>
                                     <div class="box-info flex-grow-1">
-                                        <h3 class="box-title mb-1">SBSドライビングスクール姉崎</h3>
+                                        <h3 class="box-title mb-1"><?php _e('SBS Driving School Anesaki', 'sbs-portal'); ?></h3>
                                         <p class="box-description mb-0">Add description</p>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@ if (!defined('ABSPATH')) {
                                         <?php echo sbs_get_icon('bus'); ?>
                                     </div>
                                     <div class="box-info flex-grow-1">
-                                        <h3 class="box-title mb-1">SBSドライビングスクール稲毛</h3>
+                                        <h3 class="box-title mb-1"><?php _e('SBS Driving School Inage', 'sbs-portal'); ?></h3>
                                         <p class="box-description mb-0">Add description</p>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@ if (!defined('ABSPATH')) {
                                 <?php echo sbs_get_icon('building'); ?>
                             </div>
                             <div class="box-info flex-grow-1">
-                                <h3 class="box-title mb-1">姉崎詳細</h3>
+                                <h3 class="box-title mb-1"><?php _e('Anesaki Details', 'sbs-portal'); ?></h3>
                                 <p class="box-description mb-0">Add description</p>
                             </div>
                         </div>
@@ -229,7 +229,7 @@ if (!defined('ABSPATH')) {
                                 <?php echo sbs_get_icon('building'); ?>
                             </div>
                             <div class="box-info flex-grow-1">
-                                <h3 class="box-title mb-1">稲毛詳細</h3>
+                                <h3 class="box-title mb-1"><?php _e('Inage Details', 'sbs-portal'); ?></h3>
                                 <p class="box-description mb-0">Add description</p>
                             </div>
                         </div>
@@ -245,7 +245,7 @@ if (!defined('ABSPATH')) {
                                 <?php echo sbs_get_icon('calendar'); ?>
                             </div>
                             <div class="box-info flex-grow-1">
-                                <h3 class="box-title mb-1">予約システム</h3>
+                                <h3 class="box-title mb-1"><?php _e('Reservation System', 'sbs-portal'); ?></h3>
                                 <p class="box-description mb-0">教習、宿泊の予約</p>
                             </div>
                         </div>
@@ -261,7 +261,7 @@ if (!defined('ABSPATH')) {
                                 <?php echo sbs_get_icon('briefcase'); ?>
                             </div>
                             <div class="box-info flex-grow-1">
-                                <h3 class="box-title mb-1">マッチングシステム</h3>
+                                <h3 class="box-title mb-1"><?php _e('Matching System', 'sbs-portal'); ?></h3>
                                 <p class="box-description mb-0">求人情報投稿</p>
                             </div>
                         </div>

@@ -13,14 +13,152 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# Main Navigation & Basic Elements
+msgid "Greeting"
+msgstr "Salam"
+
+msgid "Greetings"
+msgstr "Salam"
+
+msgid "Company Information"
+msgstr "Informasi Perusahaan"
+
+msgid "About SBS Group"
+msgstr "Tentang Grup SBS"
+
+msgid "English"
+msgstr "English"
+
+msgid "日本語"
+msgstr "日本語"
+
+msgid "Bahasa Indonesia"
+msgstr "Bahasa Indonesia"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Show All"
+msgstr "Tampilkan Semua"
+
+msgid "SBS Driving School"
+msgstr "SBS Sekolah Mengemudi"
+
+msgid "For Your Dreams."
+msgstr "For Your Dreams."
+
+msgid "With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates."
+msgstr "Dengan motto belajar dengan gembira dan memperoleh pengetahuan serta keterampilan yang solid, kami telah maju selama 60 tahun di Chiba dan Inage, membesarkan banyak lulusan."
+
+# Explore Section
+msgid "Explore"
+msgstr "Jelajahi"
+
+msgid "News"
+msgstr "Berita"
+
+msgid "Recruitment"
+msgstr "Rekrutmen"
+
+msgid "Reservation"
+msgstr "Sistem Reservasi"
+
+msgid "Reservation System"
+msgstr "Sistem Reservasi"
+
+msgid "Course"
+msgstr "Kursus"
+
+msgid "Accommodation"
+msgstr "Akomodasi"
+
+# School Information
+msgid "SBS School"
+msgstr "Sekolah Mengemudi SBS"
+
+msgid "SBS Driving School Inage"
+msgstr "SBS Driving School Inage"
+
+msgid "SBS Driving School Anesaki"
+msgstr "SBS Driving School Anesaki"
+
+msgid "Tel: 043-259-6371"
+msgstr "Tel: 043-259-6371"
+
+msgid "Tel: 0436-61-1131"
+msgstr "Tel: 0436-61-1131"
+
+# Contact & Footer
+msgid "Contact"
+msgstr "Kontak"
+
+msgid "Terms of Use"
+msgstr "Syarat Penggunaan"
+
+msgid "Terms of Service"
+msgstr "Syarat Penggunaan"
+
+msgid "Privacy"
+msgstr "Privasi"
+
+msgid "Privacy Policy"
+msgstr "Privasi"
+
+msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+msgstr "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+
+msgid "Close"
+msgstr "Tutup"
+
+# Additional Navigation Items
+msgid "portal"
+msgstr "Portal"
+
+msgid "Portal"
+msgstr "Portal"
+
+msgid "Blog List"
+msgstr "Daftar Blog"
+
+msgid "Campaign Information"
+msgstr "Informasi Kampanye"
+
+msgid "Page top"
+msgstr "Ke Atas Halaman"
+
+# Additional Company Information
+msgid "Company Overview"
+msgstr "Ikhtisar Perusahaan"
+
+msgid "History"
+msgstr "Sejarah"
+
+# School Details
+msgid "Anesaki Details"
+msgstr "Detail Anesaki"
+
+msgid "Inage Details"
+msgstr "Detail Inage"
+
+msgid "SBS Auto"
+msgstr "SBS Auto"
+
+msgid "Matching System"
+msgstr "Sistem Pencocokan"
+
+# WordPress Default
 msgid "Primary Menu"
 msgstr "Menu Utama"
 
 msgid "Footer Menu"
 msgstr "Menu Footer"
 
+# FAQ System
 msgctxt "Post Type General Name"
 msgid "FAQs"
 msgstr "FAQ"
@@ -48,7 +186,7 @@ msgid "Edit FAQ"
 msgstr "Edit FAQ"
 
 msgid "Update FAQ"
-msgstr "Perbarui FAQ"
+msgstr "Update FAQ"
 
 msgid "View FAQ"
 msgstr "Lihat FAQ"
@@ -56,236 +194,66 @@ msgstr "Lihat FAQ"
 msgid "Search FAQs"
 msgstr "Cari FAQ"
 
-msgid "FAQs"
-msgstr "FAQ"
+msgid "No FAQs found."
+msgstr "Tidak ada FAQ ditemukan."
 
-msgid "Frequently Asked Questions"
-msgstr "Pertanyaan yang Sering Diajukan"
+msgid "No FAQs found in Trash."
+msgstr "Tidak ada FAQ ditemukan di Trash."
 
-msgid "Greeting"
-msgstr "Salam"
+msgid "Parent FAQ:"
+msgstr "FAQ Induk:"
 
-msgid "Company Information"
-msgstr "Informasi Perusahaan"
+# Campaign System
+msgctxt "Post Type General Name"
+msgid "Campaigns"
+msgstr "Kampanye"
 
-msgid "Company Overview"
-msgstr "Gambaran Perusahaan"
-
-msgid "History"
-msgstr "Sejarah"
-
-msgid "About SBS Group"
-msgstr "Tentang Grup SBS"
-
-msgid "Japanese"
-msgstr "Bahasa Jepang"
-
-msgid "Menu"
-msgstr "Menu"
-
-# Common navigation terms
-msgid "Home"
-msgstr "Beranda"
-
-msgid "About"
-msgstr "Tentang"
-
-msgid "Services"
-msgstr "Layanan"
-
-msgid "Contact"
-msgstr "Kontak"
-
-msgid "News"
-msgstr "Berita"
-
-msgid "Blog"
-msgstr "Blog"
+msgctxt "Post Type Singular Name"
+msgid "Campaign"
+msgstr "Kampanye"
 
 msgid "Campaign"
 msgstr "Kampanye"
 
-# Language names
-msgid "English"
-msgstr "Bahasa Inggris"
+msgid "All Campaigns"
+msgstr "Semua Kampanye"
 
-msgid "Indonesian"
-msgstr "Bahasa Indonesia"
+msgid "Add New Campaign"
+msgstr "Tambah Kampanye Baru"
 
-# Common UI terms
-msgid "Read More"
-msgstr "Baca Selengkapnya"
+msgid "New Campaign"
+msgstr "Kampanye Baru"
 
-msgid "Learn More"
-msgstr "Pelajari Lebih Lanjut"
+msgid "Edit Campaign"
+msgstr "Edit Kampanye"
 
-msgid "Contact Us"
-msgstr "Hubungi Kami"
+msgid "Update Campaign"
+msgstr "Update Kampanye"
 
-msgid "Get Started"
-msgstr "Mulai"
+msgid "View Campaign"
+msgstr "Lihat Kampanye"
 
-msgid "Apply Now"
-msgstr "Daftar Sekarang"
+msgid "Search Campaigns"
+msgstr "Cari Kampanye"
 
-msgid "Book Now"
-msgstr "Pesan Sekarang"
+msgid "No Campaigns found."
+msgstr "Tidak ada Kampanye ditemukan."
 
-msgid "View Details"
-msgstr "Lihat Detail"
+msgid "No Campaigns found in Trash."
+msgstr "Tidak ada Kampanye ditemukan di Trash."
 
-msgid "Previous"
-msgstr "Sebelumnya"
+# Taxonomy
+msgid "FAQ Categories"
+msgstr "Kategori FAQ"
 
-msgid "Next"
-msgstr "Selanjutnya"
+msgid "FAQ Category"
+msgstr "Kategori FAQ"
 
-msgid "Close"
-msgstr "Tutup"
+msgid "Campaign Categories"
+msgstr "Kategori Kampanye"
 
-msgid "Open"
-msgstr "Buka"
+msgid "Campaign Category"
+msgstr "Kategori Kampanye"
 
-msgid "Submit"
-msgstr "Kirim"
-
-msgid "Search"
-msgstr "Cari"
-
-msgid "Filter"
-msgstr "Filter"
-
-msgid "Sort"
-msgstr "Urutkan"
-
-msgid "Category"
-msgstr "Kategori"
-
-msgid "Date"
-msgstr "Tanggal"
-
-msgid "Featured"
-msgstr "Unggulan"
-
-msgid "Latest"
-msgstr "Terbaru"
-
-msgid "Popular"
-msgstr "Populer"
-
-# SBS specific terms
-msgid "SBS Driving School"
-msgstr "Sekolah Mengemudi SBS"
-
-msgid "SBS Auto"
-msgstr "SBS Auto"
-
-msgid "Driving License"
-msgstr "Surat Izin Mengemudi"
-
-msgid "Driving Course"
-msgstr "Kursus Mengemudi"
-
-msgid "Instructor"
-msgstr "Instruktur"
-
-msgid "Practice"
-msgstr "Praktik"
-
-msgid "Theory"
-msgstr "Teori"
-
-msgid "Examination"
-msgstr "Ujian"
-
-msgid "Registration"
-msgstr "Pendaftaran"
-
-msgid "Schedule"
-msgstr "Jadwal"
-
-msgid "Booking System"
-msgstr "Sistem Pemesanan"
-
-msgid "Matching System"
-msgstr "Sistem Pencocokan"
-
-# Hero section
-msgid "Welcome to SBS Portal"
-msgstr "Selamat Datang di Portal SBS"
-
-msgid "Your Gateway to Quality Driving Education"
-msgstr "Gerbang Anda menuju Pendidikan Mengemudi Berkualitas"
-
-msgid "Professional driving instruction with modern facilities and experienced instructors"
-msgstr "Instruksi mengemudi profesional dengan fasilitas modern dan instruktur berpengalaman"
-
-# Footer
-msgid "All rights reserved"
-msgstr "Semua hak dilindungi"
-
-msgid "Privacy Policy"
-msgstr "Kebijakan Privasi"
-
-msgid "Terms of Service"
-msgstr "Syarat Layanan"
-
-msgid "Sitemap"
-msgstr "Peta Situs"
-
-# Blog
-msgid "Blog Posts"
-msgstr "Postingan Blog"
-
-msgid "Latest News"
-msgstr "Berita Terbaru"
-
-msgid "Read Article"
-msgstr "Baca Artikel"
-
-msgid "Published on"
-msgstr "Diterbitkan pada"
-
-msgid "By"
-msgstr "Oleh"
-
-msgid "In"
-msgstr "Dalam"
-
-msgid "Tags"
-msgstr "Tag"
-
-msgid "Related Posts"
-msgstr "Postingan Terkait"
-
-# FAQ
-msgid "Question"
-msgstr "Pertanyaan"
-
-msgid "Answer"
-msgstr "Jawaban"
-
-msgid "Show Answer"
-msgstr "Tampilkan Jawaban"
-
-msgid "Hide Answer"
-msgstr "Sembunyikan Jawaban"
-
-# Campaign
-msgid "Special Offers"
-msgstr "Penawaran Khusus"
-
-msgid "Limited Time"
-msgstr "Waktu Terbatas"
-
-msgid "Discount"
-msgstr "Diskon"
-
-msgid "Save"
-msgstr "Hemat"
-
-msgid "Valid Until"
-msgstr "Berlaku Sampai"
-
-msgid "Terms and Conditions"
-msgstr "Syarat dan Ketentuan"
+msgid "No Related Campaigns Found."
+msgstr "Tidak Ada Kampanye Terkait Ditemukan."

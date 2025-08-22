@@ -15,12 +15,150 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+# Main Navigation & Basic Elements
+msgid "Greeting"
+msgstr "ごあいさつ"
+
+msgid "Greetings"
+msgstr "ごあいさつ"
+
+msgid "Company Information"
+msgstr "企業情報"
+
+msgid "About SBS Group"
+msgstr "SBSグループについて"
+
+msgid "English"
+msgstr "English"
+
+msgid "日本語"
+msgstr "日本語"
+
+msgid "Bahasa Indonesia"
+msgstr "Bahasa Indonesia"
+
+msgid "Menu"
+msgstr "メニュー"
+
+msgid "Blog"
+msgstr "ブログ"
+
+msgid "Show All"
+msgstr "すべて表示"
+
+msgid "SBS Driving School"
+msgstr "SBSドライビングスクール"
+
+msgid "For Your Dreams."
+msgstr "For Your Dreams."
+
+msgid "With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates."
+msgstr "楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してきました。"
+
+# Explore Section
+msgid "Explore"
+msgstr "探索"
+
+msgid "News"
+msgstr "ニュース"
+
+msgid "Recruitment"
+msgstr "採用"
+
+msgid "Reservation"
+msgstr "予約システム"
+
+msgid "Reservation System"
+msgstr "予約システム"
+
+msgid "Course"
+msgstr "コース"
+
+msgid "Accommodation"
+msgstr "宿泊"
+
+# School Information
+msgid "SBS School"
+msgstr "SBS自動車学校"
+
+msgid "SBS Driving School Inage"
+msgstr "SBSドライビングスクール稲毛"
+
+msgid "SBS Driving School Anesaki"
+msgstr "SBSドライビングスクール姉崎"
+
+msgid "Tel: 043-259-6371"
+msgstr "Tel: 043-259-6371"
+
+msgid "Tel: 0436-61-1131"
+msgstr "Tel: 0436-61-1131"
+
+# Contact & Footer
+msgid "Contact"
+msgstr "お問い合わせ"
+
+msgid "Terms of Use"
+msgstr "利用規約"
+
+msgid "Terms of Service"
+msgstr "利用規約"
+
+msgid "Privacy"
+msgstr "プライバシー"
+
+msgid "Privacy Policy"
+msgstr "プライバシー"
+
+msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+msgstr "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
+
+msgid "Close"
+msgstr "閉じる"
+
+# Additional Navigation Items
+msgid "portal"
+msgstr "ポータル"
+
+msgid "Portal"
+msgstr "ポータル"
+
+msgid "Blog List"
+msgstr "ブログ一覧"
+
+msgid "Campaign Information"
+msgstr "キャンペーン情報"
+
+msgid "Page top"
+msgstr "ページトップ"
+
+# Additional Company Information
+msgid "Company Overview"
+msgstr "会社概要"
+
+msgid "History"
+msgstr "沿革"
+
+# School Details
+msgid "Anesaki Details"
+msgstr "姉崎詳細"
+
+msgid "Inage Details"
+msgstr "稲毛詳細"
+
+msgid "SBS Auto"
+msgstr "SBS自動車"
+
+msgid "Matching System"
+msgstr "マッチングシステム"
+
+# WordPress Default
 msgid "Primary Menu"
 msgstr "メインメニュー"
 
 msgid "Footer Menu"
 msgstr "フッターメニュー"
 
+# FAQ System
 msgctxt "Post Type General Name"
 msgid "FAQs"
 msgstr "よくある質問"
@@ -56,236 +194,66 @@ msgstr "FAQを表示"
 msgid "Search FAQs"
 msgstr "FAQを検索"
 
-msgid "FAQs"
-msgstr "よくある質問"
+msgid "No FAQs found."
+msgstr "FAQが見つかりません。"
 
-msgid "Frequently Asked Questions"
-msgstr "よくある質問"
+msgid "No FAQs found in Trash."
+msgstr "ゴミ箱にFAQが見つかりません。"
 
-msgid "Greeting"
-msgstr "ごあいさつ"
+msgid "Parent FAQ:"
+msgstr "親FAQ:"
 
-msgid "Company Information"
-msgstr "企業情報"
+# Campaign System
+msgctxt "Post Type General Name"
+msgid "Campaigns"
+msgstr "キャンペーン"
 
-msgid "Company Overview"
-msgstr "会社概要"
-
-msgid "History"
-msgstr "沿革"
-
-msgid "About SBS Group"
-msgstr "SBSグループについて"
-
-msgid "Japanese"
-msgstr "日本語"
-
-msgid "Menu"
-msgstr "メニュー"
-
-# Common navigation terms
-msgid "Home"
-msgstr "ホーム"
-
-msgid "About"
-msgstr "会社情報"
-
-msgid "Services"
-msgstr "サービス"
-
-msgid "Contact"
-msgstr "お問い合わせ"
-
-msgid "News"
-msgstr "ニュース"
-
-msgid "Blog"
-msgstr "ブログ"
+msgctxt "Post Type Singular Name"
+msgid "Campaign"
+msgstr "キャンペーン"
 
 msgid "Campaign"
 msgstr "キャンペーン"
 
-# Language names
-msgid "English"
-msgstr "英語"
+msgid "All Campaigns"
+msgstr "すべてのキャンペーン"
 
-msgid "Indonesian"
-msgstr "インドネシア語"
+msgid "Add New Campaign"
+msgstr "新しいキャンペーンを追加"
 
-# Common UI terms
-msgid "Read More"
-msgstr "続きを読む"
+msgid "New Campaign"
+msgstr "新しいキャンペーン"
 
-msgid "Learn More"
-msgstr "詳しくはこちら"
+msgid "Edit Campaign"
+msgstr "キャンペーンを編集"
 
-msgid "Contact Us"
-msgstr "お問い合わせ"
+msgid "Update Campaign"
+msgstr "キャンペーンを更新"
 
-msgid "Get Started"
-msgstr "始める"
+msgid "View Campaign"
+msgstr "キャンペーンを表示"
 
-msgid "Apply Now"
-msgstr "今すぐ申し込む"
+msgid "Search Campaigns"
+msgstr "キャンペーンを検索"
 
-msgid "Book Now"
-msgstr "今すぐ予約"
+msgid "No Campaigns found."
+msgstr "キャンペーンが見つかりません。"
 
-msgid "View Details"
-msgstr "詳細を見る"
+msgid "No Campaigns found in Trash."
+msgstr "ゴミ箱にキャンペーンが見つかりません。"
 
-msgid "Previous"
-msgstr "前へ"
+# Taxonomy
+msgid "FAQ Categories"
+msgstr "FAQカテゴリー"
 
-msgid "Next"
-msgstr "次へ"
+msgid "FAQ Category"
+msgstr "FAQカテゴリー"
 
-msgid "Close"
-msgstr "閉じる"
+msgid "Campaign Categories"
+msgstr "キャンペーンカテゴリー"
 
-msgid "Open"
-msgstr "開く"
+msgid "Campaign Category"
+msgstr "キャンペーンカテゴリー"
 
-msgid "Submit"
-msgstr "送信"
-
-msgid "Search"
-msgstr "検索"
-
-msgid "Filter"
-msgstr "フィルター"
-
-msgid "Sort"
-msgstr "並び替え"
-
-msgid "Category"
-msgstr "カテゴリー"
-
-msgid "Date"
-msgstr "日付"
-
-msgid "Featured"
-msgstr "注目"
-
-msgid "Latest"
-msgstr "最新"
-
-msgid "Popular"
-msgstr "人気"
-
-# SBS specific terms
-msgid "SBS Driving School"
-msgstr "SBSドライビングスクール"
-
-msgid "SBS Auto"
-msgstr "SBS自動車"
-
-msgid "Driving License"
-msgstr "運転免許"
-
-msgid "Driving Course"
-msgstr "教習コース"
-
-msgid "Instructor"
-msgstr "指導員"
-
-msgid "Practice"
-msgstr "実技"
-
-msgid "Theory"
-msgstr "学科"
-
-msgid "Examination"
-msgstr "試験"
-
-msgid "Registration"
-msgstr "入所"
-
-msgid "Schedule"
-msgstr "スケジュール"
-
-msgid "Booking System"
-msgstr "予約システム"
-
-msgid "Matching System"
-msgstr "マッチングシステム"
-
-# Hero section
-msgid "Welcome to SBS Portal"
-msgstr "SBSポータルへようこそ"
-
-msgid "Your Gateway to Quality Driving Education"
-msgstr "質の高い運転教育への入り口"
-
-msgid "Professional driving instruction with modern facilities and experienced instructors"
-msgstr "モダンな設備と経験豊富な指導員による専門的な運転指導"
-
-# Footer
-msgid "All rights reserved"
-msgstr "全著作権所有"
-
-msgid "Privacy Policy"
-msgstr "プライバシーポリシー"
-
-msgid "Terms of Service"
-msgstr "利用規約"
-
-msgid "Sitemap"
-msgstr "サイトマップ"
-
-# Blog
-msgid "Blog Posts"
-msgstr "ブログ記事"
-
-msgid "Latest News"
-msgstr "最新ニュース"
-
-msgid "Read Article"
-msgstr "記事を読む"
-
-msgid "Published on"
-msgstr "公開日"
-
-msgid "By"
-msgstr "投稿者"
-
-msgid "In"
-msgstr "カテゴリー"
-
-msgid "Tags"
-msgstr "タグ"
-
-msgid "Related Posts"
-msgstr "関連記事"
-
-# FAQ
-msgid "Question"
-msgstr "質問"
-
-msgid "Answer"
-msgstr "回答"
-
-msgid "Show Answer"
-msgstr "回答を表示"
-
-msgid "Hide Answer"
-msgstr "回答を非表示"
-
-# Campaign
-msgid "Special Offers"
-msgstr "特別オファー"
-
-msgid "Limited Time"
-msgstr "期間限定"
-
-msgid "Discount"
-msgstr "割引"
-
-msgid "Save"
-msgstr "お得"
-
-msgid "Valid Until"
-msgstr "有効期限"
-
-msgid "Terms and Conditions"
-msgstr "利用条件"
+msgid "No Related Campaigns Found."
+msgstr "関連キャンペーンはありません。"

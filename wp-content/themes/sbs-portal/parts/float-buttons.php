@@ -81,7 +81,7 @@ $highlighted_campaign = sbs_get_highlighted_campaign();
     <div class="back-to-top" id="back-to-top">
         <div class="back-to-top-content">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/icon-arrow-up.svg" alt="Back to top" />
-            <span>Page top</span>
+            <span><?php _e('Page top', 'sbs-portal'); ?></span>
         </div>
     </div>
 </div>

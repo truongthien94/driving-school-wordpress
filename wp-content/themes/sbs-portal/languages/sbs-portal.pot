@@ -1,343 +1,270 @@
-# Copyright (C) 2024 SBS Portal
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR SBS Portal
 # This file is distributed under the same license as the SBS Portal theme.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SBS Portal 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/sbs-portal\n"
-"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2025-01-11 00:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: functions.php:31
-msgid "Primary Menu"
-msgstr ""
-
-#: functions.php:32
-msgid "Footer Menu"
-msgstr ""
-
-#: functions.php:95
-msgctxt "Post Type General Name"
-msgid "FAQs"
-msgstr ""
-
-#: functions.php:96
-msgctxt "Post Type Singular Name"
-msgid "FAQ"
-msgstr ""
-
-#: functions.php:97
-#: functions.php:98
-msgid "FAQ"
-msgstr ""
-
-#: functions.php:99
-msgid "All FAQs"
-msgstr ""
-
-#: functions.php:100
-msgid "Add New FAQ"
-msgstr ""
-
-#: functions.php:101
-msgid "Add New"
-msgstr ""
-
-#: functions.php:102
-msgid "New FAQ"
-msgstr ""
-
-#: functions.php:103
-msgid "Edit FAQ"
-msgstr ""
-
-#: functions.php:104
-msgid "Update FAQ"
-msgstr ""
-
-#: functions.php:105
-msgid "View FAQ"
-msgstr ""
-
-#: functions.php:106
-msgid "Search FAQs"
-msgstr ""
-
-#: functions.php:110
-msgid "FAQs"
-msgstr ""
-
-#: functions.php:111
-msgid "Frequently Asked Questions"
-msgstr ""
-
-#: parts/portal-navigation.php:25
+# Main Navigation & Basic Elements
 msgid "Greeting"
 msgstr ""
 
-#: parts/portal-navigation.php:29
+msgid "Greetings"
+msgstr ""
+
 msgid "Company Information"
 msgstr ""
 
-#: parts/portal-navigation.php:32
-msgid "Company Overview"
-msgstr ""
-
-#: parts/portal-navigation.php:33
-msgid "History"
-msgstr ""
-
-#: parts/portal-navigation.php:37
 msgid "About SBS Group"
-msgstr ""
-
-#: parts/portal-navigation.php:41
-#: parts/portal-navigation.php:83
-msgid "Japanese"
-msgstr ""
-
-#: parts/portal-navigation.php:53
-msgid "Menu"
-msgstr ""
-
-#: parts/portal-navigation.php:67
-msgid "Greeting"
-msgstr ""
-
-#: parts/portal-navigation.php:71
-msgid "Company Information"
-msgstr ""
-
-#: parts/portal-navigation.php:74
-msgid "Company Overview"
-msgstr ""
-
-#: parts/portal-navigation.php:75
-msgid "History"
-msgstr ""
-
-#: parts/portal-navigation.php:79
-msgid "About SBS Group"
-msgstr ""
-
-# Common navigation terms
-msgid "Home"
-msgstr ""
-
-msgid "About"
-msgstr ""
-
-msgid "Services"
-msgstr ""
-
-msgid "Contact"
-msgstr ""
-
-msgid "News"
-msgstr ""
-
-msgid "Blog"
-msgstr ""
-
-msgid "Campaign"
-msgstr ""
-
-msgid "FAQ"
-msgstr ""
-
-# Language names
-msgid "Japanese"
 msgstr ""
 
 msgid "English"
 msgstr ""
 
-msgid "Indonesian"
+msgid "日本語"
 msgstr ""
 
-# Common UI terms
-msgid "Read More"
+msgid "Bahasa Indonesia"
 msgstr ""
 
-msgid "Learn More"
+msgid "Menu"
 msgstr ""
 
-msgid "Contact Us"
+msgid "Blog"
 msgstr ""
 
-msgid "Get Started"
+msgid "Show All"
 msgstr ""
 
-msgid "Apply Now"
-msgstr ""
-
-msgid "Book Now"
-msgstr ""
-
-msgid "View Details"
-msgstr ""
-
-msgid "Previous"
-msgstr ""
-
-msgid "Next"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Open"
-msgstr ""
-
-msgid "Submit"
-msgstr ""
-
-msgid "Search"
-msgstr ""
-
-msgid "Filter"
-msgstr ""
-
-msgid "Sort"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Date"
-msgstr ""
-
-msgid "Featured"
-msgstr ""
-
-msgid "Latest"
-msgstr ""
-
-msgid "Popular"
-msgstr ""
-
-# SBS specific terms
 msgid "SBS Driving School"
 msgstr ""
 
-msgid "SBS Auto"
+msgid "For Your Dreams."
 msgstr ""
 
-msgid "Driving License"
+msgid "With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates."
 msgstr ""
 
-msgid "Driving Course"
+# Explore Section
+msgid "Explore"
 msgstr ""
 
-msgid "Instructor"
+msgid "News"
 msgstr ""
 
-msgid "Practice"
+msgid "Recruitment"
 msgstr ""
 
-msgid "Theory"
+msgid "Reservation"
 msgstr ""
 
-msgid "Examination"
+msgid "Reservation System"
 msgstr ""
 
-msgid "Registration"
+msgid "Course"
 msgstr ""
 
-msgid "Schedule"
+msgid "Accommodation"
 msgstr ""
 
-msgid "Booking System"
+# School Information
+msgid "SBS School"
 msgstr ""
 
-msgid "Matching System"
+msgid "SBS Driving School Inage"
 msgstr ""
 
-# Hero section
-msgid "Welcome to SBS Portal"
+msgid "SBS Driving School Anesaki"
 msgstr ""
 
-msgid "Your Gateway to Quality Driving Education"
+msgid "Tel: 043-259-6371"
 msgstr ""
 
-msgid "Professional driving instruction with modern facilities and experienced instructors"
+msgid "Tel: 0436-61-1131"
 msgstr ""
 
-# Footer
-msgid "All rights reserved"
+# Contact & Footer
+msgid "Contact"
 msgstr ""
 
-msgid "Privacy Policy"
+msgid "Terms of Use"
 msgstr ""
 
 msgid "Terms of Service"
 msgstr ""
 
-msgid "Sitemap"
+msgid "Privacy"
 msgstr ""
 
-# Blog
-msgid "Blog Posts"
+msgid "Privacy Policy"
 msgstr ""
 
-msgid "Latest News"
+msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
 msgstr ""
 
-msgid "Read Article"
+msgid "Close"
 msgstr ""
 
-msgid "Published on"
+# Additional Navigation Items
+msgid "portal"
 msgstr ""
 
-msgid "By"
+msgid "Portal"
 msgstr ""
 
-msgid "In"
+msgid "Blog List"
 msgstr ""
 
-msgid "Tags"
+msgid "Campaign Information"
 msgstr ""
 
-msgid "Related Posts"
+msgid "Page top"
 msgstr ""
 
-# FAQ
-msgid "Frequently Asked Questions"
+# Additional Company Information
+msgid "Company Overview"
 msgstr ""
 
-msgid "Question"
+msgid "History"
 msgstr ""
 
-msgid "Answer"
+# School Details
+msgid "Anesaki Details"
 msgstr ""
 
-msgid "Show Answer"
+msgid "Inage Details"
 msgstr ""
 
-msgid "Hide Answer"
+msgid "SBS Auto"
 msgstr ""
 
-# Campaign
-msgid "Special Offers"
+msgid "Matching System"
 msgstr ""
 
-msgid "Limited Time"
+# WordPress Default
+msgid "Primary Menu"
 msgstr ""
 
-msgid "Discount"
+msgid "Footer Menu"
 msgstr ""
 
-msgid "Save"
+msgid "Skip to content"
 msgstr ""
 
-msgid "Valid Until"
+msgid "Pages:"
 msgstr ""
 
-msgid "Terms and Conditions"
+msgid "Edit"
+msgstr ""
+
+# FAQ System
+msgctxt "Post Type General Name"
+msgid "FAQs"
+msgstr ""
+
+msgctxt "Post Type Singular Name"
+msgid "FAQ"
+msgstr ""
+
+msgid "FAQ"
+msgstr ""
+
+msgid "All FAQs"
+msgstr ""
+
+msgid "Add New FAQ"
+msgstr ""
+
+msgid "Add New"
+msgstr ""
+
+msgid "New FAQ"
+msgstr ""
+
+msgid "Edit FAQ"
+msgstr ""
+
+msgid "Update FAQ"
+msgstr ""
+
+msgid "View FAQ"
+msgstr ""
+
+msgid "Search FAQs"
+msgstr ""
+
+msgid "No FAQs found."
+msgstr ""
+
+msgid "No FAQs found in Trash."
+msgstr ""
+
+msgid "Parent FAQ:"
+msgstr ""
+
+# Campaign System
+msgctxt "Post Type General Name"
+msgid "Campaigns"
+msgstr ""
+
+msgctxt "Post Type Singular Name"
+msgid "Campaign"
+msgstr ""
+
+msgid "Campaign"
+msgstr ""
+
+msgid "All Campaigns"
+msgstr ""
+
+msgid "Add New Campaign"
+msgstr ""
+
+msgid "New Campaign"
+msgstr ""
+
+msgid "Edit Campaign"
+msgstr ""
+
+msgid "Update Campaign"
+msgstr ""
+
+msgid "View Campaign"
+msgstr ""
+
+msgid "Search Campaigns"
+msgstr ""
+
+msgid "No Campaigns found."
+msgstr ""
+
+msgid "No Campaigns found in Trash."
+msgstr ""
+
+msgid "No Related Campaigns Found."
+msgstr ""
+
+# Taxonomy
+msgid "FAQ Categories"
+msgstr ""
+
+msgid "FAQ Category"
+msgstr ""
+
+msgid "Campaign Categories"
+msgstr ""
+
+msgid "Campaign Category"
 msgstr ""

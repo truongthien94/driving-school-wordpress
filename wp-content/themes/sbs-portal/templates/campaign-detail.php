@@ -83,7 +83,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     <?php
     // Use reusable header section with campaign specific parameters
     get_template_part('parts/header-section', null, array(
-        'title' => 'キャンペーン情報',
+        'title' => __('Campaign Information', 'sbs-portal'),
         'subtitle' => 'Campaign',
         'show_navigation' => true
     ));
@@ -105,7 +105,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                         </div>
 
                         <div class="mb-4">
-                            <h5 class="fw-bold">コース情報</h5>
+                            <h5 class="fw-bold"><?php _e('Course', 'sbs-portal'); ?> <?php _e('Company Information', 'sbs-portal'); ?></h5>
                             <div class="campaign-text-block">
                                 <?php
                                 if ($campaign_post) {
@@ -161,7 +161,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                 endwhile;
                                 wp_reset_postdata();
                             else:
-                                echo '<div class="no-related-posts"><p>関連キャンペーンはありません。</p></div>';
+                                echo '<div class="no-related-posts"><p>' . __('No Related Campaigns Found.', 'sbs-portal') . '</p></div>';
                             endif;
                             ?>
                         </div>

@@ -32,49 +32,49 @@ $footer_data = sbs_get_footer_data();
                 </div>
                 <div class="company-info">
                     <p class="company-description">
-                        楽しく学んで確かな知識と技術の習得をモットーに、千葉・稲毛の地で60年間歩み続けて、多くの卒業生を育成してまいりました。
+                        <?php _e('With the motto of learning joyfully and acquiring solid knowledge and skills, we have been moving forward for 60 years in Chiba and Inage, nurturing many graduates.', 'sbs-portal'); ?>
                     </p>
                 </div>
             </div>
 
             <!-- Footer Columns -->
             <div class="footer-columns">
-                <!-- Column 1: 探索 -->
+                <!-- Column 1: Explore -->
                 <div class="footer-column">
-                    <h3 class="column-title">探索</h3>
+                    <h3 class="column-title"><?php _e('Explore', 'sbs-portal'); ?></h3>
                     <ul class="column-links">
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">ごあいさつ</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school"><?php _e('Greetings', 'sbs-portal'); ?></a></li>
                         <li>
                             <div class="dropdown dropdown-footer">
                                 <!-- Dropdown Toggle Button -->
                                 <button class="dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLanguageList" aria-expanded="false" aria-controls="collapseLanguageList">
-                                    <span>企業情報</span>
+                                    <span><?php _e('Company Information', 'sbs-portal'); ?></span>
                                 </button>
                                 <!-- Collapsible List Group -->
                                 <div class="collapse" id="collapseLanguageList">
                                     <ul class="list-group ">
                                         <li class="mt-3">
-                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline">会社概要</a>
+                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/outline"><?php _e('Company Overview', 'sbs-portal'); ?></a>
                                         </li>
                                         <li class="mt-3">
-                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history">沿革</a>
+                                            <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/company/history"><?php _e('History', 'sbs-portal'); ?></a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/news/?page=1&category=0&year=2025">ニュース</a></li>
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group">SBSグループについて</a></li>
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/recruit/">採用</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/news/?page=1&category=0&year=2025"><?php _e('News', 'sbs-portal'); ?></a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/group"><?php _e('About SBS Group', 'sbs-portal'); ?></a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/recruit/"><?php _e('Recruitment', 'sbs-portal'); ?></a></li>
                     </ul>
                 </div>
 
-                <!-- Column 3: SBS自動車学校 -->
+                <!-- Column 3: SBS School -->
                 <div class="footer-column">
-                    <h3 class="column-title">SBS自動車学校</h3>
+                    <h3 class="column-title"><?php _e('SBS School', 'sbs-portal'); ?></h3>
                     <ul class="column-links">
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage">SBSドライビングスクール稲毛</a></li>
-                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">SBSドライビングスクール姉崎</a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage"><?php _e('SBS Driving School Inage', 'sbs-portal'); ?></a></li>
+                        <li><a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki"><?php _e('SBS Driving School Anesaki', 'sbs-portal'); ?></a></li>
                     </ul>
                 </div>
             </div>
@@ -83,17 +83,17 @@ $footer_data = sbs_get_footer_data();
             <div class="footer-contact">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage/">SBSドライビングスクール稲毛</a>
-                        <p>Tel: 043-259-6371</p>
+                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/inage/"><?php _e('SBS Driving School Inage', 'sbs-portal'); ?></a>
+                        <p><?php _e('Tel: 043-259-6371', 'sbs-portal'); ?></p>
                     </div>
                     <div class="contact-item">
-                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki">SBSドライビングスクール姉崎</a>
-                        <p>Tel: 0436-61-1131</p>
+                        <a href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school/anesaki"><?php _e('SBS Driving School Anesaki', 'sbs-portal'); ?></a>
+                        <p><?php _e('Tel: 0436-61-1131', 'sbs-portal'); ?></p>
                     </div>
                 </div>
                 <div class="contact-button-wrapper">
                     <div class="contact-button" id="contact-button">
-                        <span>お問い合わせ</span>
+                        <span><?php _e('Contact', 'sbs-portal'); ?></span>
                     </div>
                 </div>
             </div>
