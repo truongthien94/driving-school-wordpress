@@ -42,7 +42,7 @@ $related_posts = new WP_Query(array(
 
 if ($related_posts->have_posts()) : ?>
     <section class="related-posts">
-        <h2 class="related-posts-title">Related Posts</h2>
+        <h2 class="related-posts-title"><?php _e('Related Posts', 'sbs-portal'); ?></h2>
 
         <div class="related-posts-grid">
             <?php while ($related_posts->have_posts()) : $related_posts->the_post(); ?>

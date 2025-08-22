@@ -21,13 +21,13 @@ $faq_groups = sbs_get_faq_groups();
     <!-- FAQ Title Bar -->
     <div class="faq-title-bar ">
         <div class="faq-main-title p-3">
-            <span>FAQ</span>
+            <span><?php _e('FAQ', 'sbs-portal'); ?></span>
         </div>
         <div class="faq-japanese-title d-xl-none align-self-center">
-            よくある質問
+            <?php _e('Frequently Asked Questions', 'sbs-portal'); ?>
         </div>
         <div class="faq-vertical-text d-none d-xl-block align-self-end">
-            よ<br>く<br>あ<br>る<br>ご<br>質<br>問
+            <?php _e('Frequently Asked Questions', 'sbs-portal'); ?>
         </div>
     </div>
 
@@ -41,7 +41,7 @@ $faq_groups = sbs_get_faq_groups();
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="no-faqs text-center py-4">
-                    <p class="text-muted mb-0">FAQはまだありません。</p>
+                    <p class="text-muted mb-0"><?php _e('No FAQs available yet.', 'sbs-portal'); ?></p>
                 </div>
             <?php endif; ?>
         </div>

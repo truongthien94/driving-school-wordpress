@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$footer_data = sbs_get_footer_data();
+// Footer data is now handled by translation functions
 ?>
 
 </div><!-- #page -->
@@ -102,23 +102,18 @@ $footer_data = sbs_get_footer_data();
         <!-- Footer Bottom -->
         <div class="footer-bottom">
             <!-- Legal Links -->
-            <?php if (isset($footer_data['legal'])): ?>
-                <div class="legal-links d-flex justify-content-center mb-2">
-                    <?php foreach ($footer_data['legal'] as $legal): ?>
-                        <a class="<?php echo esc_attr($legal['class']); ?>">
-                            <?php echo esc_html($legal['text']); ?>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+            <div class="legal-links d-flex justify-content-center mb-2">
+                <a class="legal-link me-3">
+                    <?php _e('Terms of Use', 'sbs-portal'); ?>
+                </a>
+                <a class="legal-link">
+                    <?php _e('Privacy', 'sbs-portal'); ?>
+                </a>
+            </div>
 
             <!-- Copyright -->
             <div class="copyright">
-                <?php if (isset($footer_data['copyright'])): ?>
-                    <p><?php echo esc_html($footer_data['copyright']); ?></p>
-                <?php else: ?>
-                    <p>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. All rights reserved.</p>
-                <?php endif; ?>
+                <p><?php _e('Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved', 'sbs-portal'); ?></p>
             </div>
         </div>
     </div>

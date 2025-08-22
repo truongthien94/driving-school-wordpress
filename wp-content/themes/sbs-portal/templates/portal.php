@@ -69,7 +69,7 @@ if (!defined('ABSPATH')) {
                                         <?php endif; ?>
                                     </h3>
                                     <p class="box-description mb-0">
-                                        <?php echo esc_html($main_item['description'] ?: 'Add description'); ?>
+                                        <?php echo esc_html($main_item['description'] ?: __('Add description', 'sbs-portal')); ?>
                                     </p>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@ if (!defined('ABSPATH')) {
                                                     <?php endif; ?>
                                                 </h3>
                                                 <p class="box-description mb-0">
-                                                    <?php echo esc_html($item['description'] ?: 'Add description'); ?>
+                                                    <?php echo esc_html($item['description'] ?: __('Add description', 'sbs-portal')); ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@ if (!defined('ABSPATH')) {
                                 </div>
                                 <div class="box-info flex-grow-1">
                                     <h3 class="box-title mb-1"><?php _e('SBS Auto', 'sbs-portal'); ?></h3>
-                                    <p class="box-description mb-0">Add description</p>
+                                    <p class="box-description mb-0"><?php _e('Add description', 'sbs-portal'); ?></p>
                                 </div>
                             </div>
                             <div class="box-line"></div>
@@ -140,7 +140,7 @@ if (!defined('ABSPATH')) {
                                     </div>
                                     <div class="box-info flex-grow-1">
                                         <h3 class="box-title mb-1"><?php _e('SBS Driving School Anesaki', 'sbs-portal'); ?></h3>
-                                        <p class="box-description mb-0">Add description</p>
+                                        <p class="box-description mb-0"><?php _e('Add description', 'sbs-portal'); ?></p>
                                     </div>
                                 </div>
                                 <div class="box-line position-absolute"></div>
@@ -154,7 +154,7 @@ if (!defined('ABSPATH')) {
                                     </div>
                                     <div class="box-info flex-grow-1">
                                         <h3 class="box-title mb-1"><?php _e('SBS Driving School Inage', 'sbs-portal'); ?></h3>
-                                        <p class="box-description mb-0">Add description</p>
+                                        <p class="box-description mb-0"><?php _e('Add description', 'sbs-portal'); ?></p>
                                     </div>
                                 </div>
                                 <div class="box-line position-absolute"></div>
@@ -246,7 +246,7 @@ if (!defined('ABSPATH')) {
                             </div>
                             <div class="box-info flex-grow-1">
                                 <h3 class="box-title mb-1"><?php _e('Reservation System', 'sbs-portal'); ?></h3>
-                                <p class="box-description mb-0">教習、宿泊の予約</p>
+                                <p class="box-description mb-0"><?php _e('教習、宿泊の予約', 'sbs-portal'); ?></p>
                             </div>
                         </div>
                         <div class="box-line position-absolute"></div>
@@ -262,7 +262,7 @@ if (!defined('ABSPATH')) {
                             </div>
                             <div class="box-info flex-grow-1">
                                 <h3 class="box-title mb-1"><?php _e('Matching System', 'sbs-portal'); ?></h3>
-                                <p class="box-description mb-0">求人情報投稿</p>
+                                <p class="box-description mb-0"><?php _e('求人情報投稿', 'sbs-portal'); ?></p>
                             </div>
                         </div>
                         <div class="box-line position-absolute"></div>
@@ -305,7 +305,7 @@ if (!defined('ABSPATH')) {
                             <div class="campaign-overlay">
                                 <div class="campaign-info">
                                     <h3 class="campaign-title"><?php echo esc_html($item['title']); ?></h3>
-                                    <span class="campaign-cta">詳細を見る</span>
+                                    <span class="campaign-cta"><?php _e('詳細を見る', 'sbs-portal'); ?></span>
                                 </div>
                             </div>
                         </a>

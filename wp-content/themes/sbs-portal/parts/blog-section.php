@@ -28,7 +28,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
                 </div>
                 <h2 class="section-title mb-0"><?php _e('Blog', 'sbs-portal'); ?></h2>
             </div>
-            <p class="section-subtitle mb-0">BLOG and NEWS</p>
+            <p class="section-subtitle mb-0"><?php _e('BLOG and NEWS', 'sbs-portal'); ?></p>
         </div>
         <div class="header-action">
             <a href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog-list/')); ?>" class="view-all-button btn btn-outline-secondary btn-sm text-decoration-none">
@@ -60,7 +60,7 @@ $blog_posts = sbs_get_blog_posts(6); // Get 6 posts for display
             <?php endforeach;
         else: ?>
             <div class="no-posts text-center py-5">
-                <p class="text-muted mb-0">No blog posts available yet.</p>
+                <p class="text-muted mb-0"><?php _e('No blog posts available yet.', 'sbs-portal'); ?></p>
             </div>
         <?php endif; ?>
     </div>

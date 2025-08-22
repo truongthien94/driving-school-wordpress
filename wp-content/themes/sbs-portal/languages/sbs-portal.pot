@@ -310,5 +310,46 @@ msgstr ""
 msgid "Campaign content not available."
 msgstr ""
 
+# Additional UI Elements
+msgid "BLOG and NEWS"
+msgstr ""
+
+msgid "No blog posts available yet."
+msgstr ""
+
+msgid "Portal"
+msgstr ""
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Frequently Asked Questions"
+msgstr ""
+
+msgid "No FAQs available yet."
+msgstr ""
+
+msgid "Related Posts"
+msgstr ""
+
+msgid "Add description"
+msgstr ""
+
+msgid "教習、宿泊の予約"
+msgstr ""
+
+msgid "求人情報投稿"
+msgstr ""
+
+msgid "詳細を見る"
+msgstr ""
+
+# Footer Legal Links
+msgid "Terms of Use"
+msgstr ""
+
+msgid "Privacy"
+msgstr ""
+
 msgid "Campaign"
 msgstr ""

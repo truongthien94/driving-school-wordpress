@@ -116,9 +116,6 @@ msgid "Close"
 msgstr "Close"
 
 # Additional Navigation Items
-msgid "portal"
-msgstr "Portal"
-
 msgid "Portal"
 msgstr "Portal"
 
@@ -298,3 +295,32 @@ msgstr "This campaign could not be found."
 
 msgid "Campaign content not available."
 msgstr "Campaign content not available."
+
+# Additional UI Elements
+msgid "BLOG and NEWS"
+msgstr "BLOG and NEWS"
+
+msgid "No blog posts available yet."
+msgstr "No blog posts available yet."
+
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+msgid "No FAQs available yet."
+msgstr "No FAQs available yet."
+
+msgid "Related Posts"
+msgstr "Related Posts"
+
+msgid "Add description"
+msgstr "Add description"
+
+msgid "教習、宿泊の予約"
+msgstr "Course and Accommodation Reservation"
+
+msgid "求人情報投稿"
+msgstr "Job Information Posting"
+
+msgid "詳細を見る"
+msgstr "View Details"
+
