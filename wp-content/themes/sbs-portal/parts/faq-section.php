@@ -21,7 +21,7 @@ $faq_groups = sbs_get_faq_groups();
     <!-- FAQ Title Bar -->
     <div class="faq-title-bar ">
         <div class="faq-main-title p-3">
-            <h2>FAQ</h2>
+            <span>FAQ</span>
         </div>
         <div class="faq-japanese-title d-xl-none align-self-center">
             よくある質問
