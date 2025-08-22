@@ -76,13 +76,13 @@ if (!defined('SBS_FAQ_ITEM_STYLES_PRINTED')) {
             <div class="faq-answer pt-2 d-flex flex-column gap-2">
                 <?php if (!empty($question['answer'])): ?>
                     <div class="answer-brief">
-                        <?php echo wp_kses_post($question['answer']); ?>
+                        <?php echo wpautop($question['answer']); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (!empty($question['detail'])): ?>
                     <div class="answer-detail">
-                        <?php echo wp_kses_post($question['detail']); ?>
+                        <?php echo wpautop($question['detail']); ?>
                     </div>
                 <?php endif; ?>
             </div>

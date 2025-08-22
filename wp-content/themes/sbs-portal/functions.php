@@ -1270,8 +1270,6 @@ function sbs_hero_item_meta_box_callback($post)
         'building' => 'Building Icon',
         'calendar' => 'Calendar Icon',
         'briefcase' => 'Briefcase Icon',
-        'car' => 'Car Icon',
-        'star' => 'Star Icon'
     );
 
 ?>

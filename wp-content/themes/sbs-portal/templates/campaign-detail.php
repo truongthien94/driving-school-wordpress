@@ -95,7 +95,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
             <div class="row g-4">
                 <!-- Left: Main Article -->
                 <div class="col-md-9">
-                    <div class="bg-white p-4 rounded-3">
+                    <div class="bg-white p-4 rounded-3" style="border: 1px solid #EAECEE;">
                         <div class="campaign-detail-img mb-4">
                             <img src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($post_title); ?>" />
                         </div>

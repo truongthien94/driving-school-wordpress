@@ -38,8 +38,8 @@ $show_navigation = isset($args['show_navigation']) ? $args['show_navigation'] : 
                 </a>
             </div>
             <div class="header-section-title">
-                <h4><?php echo esc_html($title); ?></h4>
-                <h1 class="fst-italic" style="white-space: nowrap;"><?php echo esc_html($subtitle); ?></h1>
+                <div class="header-section-title-text"><?php echo esc_html($title); ?></div>
+                <div class="header-section-title-subtitle" style="white-space: nowrap;"><?php echo esc_html($subtitle); ?></div>
             </div>
         </div>
     </div>
