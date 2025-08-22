@@ -82,10 +82,10 @@ if (!$post_data) {
         error_log('Blog Detail - No post found, using fallback data');
     }
 
-    $post_title = !empty($post_title_param) ? urldecode($post_title_param) : 'ブログ記事';
+    $post_title = !empty($post_title_param) ? urldecode($post_title_param) : __('Blog Article', 'sbs-portal');
     $post_date = date('Y-m-d');
-    $post_content = 'この記事の内容は準備中です。詳細情報は後日公開予定です。';
-    $post_excerpt = '詳細情報は後日公開予定です。';
+    $post_content = __('This article content is being prepared. Detailed information will be published later.', 'sbs-portal');
+    $post_excerpt = __('Detailed information will be published later.', 'sbs-portal');
 }
 
 // Get related blog posts for sidebar
@@ -121,7 +121,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     <?php
     // Use reusable header section with blog detail specific parameters
     get_template_part('parts/header-section', null, array(
-        'title' => 'ブログ',
+        'title' => __('Blog', 'sbs-portal'),
         'subtitle' => 'BLOG and NEWS',
         'show_navigation' => true
     ));
@@ -129,7 +129,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
     <!-- Blog Detail Content Section -->
     <section class="blog-detail-content">
-        <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array(array('label' => 'ブログ一覧', 'url' => home_url('/blog/')), array('label' => $post_title)))); ?>
+        <?php get_template_part('parts/breadcrumbs-section', null, array('breadcrumb_items' => array(array('label' => __('Blog List', 'sbs-portal'), 'url' => home_url('/blog/')), array('label' => $post_title)))); ?>
         <div class="row g-4">
             <!-- Left Column: Main Article Content (2/3) -->
             <div class="col-lg-8">
@@ -155,7 +155,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                     <div class="blog-detail-content-text">
                         <!-- Course Information Section -->
                         <div class="content-section mb-4">
-                            <h2 class="content-heading">コース情報</h2>
+                            <h2 class="content-heading"><?php _e('Course Information', 'sbs-portal'); ?></h2>
                             <div class="content-body">
                                 <?php
                                 // Render full post content with WordPress filters to keep formatting
@@ -172,12 +172,12 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
                         <!-- Lesson List Section -->
                         <div class="content-section">
-                            <h2 class="content-heading">レッスン一覧</h2>
+                            <h2 class="content-heading"><?php _e('Lesson List', 'sbs-portal'); ?></h2>
                             <div class="content-body">
                                 <?php if ($post_excerpt): ?>
                                     <p><?php echo esc_html($post_excerpt); ?></p>
                                 <?php else: ?>
-                                    <p>レッスンの詳細情報は準備中です。</p>
+                                    <p><?php _e('Lesson details are being prepared.', 'sbs-portal'); ?></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -260,7 +260,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                             else:
                                 ?>
                                 <div class="no-related-posts">
-                                    <p>関連記事はありません。</p>
+                                    <p><?php _e('No related articles found.', 'sbs-portal'); ?></p>
                                 </div>
                         <?php
                             endif;
@@ -271,7 +271,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                     <!-- View All Button -->
                     <div class="view-all-section">
                         <a class="sbs-btn-outline-sm text-decoration-none" href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog/')); ?>">
-                            <span>すべて表示</span>
+                            <span><?php _e('Show All', 'sbs-portal'); ?></span>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
                             </svg>

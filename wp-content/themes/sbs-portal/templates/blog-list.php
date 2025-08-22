@@ -139,7 +139,7 @@ if (!$blog_posts->have_posts()) {
                                 <span class="page-info">
                                     <?php
                                     $max_pages = $use_mock_data ? 1 : ($blog_posts->max_num_pages ?: 1);
-                                    echo $paged . '/' . $max_pages . 'ページ';
+                                    echo $paged . '/' . $max_pages . __('page', 'sbs-portal');
                                     ?>
                                 </span>
                             </div>
@@ -191,7 +191,7 @@ if (!$blog_posts->have_posts()) {
 
                 <?php else: ?>
                     <div class="no-blog-posts text-center py-5">
-                        <p class="text-muted">現在、ブログ投稿はありません。</p>
+                        <p class="text-muted"><?php _e('Currently, there are no blog posts.', 'sbs-portal'); ?></p>
                     </div>
                 <?php endif; ?>
             </div>

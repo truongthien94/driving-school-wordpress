@@ -257,3 +257,44 @@ msgstr "Kategori Kampanye"
 
 msgid "No Related Campaigns Found."
 msgstr "Tidak Ada Kampanye Terkait Ditemukan."
+
+# Blog Detail Template
+msgid "Blog Article"
+msgstr "Artikel Blog"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "Konten artikel ini sedang disiapkan. Informasi detail akan dipublikasikan nanti."
+
+msgid "Detailed information will be published later."
+msgstr "Informasi detail akan dipublikasikan nanti."
+
+msgid "Course Information"
+msgstr "Informasi Kursus"
+
+msgid "Lesson List"
+msgstr "Daftar Pelajaran"
+
+msgid "Lesson details are being prepared."
+msgstr "Detail pelajaran sedang disiapkan."
+
+msgid "Related Articles"
+msgstr "Artikel Terkait"
+
+msgid "No related articles found."
+msgstr "Tidak ada artikel terkait ditemukan."
+
+msgid "Currently, there are no blog posts."
+msgstr "Saat ini tidak ada posting blog."
+
+msgid "page"
+msgstr "halaman"
+
+# Campaign Detail Template
+msgid "Campaign Not Found"
+msgstr "Kampanye Tidak Ditemukan"
+
+msgid "This campaign could not be found."
+msgstr "Kampanye ini tidak dapat ditemukan."
+
+msgid "Campaign content not available."
+msgstr "Konten kampanye tidak tersedia."

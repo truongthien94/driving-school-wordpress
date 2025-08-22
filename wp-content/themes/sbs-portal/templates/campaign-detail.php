@@ -54,12 +54,12 @@ if (!$campaign_post) {
         $mock_post = $mock_campaign_posts[0];
         $post_title = $mock_post['title'];
         $post_date = $mock_post['date'];
-        $post_content = $mock_post['content'] ?? 'Campaign content not available.';
+        $post_content = $mock_post['content'] ?? __('Campaign content not available.', 'sbs-portal');
         $featured_image = get_template_directory_uri() . '/assets/images/' . $mock_post['featured_image'];
     } else {
-        $post_title = 'Campaign Not Found';
+        $post_title = __('Campaign Not Found', 'sbs-portal');
         $post_date = date('Y-m-d');
-        $post_content = 'This campaign could not be found.';
+        $post_content = __('This campaign could not be found.', 'sbs-portal');
         $featured_image = get_template_directory_uri() . '/assets/images/campaign-detail.png';
     }
 } else {
@@ -84,7 +84,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     // Use reusable header section with campaign specific parameters
     get_template_part('parts/header-section', null, array(
         'title' => __('Campaign Information', 'sbs-portal'),
-        'subtitle' => 'Campaign',
+        'subtitle' => __('Campaign', 'sbs-portal'),
         'show_navigation' => true
     ));
     ?>

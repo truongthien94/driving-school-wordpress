@@ -257,3 +257,44 @@ msgstr "Campaign Category"
 
 msgid "No Related Campaigns Found."
 msgstr "No Related Campaigns Found."
+
+# Blog Detail Template
+msgid "Blog Article"
+msgstr "Blog Article"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "This article content is being prepared. Detailed information will be published later."
+
+msgid "Detailed information will be published later."
+msgstr "Detailed information will be published later."
+
+msgid "Course Information"
+msgstr "Course Information"
+
+msgid "Lesson List"
+msgstr "Lesson List"
+
+msgid "Lesson details are being prepared."
+msgstr "Lesson details are being prepared."
+
+msgid "Related Articles"
+msgstr "Related Articles"
+
+msgid "No related articles found."
+msgstr "No related articles found."
+
+msgid "Currently, there are no blog posts."
+msgstr "Currently, there are no blog posts."
+
+msgid "page"
+msgstr "page"
+
+# Campaign Detail Template
+msgid "Campaign Not Found"
+msgstr "Campaign Not Found"
+
+msgid "This campaign could not be found."
+msgstr "This campaign could not be found."
+
+msgid "Campaign content not available."
+msgstr "Campaign content not available."

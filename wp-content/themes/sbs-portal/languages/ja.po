@@ -257,3 +257,44 @@ msgstr "キャンペーンカテゴリー"
 
 msgid "No Related Campaigns Found."
 msgstr "関連キャンペーンはありません。"
+
+# Blog Detail Template
+msgid "Blog Article"
+msgstr "ブログ記事"
+
+msgid "This article content is being prepared. Detailed information will be published later."
+msgstr "この記事の内容は準備中です。詳細情報は後日公開予定です。"
+
+msgid "Detailed information will be published later."
+msgstr "詳細情報は後日公開予定です。"
+
+msgid "Course Information"
+msgstr "コース情報"
+
+msgid "Lesson List"
+msgstr "レッスン一覧"
+
+msgid "Lesson details are being prepared."
+msgstr "レッスンの詳細情報は準備中です。"
+
+msgid "Related Articles"
+msgstr "関連記事"
+
+msgid "No related articles found."
+msgstr "関連記事はありません。"
+
+msgid "Currently, there are no blog posts."
+msgstr "現在、ブログ投稿はありません。"
+
+msgid "page"
+msgstr "ページ"
+
+# Campaign Detail Template
+msgid "Campaign Not Found"
+msgstr "キャンペーンが見つかりません"
+
+msgid "This campaign could not be found."
+msgstr "このキャンペーンは見つかりませんでした。"
+
+msgid "Campaign content not available."
+msgstr "キャンペーンの内容は利用できません。"
