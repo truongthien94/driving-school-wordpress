@@ -107,7 +107,18 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                         <div class="mb-4">
                             <h5 class="fw-bold">コース情報</h5>
                             <div class="campaign-text-block">
-                                <?php echo apply_filters('the_content', $post_content); ?>
+                                <?php
+                                if ($campaign_post) {
+                                    // If we have a real post object, set up post data and use the_content()
+                                    // which handles <!--more--> tag and other formatting correctly.
+                                    setup_postdata($campaign_post);
+                                    the_content();
+                                    wp_reset_postdata();
+                                } else {
+                                    // For mock data, we just apply the filter as before.
+                                    echo apply_filters('the_content', $post_content);
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
