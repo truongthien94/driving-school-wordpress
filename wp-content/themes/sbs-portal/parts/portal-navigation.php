@@ -20,7 +20,7 @@ $mock_data = sbs_get_mock_data();
 <div class="mega-search-box">
     <div class="portal-sticky nav-section">
         <div class="d-flex align-items-center justify-content-end">
-            <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 navigation-items">
+            <ul class="d-flex list-unstyled align-items-center mb-2 mb-lg-0 navigation-items gap-0">
                 <li class="nav-item d-none d-xl-flex">
                     <a class="nav-link active" aria-current="page" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
                         <?php _e('Greeting', 'sbs-portal'); ?>
@@ -77,7 +77,7 @@ $mock_data = sbs_get_mock_data();
                 </li>
                 <li class="nav-item">
                     <nav class="navbar">
-                        <div class="container-fluid">
+                        <div class="container-navbar">
                             <button class="navbar-toggler btn-custom-nav p-2 d-flex gap-2" type="button"
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                                 <span class="d-none d-xl-flex align-items-center"><?php _e('Menu', 'sbs-portal'); ?></span>

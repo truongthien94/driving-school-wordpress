@@ -24,7 +24,7 @@ $show_navigation = isset($args['show_navigation']) ? $args['show_navigation'] : 
 <section class="header-section">
     <?php if ($show_navigation): ?>
         <div class="hero-navigation row-gap-0 p-0 row py-4 flex justify-content-end">
-            <div class="col-xl-6">
+            <div class="col-xl-6 navigation-container">
                 <?php get_template_part('parts/portal-navigation'); ?>
             </div>
         </div>

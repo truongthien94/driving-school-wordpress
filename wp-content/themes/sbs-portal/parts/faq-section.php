@@ -18,19 +18,7 @@ $faq_groups = sbs_get_faq_groups();
 ?>
 
 <div id="faq-section" class="faq-section position-relative">
-    <!-- FAQ Title Bar -->
-    <!-- <div class="faq-title-bar ">
-        <div class="faq-main-title p-3">
-            <span><?php _e('FAQ', 'sbs-portal'); ?></span>
-        </div>
-        <div class="faq-japanese-title d-xl-none align-self-center">
-            <?php _e('Frequently Asked Questions', 'sbs-portal'); ?>
-        </div>
-        <div class="faq-vertical-text d-none d-xl-block align-self-end">
-            <?php _e('Frequently Asked Questions', 'sbs-portal'); ?>
-        </div>
-    </div> -->
-    <div class="faq-title-bar ">
+    <div class="faq-title-bar">
         <div class="faq-main-title p-3">
             <span>FAQ</span>
         </div>

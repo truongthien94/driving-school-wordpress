@@ -24,15 +24,13 @@ if (!defined('ABSPATH')) {
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
-        <div class="hero-container row py-4 flex justify-content-end">
-            <div class="col-xl-6">
-            </div>
+        <div class="hero-container z-10000 row py-4 flex justify-content-end">
             <div class="col-xl-6">
                 <?php get_template_part('parts/portal-navigation'); ?>
             </div>
         </div>
 
-        <div class="row hero-container ">
+        <div class="row hero-container z-2">
             <div class="col-xl-6 image-container">
                 <div class="hero-left-column d-flex align-items-center justify-content-center">
                     <div class="hero-circle-image position-absolute">
@@ -165,7 +163,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <div class="row hero-container row-gap-0 mb-5">
+        <div class="row hero-container z-2 row-gap-0 mb-5">
             <?php
             // Get all hero items for the bottom row (items 4-7)
             $all_hero_items = sbs_get_hero_items(7);
@@ -548,14 +546,14 @@ if (!defined('ABSPATH')) {
 
     <!-- SECTION 3: Blog Section -->
     <section class="sbs-blog-section" aria-label="Latest Blog Posts and News">
-        <div class="hero-container">
+        <div class="hero-container z-2">
             <?php get_template_part('parts/blog-section'); ?>
         </div>
     </section>
 
     <!-- SECTION 4: FAQ Section -->
     <section class="sbs-faq-section" aria-label="Frequently Asked Questions">
-        <div class="hero-container">
+        <div class="hero-container z-2">
             <?php get_template_part('parts/faq-section'); ?>
         </div>
     </section>
