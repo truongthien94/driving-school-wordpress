@@ -155,12 +155,12 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
                         <div class="related-posts-grid campaign-related-grid">
                             <?php
-                            // Get 3 latest campaigns except current and render like blog related
+                            // Get 20 latest campaigns except current and render like blog related
                             $current_campaign_id = $campaign_post ? $campaign_post->ID : 0;
                             $rel_q = new WP_Query(array(
                                 'post_type' => 'campaign',
                                 'post_status' => 'publish',
-                                'posts_per_page' => 3,
+                                'posts_per_page' => 20,
                                 'post__not_in' => $current_campaign_id ? array($current_campaign_id) : array(),
                                 'orderby' => 'date',
                                 'order' => 'DESC',
