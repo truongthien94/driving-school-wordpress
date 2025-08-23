@@ -324,3 +324,16 @@ msgstr "Job Information Posting"
 msgid "詳細を見る"
 msgstr "View Details"
 
+# Campaign Date Labels
+msgid "From"
+msgstr "From"
+
+msgid "To"
+msgstr "To"
+
+msgid "Campaign Period"
+msgstr "Campaign Period"
+
+msgid "Active Period"
+msgstr "Active Period"
+

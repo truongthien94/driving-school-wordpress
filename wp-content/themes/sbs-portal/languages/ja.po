@@ -324,3 +324,15 @@ msgstr "求人情報投稿"
 msgid "詳細を見る"
 msgstr "詳細を見る"
 
+msgid "From"
+msgstr "開始日"
+
+msgid "To"
+msgstr "終了日"
+
+msgid "Campaign Period"
+msgstr "キャンペーン期間"
+
+msgid "Active Period"
+msgstr "実施期間"
+

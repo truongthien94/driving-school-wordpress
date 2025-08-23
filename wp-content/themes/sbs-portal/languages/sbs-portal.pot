@@ -353,3 +353,21 @@ msgstr ""
 
 msgid "Campaign"
 msgstr ""
+
+#: templates/campaign-detail.php:111
+msgid "To"
+msgstr ""
+
+#: parts/portal-navigation.php:26
+msgid "Greeting"
+msgstr ""
+
+# Campaign Date Labels
+msgid "From"
+msgstr ""
+
+msgid "Campaign Period"
+msgstr ""
+
+msgid "Active Period"
+msgstr ""

@@ -324,3 +324,16 @@ msgstr "Posting Informasi Lowongan"
 msgid "詳細を見る"
 msgstr "Lihat Detail"
 
+# Campaign Date Labels
+msgid "From"
+msgstr "Dari"
+
+msgid "To"
+msgstr "Sampai"
+
+msgid "Campaign Period"
+msgstr "Periode Kampanye"
+
+msgid "Active Period"
+msgstr "Periode Aktif"
+

@@ -102,6 +102,23 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
                         <div class="mb-4">
                             <h4 class="fw-bold"><?php echo esc_html($post_title); ?></h4>
+                            <?php
+                            if ($campaign_post) {
+                                $start_date = get_post_meta($campaign_post->ID, '_campaign_start_date', true);
+                                $end_date = get_post_meta($campaign_post->ID, '_campaign_end_date', true);
+
+                                if ($start_date || $end_date) {
+                                    echo '<div class="campaign-active-period">';
+                                    if ($start_date) {
+                                        echo '<span>' . __('From', 'sbs-portal') . ' ' . esc_html($start_date) . ' ' . '</span>';
+                                    }
+                                    if ($end_date) {
+                                        echo '<span>' . __('To', 'sbs-portal') . ' ' . esc_html($end_date) . '</span>';
+                                    }
+                                    echo '</div>';
+                                }
+                            }
+                            ?>
                         </div>
 
                         <div class="mb-4">
@@ -112,7 +129,15 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                     // If we have a real post object, set up post data and use the_content()
                                     // which handles <!--more--> tag and other formatting correctly.
                                     setup_postdata($campaign_post);
+
+                                    // Force full content display, ignoring the <!--more--> tag for splitting
+                                    global $more;
+                                    $temp_more = $more;
+                                    $more = 1;
+
                                     the_content();
+
+                                    $more = $temp_more;
                                     wp_reset_postdata();
                                 } else {
                                     // For mock data, we just apply the filter as before.

@@ -226,7 +226,7 @@ body {
     flex-shrink: 0;
 }
 
-.navigation-container{
+.navigation-container {
     padding: 0 40px;
 }
 
@@ -253,7 +253,7 @@ body {
     justify-content: center;
 }
 
-.nav-section .nav-link{
+.nav-section .nav-link {
     padding: 0;
 }
 
