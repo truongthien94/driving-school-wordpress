@@ -89,14 +89,18 @@ body {
 .navigation-items {
     display: flex;
     align-items: center;
-    gap: 26px;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    /* Responsive gap: 16px to 32px */
     margin: 0;
-    padding: 0;
+    /* Add horizontal padding */
     list-style: none;
     flex-wrap: nowrap;
     white-space: nowrap;
     position: relative;
     z-index: 1002;
+    justify-content: space-between;
+    /* Distribute items evenly */
+    width: 100%;
 }
 
 /* Navigation Item Base Styles */
@@ -118,12 +122,14 @@ body {
 .nav-link {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    /* Responsive font size */
     line-height: 1.5em;
     text-align: center;
     color: #262626;
     text-decoration: none;
-    padding: 0;
+    padding: clamp(0.375rem, 1.5vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem);
+    /* Responsive padding */
     margin: 0;
     background: transparent;
     border: none;
@@ -253,7 +259,6 @@ body {
 /* Responsive Navigation Styles */
 @media (max-width: 1199.98px) {
     .mega-search-box {
-        padding: 20px 16px;
         height: auto;
         min-height: 64px;
         align-items: center;
@@ -261,12 +266,15 @@ body {
     }
 
     .navigation-items {
-        gap: 10px;
+        gap: clamp(0.5rem, 1.5vw, 1rem);
+        /* Smaller gap on tablets */
         flex-wrap: nowrap;
-        justify-content: flex-end;
+        justify-content: space-between;
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        padding: 0 0.75rem;
+        /* Reduce padding on tablets */
     }
 
     .navigation-items::-webkit-scrollbar {
@@ -285,19 +293,45 @@ body {
 
 @media (max-width: 768px) {
     .mega-search-box {
-        padding: 15px 12px;
         gap: 15px;
     }
 
     .navigation-items {
-        gap: 5px;
+        gap: clamp(0.25rem, 1vw, 0.5rem);
+        /* Very small gap on mobile */
         flex-wrap: nowrap;
         overflow-x: auto;
+        justify-content: flex-start;
+        /* Left align on mobile for easier scrolling */
+        padding: 0 0.5rem;
+        /* Minimal padding on mobile */
     }
 
     .nav-link {
-        font-size: 14px;
+        font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+        /* Smaller font on mobile */
         white-space: nowrap;
+        padding: 0.375rem 0.5rem;
+        /* Compact padding on mobile */
+    }
+
+    /* Better touch targets for mobile */
+    .nav-item {
+        min-height: 44px;
+        /* iOS minimum touch target */
+        display: flex;
+        align-items: center;
+    }
+
+    /* Improve dropdown positioning on mobile */
+    .nav-item.dropdown .dropdown-menu {
+        position: fixed !important;
+        top: auto !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        transform: none !important;
+        width: auto !important;
+        margin-top: 0.5rem;
     }
 
     .dropdown-text {
@@ -1251,13 +1285,6 @@ body.mega-menu-open {
     flex-direction: column;
 }
 
-.portal-box-container {
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 100px;
-}
-
 .hero-overlay {
     position: absolute;
     top: 0;
@@ -1272,7 +1299,6 @@ body.mega-menu-open {
 /* ROW 1: Hero Container - 50/50 Split Layout */
 .hero-container {
     z-index: 2;
-    width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -1310,13 +1336,6 @@ body.mega-menu-open {
     white-space: nowrap;
 }
 
-.hero-navigation {
-    z-index: 10000;
-    width: 100%;
-    float: right;
-    margin: 0 auto;
-}
-
 .hero-circle-image img {
     width: 100%;
     height: 100%;
@@ -1346,7 +1365,23 @@ body.mega-menu-open {
 }
 
 .btn-custom-nav span {
-    font-size: 16px;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    /* Responsive font size */
+}
+
+/* Enhanced responsive styles for navigation button */
+.btn-custom-nav {
+    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem);
+    gap: clamp(0.25rem, 1vw, 0.5rem);
+    min-width: max-content;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-nav:hover {
+    background-color: #B81A01;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(221, 31, 1, 0.2);
 }
 
 /* Brand Message - Position below images */
@@ -2608,10 +2643,6 @@ body.admin-bar .faq-title-bar {
         border-radius: 0;
     }
 
-    .portal-box-container {
-        padding: 0;
-    }
-
     .hero-logo-strip {
         width: 350px;
         height: 70px;
@@ -2732,11 +2763,10 @@ body.admin-bar .faq-title-bar {
     }
 
     .hero-container {
-        gap: 20px;
         flex-direction: column;
         min-height: auto;
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .hero-left-column {
@@ -2760,11 +2790,6 @@ body.admin-bar .faq-title-bar {
         background-color: transparent;
         border-radius: 0;
     }
-
-    .portal-box-container {
-        padding: 0;
-    }
-
 
     .hero-logo-strip {
         width: 250px;
@@ -2930,7 +2955,6 @@ body.admin-bar .faq-title-bar {
 @media (max-width: 480px) {
     .hero-container {
         gap: 15px;
-        min-height: 400px;
     }
 
     .hero-left-column {
@@ -2948,11 +2972,6 @@ body.admin-bar .faq-title-bar {
         background-color: transparent;
         border-radius: 0;
     }
-
-    .portal-box-container {
-        padding: 0;
-    }
-
 
     .hero-logo-strip {
         width: 200px;
@@ -3344,6 +3363,8 @@ body.admin-bar .faq-title-bar {
 .text-truncate-lines-5 {
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
+    /* Standard property for compatibility */
     /* Giới hạn tối đa 5 dòng */
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -3516,7 +3537,7 @@ body.admin-bar .faq-title-bar {
     z-index: 9999;
 }
 
-.list-group {}
+/* Removed empty ruleset for .list-group */
 
 /* Enhanced Language Options */
 .language-option {

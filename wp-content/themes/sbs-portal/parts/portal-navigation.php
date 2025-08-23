@@ -20,7 +20,7 @@ $mock_data = sbs_get_mock_data();
 <div class="mega-search-box">
     <div class="portal-sticky nav-section">
         <div class="d-flex align-items-center justify-content-end">
-            <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 gap-2 gap-xxl-4">
+            <ul class="d-flex list-unstyled align-items-center ms-auto mb-2 mb-lg-0 navigation-items">
                 <li class="nav-item d-none d-xl-flex">
                     <a class="nav-link active" aria-current="page" href="https://www.sbs-drivingschool.co.jp/sbsjdgk/school">
                         <?php _e('Greeting', 'sbs-portal'); ?>
@@ -268,5 +268,4 @@ $mock_data = sbs_get_mock_data();
             </ul>
         </div>
     </div>
-
 </div>

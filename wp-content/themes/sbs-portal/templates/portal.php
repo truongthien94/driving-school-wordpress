@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
         <!-- Background Overlay -->
         <div class="hero-overlay"></div>
 
-        <div class="hero-navigation hero-container row py-4 flex justify-content-end">
+        <div class="hero-container row py-4 flex justify-content-end">
             <div class="col-xl-6">
             </div>
             <div class="col-xl-6">
@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <div class="row hero-container row-gap-0 p-0">
+        <div class="row hero-container ">
             <div class="col-xl-6 image-container">
                 <div class="hero-left-column d-flex align-items-center justify-content-center">
                     <div class="hero-circle-image position-absolute">
@@ -165,7 +165,7 @@ if (!defined('ABSPATH')) {
             </div>
         </div>
 
-        <div class="row portal-box-container hero-container row-gap-0 p-0 ms-1 mb-5">
+        <div class="row hero-container row-gap-0 mb-5">
             <?php
             // Get all hero items for the bottom row (items 4-7)
             $all_hero_items = sbs_get_hero_items(7);
