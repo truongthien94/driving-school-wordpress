@@ -198,7 +198,7 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Content Section */
 .blog-list-content {
-    padding: 60px 40px 60px;
+    padding: 60px 28px 60px;
     min-height: calc(100vh - 284px - 278px);
     position: relative;
 }
@@ -780,20 +780,6 @@ Optimized for Bootstrap 5 integration
     color: #FFFFFF;
     margin: 34px 0 0 40px;
 
-}
-
-.header-section-title-text {
-    display: inline;
-    font-weight: 600;
-    font-style: Semi Bold;
-}
-
-.header-section-title-subtitle {
-    display: inline;
-    font-family: Cormorant Garamond;
-    font-weight: 700;
-    font-style: Italic;
-    font-size: 52px;
 }
 
 .header-section-right .hero-circle-2 {

@@ -17,7 +17,7 @@ Optimized for Bootstrap 5 integration
 
 /* Blog Detail Content Section */
 .blog-detail-content {
-    padding: 60px 40px 60px;
+    padding: 60px 28px 60px;
     min-height: calc(100vh - 284px - 278px);
     position: relative;
 }
@@ -345,9 +345,6 @@ Optimized for Bootstrap 5 integration
 
 /* Responsive Design for Blog Detail */
 @media (max-width: 1200px) {
-    .blog-detail-content {
-        padding: 40px 20px 40px;
-    }
 
     .blog-detail-article {
         padding: 22px;
@@ -359,10 +356,6 @@ Optimized for Bootstrap 5 integration
 }
 
 @media (max-width: 768px) {
-    .blog-detail-content {
-        padding: 40px 20px 40px;
-    }
-
     .blog-detail-article {
         padding: 24px;
         margin-bottom: 24px;
@@ -414,10 +407,6 @@ Optimized for Bootstrap 5 integration
 }
 
 @media (max-width: 576px) {
-    .blog-detail-content {
-        padding: 20px 16px 20px;
-    }
-
     .blog-detail-article {
         padding: 6px;
     }

@@ -119,18 +119,32 @@ body {
     z-index: 1003;
 }
 
+.header-section-title-text {
+    font-weight: 600;
+    font-style: Semi Bold;
+}
+
+.header-section-title-subtitle {
+    display: inline;
+    font-family: Cormorant Garamond;
+    font-weight: 700;
+    font-style: Italic;
+    font-size: 52px;
+}
+
+.header-section-title h4 {
+    display: inline;
+}
+
 /* Navigation Links - Figma Typography */
 .nav-link {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: clamp(0.875rem, 2vw, 1rem);
-    /* Responsive font size */
+    font-size: 16px;
     line-height: 1.5em;
     text-align: center;
     color: #262626;
     text-decoration: none;
-    padding: clamp(0.375rem, 1.5vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem);
-    /* Responsive padding */
     margin: 0;
     background: transparent;
     border: none;
@@ -2126,6 +2140,11 @@ body.admin-bar .faq-title-bar {
     transition: all 0.3s ease;
 }
 
+.header-section-left{
+    position: absolute;
+    top: 0;
+}
+
 .blog-detail-content {
     padding: 60px 40px 60px;
     min-height: calc(100vh - 284px - 278px);
@@ -2565,10 +2584,6 @@ body.admin-bar .faq-title-bar {
         padding: 8px;
     }
 
-    .blog-detail-content {
-        padding: 40px 20px 40px;
-    }
-
     .hero-circle-image {
         top: -30%;
         width: 350px;
@@ -2762,10 +2777,6 @@ body.admin-bar .faq-title-bar {
         min-height: auto;
     }
 
-    .blog-detail-content {
-        padding: 40px 20px 40px;
-    }
-
     .hero-container {
         flex-direction: column;
         min-height: auto;
@@ -2947,13 +2958,6 @@ body.admin-bar .faq-title-bar {
     .detail-services-column {
         grid-template-columns: 1fr;
     }
-}
-
-@media (max-width: 576px) {
-    .blog-detail-content {
-        padding: 20px 16px 20px;
-    }
-
 }
 
 /* Extra Small Screens */

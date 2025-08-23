@@ -71,10 +71,10 @@ $blog_posts = array_slice($all_blog_posts, $offset, $posts_per_page);
 
                         <!-- Blog Post Row (every 3 posts) -->
                         <?php if ($post_count === 1 || ($post_count - 1) % 3 === 0) : ?>
-                            <div class="row g-3 mb-4">
+                            <div class="row mb-4">
                             <?php endif; ?>
 
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <?php get_template_part('parts/blog-card-large', null, array('post' => $post_data)); ?>
                             </div>
 
