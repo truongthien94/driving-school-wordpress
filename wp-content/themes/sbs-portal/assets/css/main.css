@@ -3063,11 +3063,6 @@ body.admin-bar .faq-title-bar {
         height: 16px;
     }
 
-    /* Mobile responsive for popup positioning */
-    .sbs-popup.back-to-top-hidden {
-        bottom: 180px;
-    }
-
     .external-btn {
         width: 28px;
         height: 28px;
@@ -3669,8 +3664,12 @@ body.admin-bar .faq-title-bar {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .sbs-popup.back-to-top-visible {
         bottom: 220px;
+    }
+
+    .sbs-popup.back-to-top-hidden {
+        bottom: 150px;
     }
 }
