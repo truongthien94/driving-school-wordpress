@@ -337,9 +337,32 @@ msgid "Active Period"
 msgstr "実施期間"
 
 # Navigation Elements
-msgid "Terms of Service"
-msgstr "利用規約"
 
-msgid "Privacy Policy"
-msgstr "プライバシーポリシー"
+msgid "Get a free consultation"
+msgstr "無料相談"
+
+msgid "BLOG"
+msgstr "ブログ"
+
+msgid "NEWS"
+msgstr "ニュース"
+
+msgid "EVENT"
+msgstr "イベント"
+
+msgid "CAMPAIGN"
+msgstr "キャンペーン"
+
+# Blog Card Category Labels (specific for blog cards to avoid conflicts)
+msgid "Blog Category"
+msgstr "ブログ"
+
+msgid "News Category"
+msgstr "ニュース"
+
+msgid "Event Category"
+msgstr "イベント"
+
+msgid "Campaign Category Label"
+msgstr "キャンペーン"
 

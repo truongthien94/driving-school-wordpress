@@ -122,7 +122,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     // Use reusable header section with blog detail specific parameters
     get_template_part('parts/header-section', null, array(
         'title' => __('Blog', 'sbs-portal'),
-        'subtitle' => 'BLOG and NEWS',
+        'subtitle' => __('BLOG and NEWS', 'sbs-portal'),
         'show_navigation' => true
     ));
     ?>
@@ -155,7 +155,6 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                     <div class="blog-detail-content-text">
                         <!-- Course Information Section -->
                         <div class="content-section mb-4">
-                            <h2 class="content-heading"><?php _e('Course Information', 'sbs-portal'); ?></h2>
                             <div class="content-body">
                                 <?php
                                 // Render full post content with WordPress filters to keep formatting
@@ -167,18 +166,6 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                     echo apply_filters('the_content', $post_content);
                                 }
                                 ?>
-                            </div>
-                        </div>
-
-                        <!-- Lesson List Section -->
-                        <div class="content-section">
-                            <h2 class="content-heading"><?php _e('Lesson List', 'sbs-portal'); ?></h2>
-                            <div class="content-body">
-                                <?php if ($post_excerpt): ?>
-                                    <p><?php echo esc_html($post_excerpt); ?></p>
-                                <?php else: ?>
-                                    <p><?php _e('Lesson details are being prepared.', 'sbs-portal'); ?></p>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -272,9 +259,6 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                     <div class="view-all-section">
                         <a class="sbs-btn-outline-sm text-decoration-none" href="<?php echo esc_url(get_post_type_archive_link('blog') ?: home_url('/blog/')); ?>">
                             <span><?php _e('Show All', 'sbs-portal'); ?></span>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1" />
-                            </svg>
                         </a>
                     </div>
                 </div>

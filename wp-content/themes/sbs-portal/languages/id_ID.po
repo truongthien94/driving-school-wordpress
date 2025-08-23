@@ -130,7 +130,7 @@ msgstr "Ke Atas Halaman"
 
 # Additional Company Information
 msgid "Company Overview"
-msgstr "Ikhtisar Perusahaan"
+msgstr "Profil Perusahaan"
 
 msgid "History"
 msgstr "Sejarah"
@@ -143,10 +143,10 @@ msgid "Inage Details"
 msgstr "Detail Inage"
 
 msgid "SBS Auto"
-msgstr "SBS Auto"
+msgstr "SBS Otomotif"
 
 msgid "Matching System"
-msgstr "Sistem Pencocokan"
+msgstr "Sistem Matching"
 
 # WordPress Default
 msgid "Primary Menu"
@@ -338,9 +338,32 @@ msgid "Active Period"
 msgstr "Periode Aktif"
 
 # Navigation Elements
-msgid "Terms of Service"
-msgstr "Ketentuan Layanan"
 
-msgid "Privacy Policy"
-msgstr "Kebijakan Privasi"
+msgid "Get a free consultation"
+msgstr "Dapatkan konsultasi gratis"
+
+msgid "BLOG"
+msgstr "BLOG"
+
+msgid "NEWS"
+msgstr "BERITA"
+
+msgid "EVENT"
+msgstr "ACARA"
+
+msgid "CAMPAIGN"
+msgstr "KAMPANYE"
+
+# Blog Card Category Labels (specific for blog cards to avoid conflicts)
+msgid "Blog Category"
+msgstr "Blog"
+
+msgid "News Category"
+msgstr "Berita"
+
+msgid "Event Category"
+msgstr "Acara"
+
+msgid "Campaign Category Label"
+msgstr "Kampanye"
 

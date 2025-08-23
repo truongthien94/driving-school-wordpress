@@ -375,3 +375,31 @@ msgstr ""
 
 msgid "Privacy Policy"
 msgstr ""
+
+msgid "Get a free consultation"
+msgstr ""
+
+msgid "BLOG"
+msgstr ""
+
+msgid "NEWS"
+msgstr ""
+
+msgid "EVENT"
+msgstr ""
+
+msgid "CAMPAIGN"
+msgstr ""
+
+# Blog Card Category Labels (specific for blog cards to avoid conflicts)
+msgid "Blog Category"
+msgstr ""
+
+msgid "News Category"
+msgstr ""
+
+msgid "Event Category"
+msgstr ""
+
+msgid "Campaign Category Label"
+msgstr ""

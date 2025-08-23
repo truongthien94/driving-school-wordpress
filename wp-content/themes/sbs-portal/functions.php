@@ -136,7 +136,7 @@ function sbs_fix_image_upload_limits()
 {
     // Increase memory limit for image processing
     if (function_exists('ini_set')) {
-        @ini_set('memory_limit', '512M');
+        @ini_set('memory_limit', '1024M');
         @ini_set('max_execution_time', 300);
         @ini_set('max_input_time', 300);
     }
@@ -167,6 +167,7 @@ add_filter('upload_size_limit', 'sbs_filter_upload_size_limit', 99);
 /**
  * Increase image quality and disable compression
  */
+/*
 function sbs_improve_image_quality($quality, $mime_type)
 {
     // Set high quality for JPEG images
@@ -183,7 +184,17 @@ add_filter('wp_editor_set_quality', 'sbs_improve_image_quality', 10, 2);
 add_filter('jpeg_quality', function () {
     return 95;
 });
+*/
 
+
+/**
+ * Force GD library for image editing to prevent Imagick issues.
+ */
+function sbs_force_gd_image_editor($editors)
+{
+    return array('WP_Image_Editor_GD', 'WP_Image_Editor_Imagick');
+}
+add_filter('wp_image_editors', 'sbs_force_gd_image_editor');
 
 /**
  * Disable WordPress automatic image resizing for large images (the "-scaled" images).
@@ -4843,3 +4854,14 @@ function sbs_api_get_campaigns_status(WP_REST_Request $request)
 
     return rest_ensure_response($status_data);
 }
+
+/**
+ * Debug: Disable intermediate image generation to test uploads.
+ * This can help determine if the error is due to resource limits during resizing.
+ * To use, uncomment the add_filter line below.
+ */
+function sbs_disable_intermediate_image_sizes($sizes)
+{
+    return [];
+}
+// add_filter('intermediate_image_sizes_advanced', 'sbs_disable_intermediate_image_sizes');

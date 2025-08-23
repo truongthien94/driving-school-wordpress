@@ -122,7 +122,7 @@ if (!defined('ABSPATH')) {
                                     <?php echo sbs_get_icon('car'); ?>
                                 </div>
                                 <div class="box-info flex-grow-1">
-                                    <h3 class="box-title mb-1"><?php _e('SBS Auto', 'sbs-portal'); ?></h3>
+                                    <h3 class="box-title mb-1"><?php _e('SBS Automotive', 'sbs-portal'); ?></h3>
                                     <p class="box-description mb-0"><?php _e('Add description', 'sbs-portal'); ?></p>
                                 </div>
                             </div>

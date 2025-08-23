@@ -200,11 +200,11 @@ $mock_data = sbs_get_mock_data();
                                                 </div>
                                             </div>
 
-                                            <!-- SBS Auto Section -->
+                                            <!-- SBS Automotive Section -->
                                             <div class="mega-nav-column">
                                                 <div class="mega-nav-section">
                                                     <a class="mega-section-title hover-link" href="https://www.sbs-drivingschool.co.jp/sbsjdgk">
-                                                        <?php _e('SBS Auto', 'sbs-portal'); ?>
+                                                        <?php _e('SBS Automotive', 'sbs-portal'); ?>
                                                     </a>
 
                                                     <ul class="mega-nav-list">

@@ -71,11 +71,28 @@ if (!empty($post['id'])) {
         <div class="blog-card-large-meta mt-auto">
             <div class="meta-tags">
                 <?php
-                $cat_label = isset($post['category']) && $post['category'] !== '' ? $post['category'] : 'BLOG';
-                $cat_class = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $cat_label));
+                // Get category from post data and normalize it
+                $category_raw = !empty($post['category']) ? strtolower(trim($post['category'])) : 'blog';
+
+                // Map category values to translation keys (unique to avoid conflicts)
+                $category_mapping = array(
+                    'blog'     => 'Blog Category',
+                    'news'     => 'News Category',
+                    'event'    => 'Event Category',
+                    'campaign' => 'Campaign Category Label'
+                );
+
+                // Get translation key, fallback to Blog Category
+                $translation_key = isset($category_mapping[$category_raw]) ? $category_mapping[$category_raw] : 'Blog Category';
+
+                // Generate CSS class
+                $cat_class = 'category-' . $category_raw;
+
+                // Get translated label
+                $cat_label = esc_html__($translation_key, 'sbs-portal');
                 ?>
-                <span class="category-tag category-<?php echo esc_attr($cat_class); ?>">
-                    <?php echo esc_html(strtoupper($cat_label)); ?>
+                <span class="category-tag <?php echo esc_attr($cat_class); ?>">
+                    <?php echo $cat_label; ?>
                 </span>
                 <span class="date-tag">
                     <?php echo esc_html($post['date']); ?>

@@ -101,13 +101,13 @@ msgid "Terms of Use"
 msgstr "Terms of Use"
 
 msgid "Terms of Service"
-msgstr "Terms of Service"
+msgstr "Terms of Use"
 
 msgid "Privacy"
 msgstr "Privacy"
 
 msgid "Privacy Policy"
-msgstr "Privacy Policy"
+msgstr "Privacy"
 
 msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
 msgstr "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
@@ -143,7 +143,7 @@ msgid "Inage Details"
 msgstr "Inage Details"
 
 msgid "SBS Auto"
-msgstr "SBS Auto"
+msgstr "SBS Automotive"
 
 msgid "Matching System"
 msgstr "Matching System"
@@ -338,9 +338,32 @@ msgid "Active Period"
 msgstr "Active Period"
 
 # Navigation Elements
-msgid "Terms of Service"
-msgstr "Terms of Service"
 
-msgid "Privacy Policy"
-msgstr "Privacy Policy"
+msgid "Get a free consultation"
+msgstr "Get a free consultation"
+
+msgid "BLOG"
+msgstr "BLOG"
+
+msgid "NEWS"
+msgstr "NEWS"
+
+msgid "EVENT"
+msgstr "EVENT"
+
+msgid "CAMPAIGN"
+msgstr "CAMPAIGN"
+
+# Blog Card Category Labels (specific for blog cards to avoid conflicts)
+msgid "Blog Category"
+msgstr "Blog"
+
+msgid "News Category"
+msgstr "News"
+
+msgid "Event Category"
+msgstr "Event"
+
+msgid "Campaign Category Label"
+msgstr "Campaign"
 

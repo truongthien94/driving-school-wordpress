@@ -49,7 +49,7 @@ $blog_posts = array_slice($all_blog_posts, $offset, $posts_per_page);
         // Use reusable header section with blog-specific parameters
         get_template_part('parts/header-section', null, array(
             'title' => __('Blog', 'sbs-portal'),
-            'subtitle' => 'BLOG and NEWS',
+            'subtitle' => __('BLOG and NEWS', 'sbs-portal'),
             'show_navigation' => true
         ));
         ?>
