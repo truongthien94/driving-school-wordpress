@@ -737,20 +737,6 @@ Optimized for Bootstrap 5 integration
 
 }
 
-.header-section-title-text {
-    display: inline;
-    font-weight: 600;
-    font-style: Semi Bold;
-}
-
-.header-section-title-subtitle {
-    display: inline;
-    font-family: Cormorant Garamond;
-    font-weight: 700;
-    font-style: Italic;
-    font-size: 52px;
-}
-
 .header-section-right .hero-circle-2 {
     width: 233px;
     height: 233px;
