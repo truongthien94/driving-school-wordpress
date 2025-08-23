@@ -97,15 +97,28 @@ function sbs_enqueue_admin_scripts($hook)
 {
     global $typenow;
 
-    // Target the 'campaign' post type edit/new screens
-    if ('campaign' === $typenow && in_array($hook, array('post.php', 'post-new.php'))) {
-        wp_enqueue_script(
-            'sbs-admin-campaign-validation',
-            get_template_directory_uri() . '/assets/js/admin-campaign.js',
-            array('jquery', 'wp-data'),
-            '1.0.0',
-            true
-        );
+    if (in_array($hook, ['post.php', 'post-new.php'])) {
+        // Target the 'campaign' post type edit/new screens
+        if ('campaign' === $typenow) {
+            wp_enqueue_script(
+                'sbs-admin-campaign-validation',
+                get_template_directory_uri() . '/assets/js/admin-campaign.js',
+                ['jquery', 'wp-data'],
+                '1.0.0',
+                true
+            );
+        }
+
+        // Target the 'blog' post type edit/new screens
+        if ('blog' === $typenow) {
+            wp_enqueue_script(
+                'sbs-admin-blog-validation',
+                get_template_directory_uri() . '/assets/js/admin-blog.js',
+                ['jquery', 'wp-data'],
+                '1.0.0',
+                true
+            );
+        }
     }
 }
 add_action('admin_enqueue_scripts', 'sbs_enqueue_admin_scripts');
