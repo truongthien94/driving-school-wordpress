@@ -337,3 +337,10 @@ msgstr "Periode Kampanye"
 msgid "Active Period"
 msgstr "Periode Aktif"
 
+# Navigation Elements
+msgid "Terms of Service"
+msgstr "Ketentuan Layanan"
+
+msgid "Privacy Policy"
+msgstr "Kebijakan Privasi"
+

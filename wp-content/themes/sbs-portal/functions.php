@@ -124,6 +124,12 @@ function sbs_enqueue_admin_scripts($hook)
 add_action('admin_enqueue_scripts', 'sbs_enqueue_admin_scripts');
 
 /**
+ * ============================================================================
+ * MEDIA & UPLOAD HANDLING
+ * ============================================================================
+ */
+
+/**
  * Fix image upload issues and increase limits
  */
 function sbs_fix_image_upload_limits()
@@ -135,32 +141,28 @@ function sbs_fix_image_upload_limits()
         @ini_set('max_input_time', 300);
     }
 
-    // Increase upload file size limits
+    // Increase upload file size limits via PHP settings (might not work on all hosts)
     if (function_exists('ini_set')) {
-        @ini_set('upload_max_filesize', '64M');
-        @ini_set('post_max_size', '64M');
+        @ini_set('upload_max_filesize', '6M');
+        @ini_set('post_max_size', '8M'); // Must be larger than upload_max_filesize
         @ini_set('max_file_uploads', '20');
     }
 }
 add_action('init', 'sbs_fix_image_upload_limits');
 
 /**
- * Disable WordPress image size validation
+ * Filter WordPress's upload size limit.
+ * This is a more reliable method to increase the limit.
+ *
+ * @param int $size Default upload size in bytes.
+ * @return int Modified upload size in bytes.
  */
-function sbs_disable_image_size_validation($sizes, $metadata, $attachment_id)
+function sbs_filter_upload_size_limit($size)
 {
-    // Remove size validation for large images
-    if (isset($sizes['large']) && isset($sizes['medium'])) {
-        // Keep only essential sizes
-        return array(
-            'thumbnail' => $sizes['thumbnail'],
-            'medium' => $sizes['medium'],
-            'large' => $sizes['large']
-        );
-    }
-    return $sizes;
+    return 6 * 1024 * 1024; // 6MB
 }
-add_filter('wp_generate_attachment_metadata', 'sbs_disable_image_size_validation', 10, 3);
+add_filter('upload_size_limit', 'sbs_filter_upload_size_limit', 99);
+
 
 /**
  * Increase image quality and disable compression
@@ -178,30 +180,15 @@ function sbs_improve_image_quality($quality, $mime_type)
     return $quality;
 }
 add_filter('wp_editor_set_quality', 'sbs_improve_image_quality', 10, 2);
+add_filter('jpeg_quality', function () {
+    return 95;
+});
+
 
 /**
- * Disable WordPress automatic image resizing for large images
+ * Disable WordPress automatic image resizing for large images (the "-scaled" images).
  */
-function sbs_disable_large_image_resize($sizes, $metadata, $attachment_id)
-{
-    // Get original image dimensions
-    if (isset($metadata['width']) && isset($metadata['height'])) {
-        $width = $metadata['width'];
-        $height = $metadata['height'];
-
-        // If image is larger than 2560px, don't create additional sizes
-        if ($width > 2560 || $height > 2560) {
-            // Only keep thumbnail and medium sizes
-            return array(
-                'thumbnail' => $sizes['thumbnail'],
-                'medium' => $sizes['medium']
-            );
-        }
-    }
-
-    return $sizes;
-}
-add_filter('wp_generate_attachment_metadata', 'sbs_disable_large_image_resize', 15, 3);
+add_filter('big_image_size_threshold', '__return_false');
 
 /**
  * Add custom image sizes for better performance

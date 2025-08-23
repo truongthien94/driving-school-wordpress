@@ -118,9 +118,6 @@ msgid "Close"
 msgstr ""
 
 # Additional Navigation Items
-msgid "portal"
-msgstr ""
-
 msgid "Portal"
 msgstr ""
 
@@ -370,4 +367,11 @@ msgid "Campaign Period"
 msgstr ""
 
 msgid "Active Period"
+msgstr ""
+
+# Navigation Elements
+msgid "Terms of Service"
+msgstr ""
+
+msgid "Privacy Policy"
 msgstr ""

@@ -161,7 +161,7 @@ $mock_data = sbs_get_mock_data();
                                             <div class="mega-nav-column">
                                                 <div class="mega-nav-section">
                                                     <h3 class="mega-section-title">
-                                                        <?php _e('portal', 'sbs-portal'); ?>
+                                                        <?php _e('Portal', 'sbs-portal'); ?>
                                                     </h3>
 
                                                     <ul class="mega-nav-list mb-4">

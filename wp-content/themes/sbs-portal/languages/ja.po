@@ -107,7 +107,7 @@ msgid "Privacy"
 msgstr "プライバシー"
 
 msgid "Privacy Policy"
-msgstr "プライバシー"
+msgstr "プライバシーポリシー"
 
 msgid "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
 msgstr "Copyright © 2025 SBS Driving School Co., Ltd. All rights reserved"
@@ -335,4 +335,11 @@ msgstr "キャンペーン期間"
 
 msgid "Active Period"
 msgstr "実施期間"
+
+# Navigation Elements
+msgid "Terms of Service"
+msgstr "利用規約"
+
+msgid "Privacy Policy"
+msgstr "プライバシーポリシー"
 

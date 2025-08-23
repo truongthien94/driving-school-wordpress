@@ -337,3 +337,10 @@ msgstr "Campaign Period"
 msgid "Active Period"
 msgstr "Active Period"
 
+# Navigation Elements
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
