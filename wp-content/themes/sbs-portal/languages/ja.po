@@ -298,7 +298,7 @@ msgstr "キャンペーンの内容は利用できません。"
 
 # Additional UI Elements
 msgid "BLOG and NEWS"
-msgstr "BLOG and NEWS"
+msgstr "ブログ＆ニュース"
 
 msgid "No blog posts available yet."
 msgstr "ブログ投稿はまだありません。"
