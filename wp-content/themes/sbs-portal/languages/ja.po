@@ -81,6 +81,9 @@ msgstr "宿泊"
 msgid "SBS School"
 msgstr "SBS自動車学校"
 
+msgid "SBS Automotive"
+msgstr "SBSオートモーティブ"
+
 msgid "SBS Driving School Inage"
 msgstr "SBSドライビングスクール稲毛"
 
