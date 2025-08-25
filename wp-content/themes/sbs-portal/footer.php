@@ -14,6 +14,21 @@ if (!defined('ABSPATH')) {
 
 // Footer data is now handled by translation functions
 ?>
+<?php
+// Determine current language code for building legal links
+$current_lang_mobile = function_exists('sbs_get_current_language') ? sbs_get_current_language() : 'ja';
+
+// Determine environment to choose correct legal links domain
+$env_settings = function_exists('sbs_get_campaign_email_api_settings') ? sbs_get_campaign_email_api_settings() : array('environment' => 'dev');
+$environment = $env_settings['environment'] ?? 'dev';
+
+$legal_base_domain = 'https://dev.sbs-ds.com';
+if ($environment === 'stg') {
+    $legal_base_domain = 'https://stg.sbs-ds.com';
+} elseif ($environment === 'prod') {
+    $legal_base_domain = 'https://sbs-ds.com';
+}
+?>
 
 </div><!-- #page -->
 
@@ -103,10 +118,10 @@ if (!defined('ABSPATH')) {
         <div class="footer-bottom">
             <!-- Legal Links -->
             <div class="legal-links d-flex justify-content-center mb-2">
-                <a class="legal-link me-3">
+                <a class="legal-link me-3" href="<?php echo esc_url($legal_base_domain . '/' . $current_lang_mobile . '/site-usage'); ?>">
                     <?php _e('Terms of Use', 'sbs-portal'); ?>
                 </a>
-                <a class="legal-link">
+                <a class="legal-link" href="<?php echo esc_url($legal_base_domain . '/' . $current_lang_mobile . '/privacy-policy'); ?>">
                     <?php _e('Privacy', 'sbs-portal'); ?>
                 </a>
             </div>
