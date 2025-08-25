@@ -367,3 +367,154 @@ msgstr "Acara"
 msgid "Campaign Category Label"
 msgstr "Kampanye"
 
+# CTA (Call To Action) Labels
+msgid "Call To Action (CTA)"
+msgstr "Call To Action (CTA)"
+
+msgid "Enable CTA"
+msgstr "Aktifkan CTA"
+
+msgid "Show Call To Action button in campaign"
+msgstr "Tampilkan tombol Call To Action di kampanye"
+
+msgid "Enable/disable CTA button display"
+msgstr "Aktifkan/nonaktifkan tampilan tombol CTA"
+
+msgid "CTA Text"
+msgstr "Teks CTA"
+
+msgid "e.g., 今すぐ申し込む"
+msgstr "mis., Daftar Sekarang"
+
+msgid "Text displayed on the CTA button"
+msgstr "Teks yang ditampilkan pada tombol CTA"
+
+msgid "CTA URL"
+msgstr "URL CTA"
+
+msgid "URL where users will be redirected when clicking the CTA button"
+msgstr "URL tujuan ketika pengguna mengklik tombol CTA"
+
+msgid "CTA Style"
+msgstr "Gaya CTA"
+
+msgid "Primary (Red)"
+msgstr "Primer (Merah)"
+
+msgid "Secondary (Gray)"
+msgstr "Sekunder (Abu-abu)"
+
+msgid "Success (Green)"
+msgstr "Sukses (Hijau)"
+
+msgid "Warning (Orange)"
+msgstr "Peringatan (Oranye)"
+
+msgid "Info (Blue)"
+msgstr "Info (Biru)"
+
+msgid "Gradient (Colorful)"
+msgstr "Gradien (Berwarna)"
+
+msgid "Outline (Border)"
+msgstr "Garis Tepi (Border)"
+
+msgid "Choose the visual style of the CTA button"
+msgstr "Pilih gaya visual tombol CTA"
+
+msgid "CTA Size"
+msgstr "Ukuran CTA"
+
+msgid "Small"
+msgstr "Kecil"
+
+msgid "Medium"
+msgstr "Sedang"
+
+msgid "Large"
+msgstr "Besar"
+
+msgid "Extra Large"
+msgstr "Sangat Besar"
+
+msgid "Size of the CTA button"
+msgstr "Ukuran tombol CTA"
+
+msgid "CTA Icon"
+msgstr "Ikon CTA"
+
+msgid "No Icon"
+msgstr "Tanpa Ikon"
+
+msgid "Pointing Right"
+msgstr "Menunjuk Kanan"
+
+msgid "Phone"
+msgstr "Telepon"
+
+msgid "Car"
+msgstr "Mobil"
+
+msgid "Gift"
+msgstr "Hadiah"
+
+msgid "Sparkles"
+msgstr "Kilau"
+
+msgid "100 Points"
+msgstr "100 Poin"
+
+msgid "Fire"
+msgstr "Api"
+
+msgid "Lightning"
+msgstr "Petir"
+
+msgid "Optional icon to display with the CTA text"
+msgstr "Ikon opsional untuk ditampilkan bersama teks CTA"
+
+msgid "CTA Position"
+msgstr "Posisi CTA"
+
+msgid "Top of Content"
+msgstr "Atas Konten"
+
+msgid "Middle of Content"
+msgstr "Tengah Konten"
+
+msgid "Bottom of Content"
+msgstr "Bawah Konten"
+
+msgid "Top and Bottom"
+msgstr "Atas dan Bawah"
+
+msgid "Where to display the CTA button"
+msgstr "Dimana menampilkan tombol CTA"
+
+msgid "CTA Animation"
+msgstr "Animasi CTA"
+
+msgid "No Animation"
+msgstr "Tanpa Animasi"
+
+msgid "Pulse"
+msgstr "Denyut"
+
+msgid "Bounce"
+msgstr "Melompat"
+
+msgid "Shake"
+msgstr "Goyang"
+
+msgid "Glow"
+msgstr "Bersinar"
+
+msgid "Animation effect for the CTA button to attract attention"
+msgstr "Efek animasi untuk tombol CTA agar menarik perhatian"
+
+msgid "CTA Preview"
+msgstr "Pratinjau CTA"
+
+msgid "今すぐ申し込む"
+msgstr "Daftar Sekarang"
+

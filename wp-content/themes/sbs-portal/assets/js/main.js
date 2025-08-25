@@ -22,6 +22,7 @@
         initPortalEffects();
         initFormValidation();
         initBannerCarousel();
+        initCTATracking();
 
         // Manual Bootstrap dropdown initialization if needed
         if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
@@ -967,4 +968,135 @@
         return window.sbsPortalData?.templateUrl || '/wp-content/themes/sbs-portal';
     }
 
+    /**
+     * Initialize CTA Tracking
+     */
+    function initCTATracking() {
+        // Track CTA impressions when they come into view
+        if ('IntersectionObserver' in window) {
+            const ctaObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        const ctaElement = entry.target;
+                        const campaignId = ctaElement.getAttribute('data-campaign-id');
+
+                        if (campaignId && !ctaElement.hasAttribute('data-impression-tracked')) {
+                            // Mark as tracked to avoid duplicate tracking
+                            ctaElement.setAttribute('data-impression-tracked', 'true');
+
+                            // Track impression
+                            sbsTrackCTAImpression(ctaElement);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.5, // Track when 50% of CTA is visible
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe all CTA buttons
+            document.querySelectorAll('.sbs-cta-button[data-campaign-id]').forEach(function (cta) {
+                ctaObserver.observe(cta);
+            });
+        }
+    }
+
 })(jQuery);
+
+/**
+ * Track CTA Click (Global function for onclick handler)
+ * @param {HTMLElement} ctaElement 
+ */
+function sbsTrackCTAClick(ctaElement) {
+    if (!ctaElement || typeof sbsThemeData === 'undefined' || !sbsThemeData.ctaTrackingEnabled) {
+        return;
+    }
+
+    const campaignId = ctaElement.getAttribute('data-campaign-id');
+    const position = ctaElement.getAttribute('data-cta-position');
+    const style = ctaElement.getAttribute('data-cta-style');
+    const targetUrl = ctaElement.getAttribute('href');
+    const campaignTitle = ctaElement.closest('.campaign-detail-content')?.querySelector('h4')?.textContent || '';
+
+    if (!campaignId) {
+        return;
+    }
+
+    // Track the click
+    const trackingData = {
+        campaign_id: parseInt(campaignId),
+        type: 'click',
+        ref: 'cta_button',
+        timestamp: Math.floor(Date.now() / 1000),
+        user_agent: navigator.userAgent,
+        target_url: targetUrl,
+        campaign_title: campaignTitle,
+        cta_position: position,
+        cta_style: style
+    };
+
+    // Send tracking request (non-blocking)
+    if (typeof fetch !== 'undefined') {
+        fetch(sbsThemeData.restUrl + 'sbs/v1/campaign/track', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': sbs_ajax.nonce
+            },
+            body: JSON.stringify(trackingData)
+        }).catch(function (error) {
+            console.log('CTA click tracking failed:', error);
+        });
+    }
+
+    // Add visual feedback
+    ctaElement.style.transform = 'scale(0.95)';
+    setTimeout(function () {
+        ctaElement.style.transform = '';
+    }, 150);
+}
+
+/**
+ * Track CTA Impression
+ * @param {HTMLElement} ctaElement 
+ */
+function sbsTrackCTAImpression(ctaElement) {
+    if (!ctaElement || typeof sbsThemeData === 'undefined' || !sbsThemeData.ctaTrackingEnabled) {
+        return;
+    }
+
+    const campaignId = ctaElement.getAttribute('data-campaign-id');
+    const position = ctaElement.getAttribute('data-cta-position');
+    const style = ctaElement.getAttribute('data-cta-style');
+    const campaignTitle = ctaElement.closest('.campaign-detail-content')?.querySelector('h4')?.textContent || '';
+
+    if (!campaignId) {
+        return;
+    }
+
+    // Track the impression
+    const trackingData = {
+        campaign_id: parseInt(campaignId),
+        type: 'impression',
+        ref: 'cta_button',
+        timestamp: Math.floor(Date.now() / 1000),
+        user_agent: navigator.userAgent,
+        campaign_title: campaignTitle,
+        cta_position: position,
+        cta_style: style
+    };
+
+    // Send tracking request (non-blocking)
+    if (typeof fetch !== 'undefined') {
+        fetch(sbsThemeData.restUrl + 'sbs/v1/campaign/track', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': sbs_ajax.nonce
+            },
+            body: JSON.stringify(trackingData)
+        }).catch(function (error) {
+            console.log('CTA impression tracking failed:', error);
+        });
+    }
+}

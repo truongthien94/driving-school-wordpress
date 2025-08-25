@@ -403,3 +403,154 @@ msgstr ""
 
 msgid "Campaign Category Label"
 msgstr ""
+
+# CTA (Call To Action) Labels
+msgid "Call To Action (CTA)"
+msgstr ""
+
+msgid "Enable CTA"
+msgstr ""
+
+msgid "Show Call To Action button in campaign"
+msgstr ""
+
+msgid "Enable/disable CTA button display"
+msgstr ""
+
+msgid "CTA Text"
+msgstr ""
+
+msgid "e.g., 今すぐ申し込む"
+msgstr ""
+
+msgid "Text displayed on the CTA button"
+msgstr ""
+
+msgid "CTA URL"
+msgstr ""
+
+msgid "URL where users will be redirected when clicking the CTA button"
+msgstr ""
+
+msgid "CTA Style"
+msgstr ""
+
+msgid "Primary (Red)"
+msgstr ""
+
+msgid "Secondary (Gray)"
+msgstr ""
+
+msgid "Success (Green)"
+msgstr ""
+
+msgid "Warning (Orange)"
+msgstr ""
+
+msgid "Info (Blue)"
+msgstr ""
+
+msgid "Gradient (Colorful)"
+msgstr ""
+
+msgid "Outline (Border)"
+msgstr ""
+
+msgid "Choose the visual style of the CTA button"
+msgstr ""
+
+msgid "CTA Size"
+msgstr ""
+
+msgid "Small"
+msgstr ""
+
+msgid "Medium"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "Extra Large"
+msgstr ""
+
+msgid "Size of the CTA button"
+msgstr ""
+
+msgid "CTA Icon"
+msgstr ""
+
+msgid "No Icon"
+msgstr ""
+
+msgid "Pointing Right"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Car"
+msgstr ""
+
+msgid "Gift"
+msgstr ""
+
+msgid "Sparkles"
+msgstr ""
+
+msgid "100 Points"
+msgstr ""
+
+msgid "Fire"
+msgstr ""
+
+msgid "Lightning"
+msgstr ""
+
+msgid "Optional icon to display with the CTA text"
+msgstr ""
+
+msgid "CTA Position"
+msgstr ""
+
+msgid "Top of Content"
+msgstr ""
+
+msgid "Middle of Content"
+msgstr ""
+
+msgid "Bottom of Content"
+msgstr ""
+
+msgid "Top and Bottom"
+msgstr ""
+
+msgid "Where to display the CTA button"
+msgstr ""
+
+msgid "CTA Animation"
+msgstr ""
+
+msgid "No Animation"
+msgstr ""
+
+msgid "Pulse"
+msgstr ""
+
+msgid "Bounce"
+msgstr ""
+
+msgid "Shake"
+msgstr ""
+
+msgid "Glow"
+msgstr ""
+
+msgid "Animation effect for the CTA button to attract attention"
+msgstr ""
+
+msgid "CTA Preview"
+msgstr ""
+
+msgid "今すぐ申し込む"
+msgstr ""

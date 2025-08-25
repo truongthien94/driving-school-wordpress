@@ -367,3 +367,154 @@ msgstr "Event"
 msgid "Campaign Category Label"
 msgstr "Campaign"
 
+# CTA (Call To Action) Labels
+msgid "Call To Action (CTA)"
+msgstr "Call To Action (CTA)"
+
+msgid "Enable CTA"
+msgstr "Enable CTA"
+
+msgid "Show Call To Action button in campaign"
+msgstr "Show Call To Action button in campaign"
+
+msgid "Enable/disable CTA button display"
+msgstr "Enable/disable CTA button display"
+
+msgid "CTA Text"
+msgstr "CTA Text"
+
+msgid "e.g., 今すぐ申し込む"
+msgstr "e.g., Apply Now"
+
+msgid "Text displayed on the CTA button"
+msgstr "Text displayed on the CTA button"
+
+msgid "CTA URL"
+msgstr "CTA URL"
+
+msgid "URL where users will be redirected when clicking the CTA button"
+msgstr "URL where users will be redirected when clicking the CTA button"
+
+msgid "CTA Style"
+msgstr "CTA Style"
+
+msgid "Primary (Red)"
+msgstr "Primary (Red)"
+
+msgid "Secondary (Gray)"
+msgstr "Secondary (Gray)"
+
+msgid "Success (Green)"
+msgstr "Success (Green)"
+
+msgid "Warning (Orange)"
+msgstr "Warning (Orange)"
+
+msgid "Info (Blue)"
+msgstr "Info (Blue)"
+
+msgid "Gradient (Colorful)"
+msgstr "Gradient (Colorful)"
+
+msgid "Outline (Border)"
+msgstr "Outline (Border)"
+
+msgid "Choose the visual style of the CTA button"
+msgstr "Choose the visual style of the CTA button"
+
+msgid "CTA Size"
+msgstr "CTA Size"
+
+msgid "Small"
+msgstr "Small"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Large"
+msgstr "Large"
+
+msgid "Extra Large"
+msgstr "Extra Large"
+
+msgid "Size of the CTA button"
+msgstr "Size of the CTA button"
+
+msgid "CTA Icon"
+msgstr "CTA Icon"
+
+msgid "No Icon"
+msgstr "No Icon"
+
+msgid "Pointing Right"
+msgstr "Pointing Right"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Car"
+msgstr "Car"
+
+msgid "Gift"
+msgstr "Gift"
+
+msgid "Sparkles"
+msgstr "Sparkles"
+
+msgid "100 Points"
+msgstr "100 Points"
+
+msgid "Fire"
+msgstr "Fire"
+
+msgid "Lightning"
+msgstr "Lightning"
+
+msgid "Optional icon to display with the CTA text"
+msgstr "Optional icon to display with the CTA text"
+
+msgid "CTA Position"
+msgstr "CTA Position"
+
+msgid "Top of Content"
+msgstr "Top of Content"
+
+msgid "Middle of Content"
+msgstr "Middle of Content"
+
+msgid "Bottom of Content"
+msgstr "Bottom of Content"
+
+msgid "Top and Bottom"
+msgstr "Top and Bottom"
+
+msgid "Where to display the CTA button"
+msgstr "Where to display the CTA button"
+
+msgid "CTA Animation"
+msgstr "CTA Animation"
+
+msgid "No Animation"
+msgstr "No Animation"
+
+msgid "Pulse"
+msgstr "Pulse"
+
+msgid "Bounce"
+msgstr "Bounce"
+
+msgid "Shake"
+msgstr "Shake"
+
+msgid "Glow"
+msgstr "Glow"
+
+msgid "Animation effect for the CTA button to attract attention"
+msgstr "Animation effect for the CTA button to attract attention"
+
+msgid "CTA Preview"
+msgstr "CTA Preview"
+
+msgid "今すぐ申し込む"
+msgstr "Apply Now"
+

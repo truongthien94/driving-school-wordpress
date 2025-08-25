@@ -108,18 +108,25 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                 $end_date = get_post_meta($campaign_post->ID, '_campaign_end_date', true);
 
                                 if ($start_date || $end_date) {
-                                    echo '<div class="campaign-active-period">';
+                                    echo '<div class="campaign-active-period mb-3">';
                                     if ($start_date) {
-                                        echo '<span>' . __('From', 'sbs-portal') . ' ' . esc_html($start_date) . ' ' . '</span>';
+                                        echo '<span class="period-label">' . __('From', 'sbs-portal') . ' ' . esc_html($start_date) . ' ' . '</span>';
                                     }
                                     if ($end_date) {
-                                        echo '<span>' . __('To', 'sbs-portal') . ' ' . esc_html($end_date) . '</span>';
+                                        echo '<span class="period-label">' . __('To', 'sbs-portal') . ' ' . esc_html($end_date) . '</span>';
                                     }
                                     echo '</div>';
                                 }
                             }
                             ?>
                         </div>
+
+                        <?php
+                        // Show CTA at top position if configured
+                        if ($campaign_post && sbs_should_show_cta_at_position($campaign_post->ID, 'top')) {
+                            echo sbs_render_campaign_cta($campaign_post->ID, 'top');
+                        }
+                        ?>
 
                         <div class="mb-4">
                             <h5 class="fw-bold"><?php _e('Course', 'sbs-portal'); ?> <?php _e('Company Information', 'sbs-portal'); ?></h5>
@@ -135,7 +142,37 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                     $temp_more = $more;
                                     $more = 1;
 
-                                    the_content();
+                                    // Get content and potentially insert middle CTA
+                                    $content = get_the_content();
+                                    $content = apply_filters('the_content', $content);
+
+                                    // If middle CTA is enabled, try to insert it in the middle of content
+                                    if (sbs_should_show_cta_at_position($campaign_post->ID, 'middle')) {
+                                        $paragraphs = explode('</p>', $content);
+                                        $total_paragraphs = count($paragraphs);
+                                        $middle_position = intval($total_paragraphs / 2);
+
+                                        if ($total_paragraphs > 2) {
+                                            // Normal case: insert right in the middle
+                                            $before_middle = array_slice($paragraphs, 0, $middle_position);
+                                            $after_middle = array_slice($paragraphs, $middle_position);
+
+                                            echo implode('</p>', $before_middle) . '</p>';
+                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
+                                            echo implode('</p>', $after_middle);
+                                        } elseif ($total_paragraphs > 1) {
+                                            // Short content: insert after the first paragraph
+                                            echo $paragraphs[0] . '</p>';
+                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
+                                            echo implode('</p>', array_slice($paragraphs, 1));
+                                        } else {
+                                            // Edge case: content has 0-1 paragraph markup; show CTA after content
+                                            echo $content;
+                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
+                                        }
+                                    } else {
+                                        echo $content;
+                                    }
 
                                     $more = $temp_more;
                                     wp_reset_postdata();
@@ -146,6 +183,13 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                                 ?>
                             </div>
                         </div>
+
+                        <?php
+                        // Show CTA at bottom position if configured
+                        if ($campaign_post && sbs_should_show_cta_at_position($campaign_post->ID, 'bottom')) {
+                            echo sbs_render_campaign_cta($campaign_post->ID, 'bottom');
+                        }
+                        ?>
                     </div>
                 </div>
 

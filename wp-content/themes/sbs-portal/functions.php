@@ -85,6 +85,7 @@ function sbs_enqueue_scripts()
     wp_localize_script('sbs-script', 'sbsThemeData', array(
         'templateDirectoryUri' => get_template_directory_uri(),
         'restUrl' => esc_url_raw(rest_url()),
+        'ctaTrackingEnabled' => true,
     ));
 }
 // Load our assets late to reduce chance of being overridden by plugins
@@ -721,6 +722,15 @@ function sbs_add_campaign_meta_boxes()
         'normal',
         'high'
     );
+
+    add_meta_box(
+        'sbs_campaign_cta',
+        __('Call To Action (CTA)', 'sbs-portal'),
+        'sbs_campaign_cta_meta_box_callback',
+        'campaign',
+        'normal',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'sbs_add_campaign_meta_boxes');
 
@@ -847,6 +857,51 @@ function sbs_save_campaign_meta_boxes($post_id)
         // Save max clicks
         if (isset($_POST['campaign_max_clicks'])) {
             update_post_meta($post_id, '_campaign_max_clicks', absint($_POST['campaign_max_clicks']));
+        }
+    }
+
+    // Save CTA settings
+    if (
+        isset($_POST['sbs_campaign_cta_meta_box_nonce']) &&
+        wp_verify_nonce($_POST['sbs_campaign_cta_meta_box_nonce'], 'sbs_campaign_cta_meta_box')
+    ) {
+        // Save CTA enabled
+        $cta_enabled = isset($_POST['campaign_cta_enabled']) ? '1' : '0';
+        update_post_meta($post_id, '_campaign_cta_enabled', $cta_enabled);
+
+        // Save CTA text
+        if (isset($_POST['campaign_cta_text'])) {
+            update_post_meta($post_id, '_campaign_cta_text', sanitize_text_field($_POST['campaign_cta_text']));
+        }
+
+        // Save CTA URL
+        if (isset($_POST['campaign_cta_url'])) {
+            update_post_meta($post_id, '_campaign_cta_url', esc_url_raw($_POST['campaign_cta_url']));
+        }
+
+        // Save CTA style
+        if (isset($_POST['campaign_cta_style'])) {
+            update_post_meta($post_id, '_campaign_cta_style', sanitize_text_field($_POST['campaign_cta_style']));
+        }
+
+        // Save CTA size
+        if (isset($_POST['campaign_cta_size'])) {
+            update_post_meta($post_id, '_campaign_cta_size', sanitize_text_field($_POST['campaign_cta_size']));
+        }
+
+        // Save CTA icon
+        if (isset($_POST['campaign_cta_icon'])) {
+            update_post_meta($post_id, '_campaign_cta_icon', sanitize_text_field($_POST['campaign_cta_icon']));
+        }
+
+        // Save CTA position
+        if (isset($_POST['campaign_cta_position'])) {
+            update_post_meta($post_id, '_campaign_cta_position', sanitize_text_field($_POST['campaign_cta_position']));
+        }
+
+        // Save CTA animation
+        if (isset($_POST['campaign_cta_animation'])) {
+            update_post_meta($post_id, '_campaign_cta_animation', sanitize_text_field($_POST['campaign_cta_animation']));
         }
     }
 }
@@ -1044,6 +1099,368 @@ function sbs_campaign_metrics_meta_box_callback($post)
                     });
                 }
             });
+        });
+    </script>
+<?php
+}
+
+/**
+ * Campaign CTA meta box callback
+ */
+function sbs_campaign_cta_meta_box_callback($post)
+{
+    wp_nonce_field('sbs_campaign_cta_meta_box', 'sbs_campaign_cta_meta_box_nonce');
+
+    $cta_enabled = get_post_meta($post->ID, '_campaign_cta_enabled', true) ?: '1';
+    $cta_text = get_post_meta($post->ID, '_campaign_cta_text', true);
+    $cta_url = get_post_meta($post->ID, '_campaign_cta_url', true);
+    $cta_style = get_post_meta($post->ID, '_campaign_cta_style', true) ?: 'primary';
+    $cta_size = get_post_meta($post->ID, '_campaign_cta_size', true) ?: 'medium';
+    $cta_icon = get_post_meta($post->ID, '_campaign_cta_icon', true);
+    $cta_position = get_post_meta($post->ID, '_campaign_cta_position', true) ?: 'bottom';
+    $cta_animation = get_post_meta($post->ID, '_campaign_cta_animation', true) ?: 'none';
+
+?>
+    <div class="cta-settings-container">
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="campaign_cta_enabled"><?php _e('Enable CTA', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox" name="campaign_cta_enabled" id="campaign_cta_enabled" value="1" <?php checked($cta_enabled, '1'); ?> />
+                        <?php _e('Show Call To Action button in campaign', 'sbs-portal'); ?>
+                    </label>
+                    <p class="description"><?php _e('Enable/disable CTA button display', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_text"><?php _e('CTA Text', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <input type="text" name="campaign_cta_text" id="campaign_cta_text" value="<?php echo esc_attr($cta_text); ?>" class="large-text" placeholder="<?php _e('e.g., 今すぐ申し込む', 'sbs-portal'); ?>" />
+                    <p class="description"><?php _e('Text displayed on the CTA button', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_url"><?php _e('CTA URL', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <input type="url" name="campaign_cta_url" id="campaign_cta_url" value="<?php echo esc_attr($cta_url); ?>" class="large-text" placeholder="https://example.com/contact" />
+                    <p class="description"><?php _e('URL where users will be redirected when clicking the CTA button', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_style"><?php _e('CTA Style', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <select name="campaign_cta_style" id="campaign_cta_style">
+                        <option value="primary" <?php selected($cta_style, 'primary'); ?>><?php _e('Primary (Red)', 'sbs-portal'); ?></option>
+                        <option value="secondary" <?php selected($cta_style, 'secondary'); ?>><?php _e('Secondary (Gray)', 'sbs-portal'); ?></option>
+                        <option value="success" <?php selected($cta_style, 'success'); ?>><?php _e('Success (Green)', 'sbs-portal'); ?></option>
+                        <option value="warning" <?php selected($cta_style, 'warning'); ?>><?php _e('Warning (Orange)', 'sbs-portal'); ?></option>
+                        <option value="info" <?php selected($cta_style, 'info'); ?>><?php _e('Info (Blue)', 'sbs-portal'); ?></option>
+                        <option value="gradient" <?php selected($cta_style, 'gradient'); ?>><?php _e('Gradient (Colorful)', 'sbs-portal'); ?></option>
+                        <option value="outline" <?php selected($cta_style, 'outline'); ?>><?php _e('Outline (Border)', 'sbs-portal'); ?></option>
+                    </select>
+                    <p class="description"><?php _e('Choose the visual style of the CTA button', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_size"><?php _e('CTA Size', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <select name="campaign_cta_size" id="campaign_cta_size">
+                        <option value="small" <?php selected($cta_size, 'small'); ?>><?php _e('Small', 'sbs-portal'); ?></option>
+                        <option value="medium" <?php selected($cta_size, 'medium'); ?>><?php _e('Medium', 'sbs-portal'); ?></option>
+                        <option value="large" <?php selected($cta_size, 'large'); ?>><?php _e('Large', 'sbs-portal'); ?></option>
+                        <option value="xl" <?php selected($cta_size, 'xl'); ?>><?php _e('Extra Large', 'sbs-portal'); ?></option>
+                    </select>
+                    <p class="description"><?php _e('Size of the CTA button', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_icon"><?php _e('CTA Icon', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <select name="campaign_cta_icon" id="campaign_cta_icon">
+                        <option value="" <?php selected($cta_icon, ''); ?>><?php _e('No Icon', 'sbs-portal'); ?></option>
+                        <option value="👉" <?php selected($cta_icon, '👉'); ?>>👉 <?php _e('Pointing Right', 'sbs-portal'); ?></option>
+                        <option value="📞" <?php selected($cta_icon, '📞'); ?>>📞 <?php _e('Phone', 'sbs-portal'); ?></option>
+                        <option value="🚗" <?php selected($cta_icon, '🚗'); ?>>🚗 <?php _e('Car', 'sbs-portal'); ?></option>
+                        <option value="🎁" <?php selected($cta_icon, '🎁'); ?>>🎁 <?php _e('Gift', 'sbs-portal'); ?></option>
+                        <option value="✨" <?php selected($cta_icon, '✨'); ?>>✨ <?php _e('Sparkles', 'sbs-portal'); ?></option>
+                        <option value="💯" <?php selected($cta_icon, '💯'); ?>>💯 <?php _e('100 Points', 'sbs-portal'); ?></option>
+                        <option value="🔥" <?php selected($cta_icon, '🔥'); ?>>🔥 <?php _e('Fire', 'sbs-portal'); ?></option>
+                        <option value="⚡" <?php selected($cta_icon, '⚡'); ?>>⚡ <?php _e('Lightning', 'sbs-portal'); ?></option>
+                    </select>
+                    <p class="description"><?php _e('Optional icon to display with the CTA text', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_position"><?php _e('CTA Position', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <select name="campaign_cta_position" id="campaign_cta_position">
+                        <option value="top" <?php selected($cta_position, 'top'); ?>><?php _e('Top of Content', 'sbs-portal'); ?></option>
+                        <option value="middle" <?php selected($cta_position, 'middle'); ?>><?php _e('Middle of Content', 'sbs-portal'); ?></option>
+                        <option value="bottom" <?php selected($cta_position, 'bottom'); ?>><?php _e('Bottom of Content', 'sbs-portal'); ?></option>
+                        <option value="both" <?php selected($cta_position, 'both'); ?>><?php _e('Top and Bottom', 'sbs-portal'); ?></option>
+                    </select>
+                    <p class="description"><?php _e('Where to display the CTA button', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+
+            <tr class="cta-option" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+                <th scope="row">
+                    <label for="campaign_cta_animation"><?php _e('CTA Animation', 'sbs-portal'); ?></label>
+                </th>
+                <td>
+                    <select name="campaign_cta_animation" id="campaign_cta_animation">
+                        <option value="none" <?php selected($cta_animation, 'none'); ?>><?php _e('No Animation', 'sbs-portal'); ?></option>
+                        <option value="pulse" <?php selected($cta_animation, 'pulse'); ?>><?php _e('Pulse', 'sbs-portal'); ?></option>
+                        <option value="bounce" <?php selected($cta_animation, 'bounce'); ?>><?php _e('Bounce', 'sbs-portal'); ?></option>
+                        <option value="shake" <?php selected($cta_animation, 'shake'); ?>><?php _e('Shake', 'sbs-portal'); ?></option>
+                        <option value="glow" <?php selected($cta_animation, 'glow'); ?>><?php _e('Glow', 'sbs-portal'); ?></option>
+                    </select>
+                    <p class="description"><?php _e('Animation effect for the CTA button to attract attention', 'sbs-portal'); ?></p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="cta-preview-section" <?php echo $cta_enabled !== '1' ? 'style="display:none;"' : ''; ?>>
+            <h4><?php _e('CTA Preview', 'sbs-portal'); ?></h4>
+            <div class="cta-preview-container">
+                <div id="cta-preview-button" class="sbs-cta-button cta-<?php echo esc_attr($cta_style); ?> cta-<?php echo esc_attr($cta_size); ?> <?php echo $cta_animation !== 'none' ? 'cta-' . esc_attr($cta_animation) : ''; ?>">
+                    <span class="cta-icon"><?php echo esc_html($cta_icon); ?></span>
+                    <span class="cta-text"><?php echo esc_html($cta_text ?: __('今すぐ申し込む', 'sbs-portal')); ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .cta-settings-container {
+            max-width: 100%;
+        }
+
+        .cta-preview-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .cta-preview-container {
+            padding: 20px;
+            text-align: center;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+
+        /* CTA Button Styles */
+        .sbs-cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* CTA Sizes */
+        .cta-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .cta-medium {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+
+        .cta-large {
+            padding: 16px 32px;
+            font-size: 18px;
+        }
+
+        .cta-xl {
+            padding: 20px 40px;
+            font-size: 20px;
+        }
+
+        /* CTA Styles */
+        .cta-primary {
+            background: #f14c9b;
+            color: white;
+        }
+
+        .cta-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .cta-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .cta-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .cta-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .cta-gradient {
+            background: linear-gradient(135deg, #f14c9b, #ff6b6b);
+            color: white;
+        }
+
+        .cta-outline {
+            background: transparent;
+            border: 2px solid #f14c9b;
+            color: #f14c9b;
+        }
+
+        /* CTA Animations */
+        .cta-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .cta-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .cta-shake {
+            animation: shake 0.5s infinite;
+        }
+
+        .cta-glow {
+            animation: glow 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(241, 76, 155, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(241, 76, 155, 0.8);
+            }
+        }
+    </style>
+
+    <script>
+        jQuery(document).ready(function($) {
+            // Toggle CTA options based on enabled checkbox
+            $('#campaign_cta_enabled').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.cta-option, .cta-preview-section').show();
+                    updatePreview();
+                } else {
+                    $('.cta-option, .cta-preview-section').hide();
+                }
+            });
+
+            // Update preview when any CTA setting changes
+            $('#campaign_cta_text, #campaign_cta_style, #campaign_cta_size, #campaign_cta_icon, #campaign_cta_animation').on('change keyup', function() {
+                updatePreview();
+            });
+
+            function updatePreview() {
+                var text = $('#campaign_cta_text').val() || '<?php _e('今すぐ申し込む', 'sbs-portal'); ?>';
+                var style = $('#campaign_cta_style').val();
+                var size = $('#campaign_cta_size').val();
+                var icon = $('#campaign_cta_icon').val();
+                var animation = $('#campaign_cta_animation').val();
+
+                var $preview = $('#cta-preview-button');
+
+                // Update classes
+                $preview.removeClass(function(index, className) {
+                    return (className.match(/(^|\s)cta-\S+/g) || []).join(' ');
+                });
+                $preview.addClass('cta-' + style + ' cta-' + size);
+                if (animation !== 'none') {
+                    $preview.addClass('cta-' + animation);
+                }
+
+                // Update content
+                $preview.find('.cta-icon').text(icon);
+                $preview.find('.cta-text').text(text);
+            }
+
+            // Initial preview update
+            if ($('#campaign_cta_enabled').is(':checked')) {
+                updatePreview();
+            }
         });
     </script>
 <?php
@@ -3017,6 +3434,99 @@ function sbs_widgets_init()
 add_action('widgets_init', 'sbs_widgets_init');
 
 /**
+ * Render CTA button for campaign
+ * @param int $campaign_id
+ * @param string $position top|middle|bottom (optional, if not specified will use campaign setting)
+ * @return string HTML for CTA button
+ */
+function sbs_render_campaign_cta($campaign_id, $position = null)
+{
+    if (!$campaign_id) {
+        return '';
+    }
+
+    $cta_enabled = get_post_meta($campaign_id, '_campaign_cta_enabled', true);
+    if ($cta_enabled !== '1') {
+        return '';
+    }
+
+    $cta_text = get_post_meta($campaign_id, '_campaign_cta_text', true);
+    $cta_url = get_post_meta($campaign_id, '_campaign_cta_url', true);
+    $cta_style = get_post_meta($campaign_id, '_campaign_cta_style', true) ?: 'primary';
+    $cta_size = get_post_meta($campaign_id, '_campaign_cta_size', true) ?: 'medium';
+    $cta_icon = get_post_meta($campaign_id, '_campaign_cta_icon', true);
+    $cta_position = get_post_meta($campaign_id, '_campaign_cta_position', true) ?: 'bottom';
+    $cta_animation = get_post_meta($campaign_id, '_campaign_cta_animation', true) ?: 'none';
+
+    // If position is specified, check if CTA should be shown at this position
+    if ($position) {
+        if ($cta_position === 'both') {
+            // Show at both top and bottom
+        } elseif ($cta_position !== $position) {
+            return '';
+        }
+    }
+
+    if (!$cta_text || !$cta_url) {
+        return '';
+    }
+
+    // Build CSS classes
+    $css_classes = array(
+        'sbs-cta-button',
+        'cta-' . $cta_style,
+        'cta-' . $cta_size
+    );
+
+    if ($cta_animation !== 'none') {
+        $css_classes[] = 'cta-' . $cta_animation;
+    }
+
+    $css_class_string = implode(' ', $css_classes);
+
+    // Build CTA HTML with tracking
+    $html = '<div class="campaign-cta-container text-center my-4">';
+    $html .= '<a href="' . esc_url($cta_url) . '" class="' . esc_attr($css_class_string) . '" target="_blank" rel="noopener" ';
+    $html .= 'data-campaign-id="' . esc_attr($campaign_id) . '" ';
+    $html .= 'data-cta-click="true" ';
+    $html .= 'data-cta-position="' . esc_attr($position ?: $cta_position) . '" ';
+    $html .= 'data-cta-style="' . esc_attr($cta_style) . '" ';
+    $html .= 'onclick="sbsTrackCTAClick(this); return true;">';
+
+    if ($cta_icon) {
+        $html .= '<span class="cta-icon me-2">' . esc_html($cta_icon) . '</span>';
+    }
+
+    $html .= '<span class="cta-text">' . esc_html($cta_text) . '</span>';
+    $html .= '</a>';
+    $html .= '</div>';
+
+    return $html;
+}
+
+/**
+ * Check if CTA should be shown at specific position
+ * @param int $campaign_id
+ * @param string $position top|middle|bottom
+ * @return bool
+ */
+function sbs_should_show_cta_at_position($campaign_id, $position)
+{
+    if (!$campaign_id) {
+        return false;
+    }
+
+    $cta_enabled = get_post_meta($campaign_id, '_campaign_cta_enabled', true);
+    if ($cta_enabled !== '1') {
+        return false;
+    }
+
+    $cta_position = get_post_meta($campaign_id, '_campaign_cta_position', true) ?: 'bottom';
+
+    return ($cta_position === $position || $cta_position === 'both');
+}
+
+/**
  * Helper function to get icon SVG
  */
 function sbs_get_icon($icon_name)
@@ -3963,6 +4473,10 @@ add_action('init', 'sbs_init_session');
  */
 function sbs_apply_current_language_locale($locale)
 {
+    // Do not override locale in WordPress admin; respect site default language
+    if (is_admin()) {
+        return $locale;
+    }
     $current_lang = sbs_get_current_language();
     $languages = sbs_get_available_languages();
 
@@ -3979,6 +4493,10 @@ add_filter('locale', 'sbs_apply_current_language_locale');
  */
 function sbs_load_textdomain()
 {
+    // Only override locale and load theme textdomain on the frontend
+    if (is_admin()) {
+        return;
+    }
     $current_lang = sbs_get_current_language();
     $languages = sbs_get_available_languages();
 
@@ -3988,7 +4506,7 @@ function sbs_load_textdomain()
         // Unload existing textdomain first
         unload_textdomain('sbs-portal');
 
-        // Set WordPress locale with high priority
+        // Set WordPress locale with high priority (frontend only)
         add_filter('locale', function () use ($locale) {
             return $locale;
         }, 10);
@@ -4050,6 +4568,10 @@ function sbs_debug_translation_status()
  */
 function sbs_enqueue_language_assets()
 {
+    // Frontend only
+    if (is_admin()) {
+        return;
+    }
     $current_lang = sbs_get_current_language();
     $languages = sbs_get_available_languages();
 
