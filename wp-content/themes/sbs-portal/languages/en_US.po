@@ -521,3 +521,122 @@ msgstr "Apply Now"
 msgid "Show More"
 msgstr "Show More"
 
+msgid "Email API Status"
+msgstr "Email API Status"
+
+msgid "Environment"
+msgstr "Environment"
+
+msgid "API URL"
+msgstr "API URL"
+
+msgid "API Status"
+msgstr "API Status"
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "Last Sent"
+msgstr "Last Sent"
+
+msgid "API Response"
+msgstr "API Response"
+
+msgid "Not sent yet"
+msgstr "Not sent yet"
+
+msgid "Send to Email API Now"
+msgstr "Send to Email API Now"
+
+msgid "Sending..."
+msgstr "Sending..."
+
+msgid "AJAX Error"
+msgstr "AJAX Error"
+
+msgid "Security check failed"
+msgstr "Security check failed"
+
+msgid "Insufficient permissions"
+msgstr "Insufficient permissions"
+
+msgid "Invalid campaign ID"
+msgstr "Invalid campaign ID"
+
+msgid "Campaign Email API"
+msgstr "Campaign Email API"
+
+msgid "Email API Settings"
+msgstr "Email API Settings"
+
+msgid "Settings saved."
+msgstr "Settings saved."
+
+msgid "Campaign Email API Settings"
+msgstr "Campaign Email API Settings"
+
+msgid "Current Environment"
+msgstr "Current Environment"
+
+msgid "Automatically detected based on site URL"
+msgstr "Automatically detected based on site URL"
+
+msgid "The API endpoint where campaign data will be sent"
+msgstr "The API endpoint where campaign data will be sent"
+
+msgid "Enable Email API"
+msgstr "Enable Email API"
+
+msgid "Send campaign data to email API when campaigns are published"
+msgstr "Send campaign data to email API when campaigns are published"
+
+msgid "How it works"
+msgstr "How it works"
+
+msgid "When a campaign is published for the first time, it will be automatically sent to the email API"
+msgstr "When a campaign is published for the first time, it will be automatically sent to the email API"
+
+msgid "The API call is made in the background (using wp_cron) to avoid delays in the admin interface"
+msgstr "The API call is made in the background (using wp_cron) to avoid delays in the admin interface"
+
+msgid "You can manually resend campaigns using the \"Send to Email API Now\" button in the campaign edit screen"
+msgstr "You can manually resend campaigns using the \"Send to Email API Now\" button in the campaign edit screen"
+
+msgid "All API responses are logged and can be viewed in the \"Email API Status\" meta box"
+msgstr "All API responses are logged and can be viewed in the \"Email API Status\" meta box"
+
+msgid "Environment Override"
+msgstr "Environment Override"
+
+msgid "Auto-detect (Recommended)"
+msgstr "Auto-detect (Recommended)"
+
+msgid "Development (DEV)"
+msgstr "Development (DEV)"
+
+msgid "Staging (STG)"
+msgstr "Staging (STG)"
+
+msgid "Production (PROD)"
+msgstr "Production (PROD)"
+
+msgid "Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly."
+msgstr "Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly."
+
+msgid "Manual Override"
+msgstr "Manual Override"
+
+msgid "Auto-detected"
+msgstr "Auto-detected"
+
+msgid "Manually set environment"
+msgstr "Manually set environment"
+
+msgid "Environment Detection"
+msgstr "Environment Detection"
+
+
+

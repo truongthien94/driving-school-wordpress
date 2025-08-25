@@ -521,3 +521,122 @@ msgstr "Daftar Sekarang"
 msgid "Show More"
 msgstr "Tampilkan Lebih Banyak"
 
+msgid "Email API Status"
+msgstr "Status API Email"
+
+msgid "Environment"
+msgstr "Lingkungan"
+
+msgid "API URL"
+msgstr "URL API"
+
+msgid "API Status"
+msgstr "Status API"
+
+msgid "Enabled"
+msgstr "Aktif"
+
+msgid "Disabled"
+msgstr "Nonaktif"
+
+msgid "Last Sent"
+msgstr "Terakhir Dikirim"
+
+msgid "API Response"
+msgstr "Respons API"
+
+msgid "Not sent yet"
+msgstr "Belum dikirim"
+
+msgid "Send to Email API Now"
+msgstr "Kirim ke API Email Sekarang"
+
+msgid "Sending..."
+msgstr "Mengirim..."
+
+msgid "AJAX Error"
+msgstr "Error AJAX"
+
+msgid "Security check failed"
+msgstr "Pemeriksaan keamanan gagal"
+
+msgid "Insufficient permissions"
+msgstr "Izin tidak mencukupi"
+
+msgid "Invalid campaign ID"
+msgstr "ID campaign tidak valid"
+
+msgid "Campaign Email API"
+msgstr "API Email Campaign"
+
+msgid "Email API Settings"
+msgstr "Pengaturan API Email"
+
+msgid "Settings saved."
+msgstr "Pengaturan disimpan."
+
+msgid "Campaign Email API Settings"
+msgstr "Pengaturan API Email Campaign"
+
+msgid "Current Environment"
+msgstr "Lingkungan Saat Ini"
+
+msgid "Automatically detected based on site URL"
+msgstr "Terdeteksi otomatis berdasarkan URL situs"
+
+msgid "The API endpoint where campaign data will be sent"
+msgstr "Endpoint API tempat data campaign akan dikirim"
+
+msgid "Enable Email API"
+msgstr "Aktifkan API Email"
+
+msgid "Send campaign data to email API when campaigns are published"
+msgstr "Kirim data campaign ke API email ketika campaign dipublikasikan"
+
+msgid "How it works"
+msgstr "Cara kerjanya"
+
+msgid "When a campaign is published for the first time, it will be automatically sent to the email API"
+msgstr "Ketika campaign dipublikasikan untuk pertama kali, akan otomatis dikirim ke API email"
+
+msgid "The API call is made in the background (using wp_cron) to avoid delays in the admin interface"
+msgstr "Panggilan API dilakukan di latar belakang (menggunakan wp_cron) untuk menghindari penundaan di antarmuka admin"
+
+msgid "You can manually resend campaigns using the \"Send to Email API Now\" button in the campaign edit screen"
+msgstr "Anda dapat mengirim ulang campaign secara manual menggunakan tombol \"Kirim ke API Email Sekarang\" di layar edit campaign"
+
+msgid "All API responses are logged and can be viewed in the \"Email API Status\" meta box"
+msgstr "Semua respons API dicatat dan dapat dilihat di kotak meta \"Status API Email\""
+
+msgid "Environment Override"
+msgstr "Override Lingkungan"
+
+msgid "Auto-detect (Recommended)"
+msgstr "Deteksi Otomatis (Direkomendasikan)"
+
+msgid "Development (DEV)"
+msgstr "Pengembangan (DEV)"
+
+msgid "Staging (STG)"
+msgstr "Staging (STG)"
+
+msgid "Production (PROD)"
+msgstr "Produksi (PROD)"
+
+msgid "Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly."
+msgstr "Biarkan kosong untuk deteksi otomatis lingkungan berdasarkan URL situs. Gunakan override manual untuk testing atau ketika deteksi otomatis tidak berfungsi dengan benar."
+
+msgid "Manual Override"
+msgstr "Override Manual"
+
+msgid "Auto-detected"
+msgstr "Terdeteksi Otomatis"
+
+msgid "Manually set environment"
+msgstr "Lingkungan diatur manual"
+
+msgid "Environment Detection"
+msgstr "Deteksi Lingkungan"
+
+
+

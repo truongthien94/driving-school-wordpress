@@ -731,6 +731,15 @@ function sbs_add_campaign_meta_boxes()
         'normal',
         'high'
     );
+
+    add_meta_box(
+        'sbs_campaign_email_api',
+        __('Email API Status', 'sbs-portal'),
+        'sbs_campaign_email_api_meta_box_callback',
+        'campaign',
+        'side',
+        'default'
+    );
 }
 add_action('add_meta_boxes', 'sbs_add_campaign_meta_boxes');
 
@@ -5387,6 +5396,463 @@ function sbs_disable_intermediate_image_sizes($sizes)
     return [];
 }
 // add_filter('intermediate_image_sizes_advanced', 'sbs_disable_intermediate_image_sizes');
+
+/**
+ * Get campaign email API settings based on environment
+ */
+function sbs_get_campaign_email_api_settings()
+{
+    // Determine environment based on site URL, wp_get_environment_type(), or manual override
+    $site_url = get_site_url();
+    $environment = 'dev'; // default
+
+    // Check for manual environment override first (highest priority)
+    $manual_environment = get_option('sbs_campaign_email_api_environment', '');
+    if (!empty($manual_environment) && in_array($manual_environment, ['dev', 'stg', 'prod'])) {
+        $environment = $manual_environment;
+    } else {
+        // Auto-detect environment based on site URL
+        if (strpos($site_url, 'stg.') !== false || strpos($site_url, 'staging') !== false) {
+            $environment = 'stg';
+        } elseif (strpos($site_url, 'dev.') !== false || strpos($site_url, 'development') !== false) {
+            $environment = 'dev';
+        } elseif (
+            strpos($site_url, 'prod.') !== false || strpos($site_url, 'production') !== false ||
+            strpos($site_url, 'www.') !== false || strpos($site_url, 'sbs-ds.com') !== false
+        ) {
+            $environment = 'prod';
+        }
+
+        // Additional check for local development
+        if (
+            strpos($site_url, 'localhost') !== false || strpos($site_url, '127.0.0.1') !== false ||
+            strpos($site_url, '.local') !== false || strpos($site_url, '.test') !== false
+        ) {
+            $environment = 'dev';
+        }
+    }
+
+    // API URLs for different environments
+    $api_urls = array(
+        'dev' => 'https://dev.sbs-ds.com/api/v1/campaigns',
+        'stg' => 'https://stg.sbs-ds.com/api/v1/campaigns',
+        'prod' => 'https://sbs-ds.com/api/v1/campaigns' // Production URL
+    );
+
+    // Fallback to dev if environment not found in URLs
+    if (!isset($api_urls[$environment])) {
+        $environment = 'dev';
+    }
+
+    return array(
+        'environment' => $environment,
+        'api_url' => $api_urls[$environment],
+        'enabled' => get_option('sbs_campaign_email_api_enabled', true), // Default enabled
+        'timeout' => 30,
+        'manual_override' => !empty($manual_environment)
+    );
+}
+
+/**
+ * Send campaign data to external email API
+ * @param int $campaign_id Campaign post ID
+ * @return array Response data with success status
+ */
+function sbs_send_campaign_to_email_api($campaign_id)
+{
+    $settings = sbs_get_campaign_email_api_settings();
+
+    if (!$settings['enabled']) {
+        return array('success' => false, 'message' => 'API is disabled');
+    }
+
+    $campaign_post = get_post($campaign_id);
+    if (!$campaign_post || $campaign_post->post_type !== 'campaign') {
+        return array('success' => false, 'message' => 'Invalid campaign');
+    }
+
+    // Get campaign metrics
+    $impressions = get_post_meta($campaign_id, '_campaign_impressions', true) ?: 0;
+    $clicks = get_post_meta($campaign_id, '_campaign_clicks', true) ?: 0;
+
+    // Prepare API payload
+    $payload = array(
+        'title' => $campaign_post->post_title,
+        'excerpt' => $campaign_post->post_excerpt ?: wp_trim_words($campaign_post->post_content, 20),
+        'content' => $campaign_post->post_content,
+        'featured_image' => get_the_post_thumbnail_url($campaign_id, 'large') ?: '',
+        'date' => get_the_date('Y-m-d', $campaign_id),
+        'slug' => $campaign_post->post_name,
+        'permalink' => get_permalink($campaign_id),
+        'detail_url' => add_query_arg('post_id', $campaign_id, home_url('/campaign-detail/')),
+        'metrics' => array(
+            'impressions' => intval($impressions),
+            'clicks' => intval($clicks)
+        )
+    );
+
+    // Send HTTP request
+    $response = wp_remote_post($settings['api_url'], array(
+        'method' => 'POST',
+        'timeout' => $settings['timeout'],
+        'headers' => array(
+            'accept' => '*/*',
+            'Content-Type' => 'application/json'
+        ),
+        'body' => wp_json_encode($payload),
+        'sslverify' => true
+    ));
+
+    // Handle response
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        error_log("Campaign Email API Error: " . $error_message);
+        return array('success' => false, 'message' => $error_message);
+    }
+
+    $status_code = wp_remote_retrieve_response_code($response);
+    $response_body = wp_remote_retrieve_body($response);
+
+    if ($status_code >= 200 && $status_code < 300) {
+        // Log successful API call
+        update_post_meta($campaign_id, '_campaign_email_api_sent', current_time('mysql'));
+        update_post_meta($campaign_id, '_campaign_email_api_response', $response_body);
+
+        return array(
+            'success' => true,
+            'message' => 'Campaign sent successfully',
+            'status_code' => $status_code,
+            'response' => $response_body
+        );
+    } else {
+        error_log("Campaign Email API Error: HTTP $status_code - $response_body");
+        return array(
+            'success' => false,
+            'message' => "HTTP Error: $status_code",
+            'response' => $response_body
+        );
+    }
+}
+
+/**
+ * Hook to send campaign to email API when campaign is published
+ * @param string $new_status
+ * @param string $old_status  
+ * @param WP_Post $post
+ */
+function sbs_campaign_status_transition($new_status, $old_status, $post)
+{
+    // Only process campaign post type
+    if ($post->post_type !== 'campaign') {
+        return;
+    }
+
+    // Send API request when campaign is published for the first time
+    if ($new_status === 'publish' && $old_status !== 'publish') {
+        // Run in background to avoid delaying the admin interface
+        wp_schedule_single_event(time() + 5, 'sbs_send_campaign_email_hook', array($post->ID));
+    }
+}
+add_action('transition_post_status', 'sbs_campaign_status_transition', 10, 3);
+
+/**
+ * Background hook to send campaign email
+ * @param int $campaign_id
+ */
+function sbs_handle_send_campaign_email($campaign_id)
+{
+    $result = sbs_send_campaign_to_email_api($campaign_id);
+
+    // Log the result for debugging
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("Campaign Email API Result for ID $campaign_id: " . wp_json_encode($result));
+    }
+}
+add_action('sbs_send_campaign_email_hook', 'sbs_handle_send_campaign_email');
+
+/**
+ * Campaign Email API Status meta box callback
+ * @param WP_Post $post
+ */
+function sbs_campaign_email_api_meta_box_callback($post)
+{
+    $settings = sbs_get_campaign_email_api_settings();
+    $api_sent = get_post_meta($post->ID, '_campaign_email_api_sent', true);
+    $api_response = get_post_meta($post->ID, '_campaign_email_api_response', true);
+
+    echo '<div class="sbs-email-api-status">';
+
+    // Display current environment and API URL
+    echo '<p><strong>' . __('Environment', 'sbs-portal') . ':</strong> ' . esc_html(strtoupper($settings['environment'])) . '</p>';
+    echo '<p><strong>' . __('API URL', 'sbs-portal') . ':</strong> <br><code>' . esc_html($settings['api_url']) . '</code></p>';
+
+    // Display API status
+    echo '<p><strong>' . __('API Status', 'sbs-portal') . ':</strong> ';
+    if ($settings['enabled']) {
+        echo '<span style="color: green;">✓ ' . __('Enabled', 'sbs-portal') . '</span>';
+    } else {
+        echo '<span style="color: red;">✗ ' . __('Disabled', 'sbs-portal') . '</span>';
+    }
+    echo '</p>';
+
+    // Display last sent information
+    if ($api_sent) {
+        echo '<p><strong>' . __('Last Sent', 'sbs-portal') . ':</strong> ' . esc_html($api_sent) . '</p>';
+
+        if ($api_response) {
+            echo '<details style="margin-top: 10px;">';
+            echo '<summary>' . __('API Response', 'sbs-portal') . '</summary>';
+            echo '<pre style="background: #f9f9f9; padding: 10px; font-size: 11px; max-height: 200px; overflow-y: auto;">' . esc_html($api_response) . '</pre>';
+            echo '</details>';
+        }
+    } else {
+        echo '<p><em>' . __('Not sent yet', 'sbs-portal') . '</em></p>';
+    }
+
+    // Manual send button for published campaigns
+    if ($post->post_status === 'publish') {
+        echo '<hr>';
+        echo '<button type="button" id="sbs-manual-send-email" class="button button-secondary" data-campaign-id="' . esc_attr($post->ID) . '">';
+        echo __('Send to Email API Now', 'sbs-portal');
+        echo '</button>';
+        echo '<div id="sbs-manual-send-result" style="margin-top: 10px;"></div>';
+    }
+
+    echo '</div>';
+
+    // Add JavaScript for manual send
+?>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#sbs-manual-send-email').on('click', function() {
+                var button = $(this);
+                var campaignId = button.data('campaign-id');
+                var resultDiv = $('#sbs-manual-send-result');
+
+                button.prop('disabled', true).text('<?php echo esc_js(__('Sending...', 'sbs-portal')); ?>');
+                resultDiv.html('');
+
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'sbs_manual_send_campaign_email',
+                        campaign_id: campaignId,
+                        nonce: '<?php echo wp_create_nonce('sbs_manual_send_email'); ?>'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            resultDiv.html('<div style="color: green; padding: 5px; background: #f0f8f0; border: 1px solid #4CAF50;">✓ ' + response.data.message + '</div>');
+                            // Reload the page after 2 seconds to show updated status
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            resultDiv.html('<div style="color: red; padding: 5px; background: #fdf2f2; border: 1px solid #f56565;">✗ ' + response.data.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        resultDiv.html('<div style="color: red; padding: 5px; background: #fdf2f2; border: 1px solid #f56565;">✗ <?php echo esc_js(__('AJAX Error', 'sbs-portal')); ?></div>');
+                    },
+                    complete: function() {
+                        button.prop('disabled', false).text('<?php echo esc_js(__('Send to Email API Now', 'sbs-portal')); ?>');
+                    }
+                });
+            });
+        });
+    </script>
+<?php
+}
+
+/**
+ * AJAX handler for manual campaign email sending
+ */
+function sbs_ajax_manual_send_campaign_email()
+{
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'sbs_manual_send_email')) {
+        wp_die(__('Security check failed', 'sbs-portal'));
+    }
+
+    // Check user capabilities
+    if (!current_user_can('edit_posts')) {
+        wp_die(__('Insufficient permissions', 'sbs-portal'));
+    }
+
+    $campaign_id = intval($_POST['campaign_id']);
+
+    if (!$campaign_id) {
+        wp_send_json_error(array('message' => __('Invalid campaign ID', 'sbs-portal')));
+    }
+
+    $result = sbs_send_campaign_to_email_api($campaign_id);
+
+    if ($result['success']) {
+        wp_send_json_success(array('message' => $result['message']));
+    } else {
+        wp_send_json_error(array('message' => $result['message']));
+    }
+}
+add_action('wp_ajax_sbs_manual_send_campaign_email', 'sbs_ajax_manual_send_campaign_email');
+
+/**
+ * Add Campaign Email API settings to admin menu
+ */
+function sbs_add_email_api_admin_menu()
+{
+    add_submenu_page(
+        'sbs-admin',
+        __('Campaign Email API', 'sbs-portal'),
+        __('Email API Settings', 'sbs-portal'),
+        'manage_options',
+        'sbs-email-api-settings',
+        'sbs_email_api_settings_page'
+    );
+}
+add_action('admin_menu', 'sbs_add_email_api_admin_menu');
+
+/**
+ * Campaign Email API settings page
+ */
+function sbs_email_api_settings_page()
+{
+    if (isset($_POST['submit'])) {
+        check_admin_referer('sbs_email_api_settings');
+
+        update_option('sbs_campaign_email_api_enabled', isset($_POST['sbs_campaign_email_api_enabled']));
+
+        // Save manual environment override
+        if (isset($_POST['sbs_campaign_email_api_environment']) && !empty($_POST['sbs_campaign_email_api_environment'])) {
+            $environment = sanitize_text_field($_POST['sbs_campaign_email_api_environment']);
+            if (in_array($environment, ['dev', 'stg', 'prod'])) {
+                update_option('sbs_campaign_email_api_environment', $environment);
+            }
+        } else {
+            // Clear manual override if empty
+            delete_option('sbs_campaign_email_api_environment');
+        }
+
+        echo '<div class="notice notice-success"><p>' . __('Settings saved.', 'sbs-portal') . '</p></div>';
+    }
+
+    $enabled = get_option('sbs_campaign_email_api_enabled', true);
+    $manual_environment = get_option('sbs_campaign_email_api_environment', '');
+    $settings = sbs_get_campaign_email_api_settings();
+?>
+    <div class="wrap">
+        <h1><?php echo esc_html__('Campaign Email API Settings', 'sbs-portal'); ?></h1>
+
+        <form method="post" action="">
+            <?php wp_nonce_field('sbs_email_api_settings'); ?>
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e('Environment Override', 'sbs-portal'); ?></th>
+                    <td>
+                        <select name="sbs_campaign_email_api_environment">
+                            <option value=""><?php _e('Auto-detect (Recommended)', 'sbs-portal'); ?></option>
+                            <option value="dev" <?php selected($manual_environment, 'dev'); ?>><?php _e('Development (DEV)', 'sbs-portal'); ?></option>
+                            <option value="stg" <?php selected($manual_environment, 'stg'); ?>><?php _e('Staging (STG)', 'sbs-portal'); ?></option>
+                            <option value="prod" <?php selected($manual_environment, 'prod'); ?>><?php _e('Production (PROD)', 'sbs-portal'); ?></option>
+                        </select>
+                        <p class="description">
+                            <?php _e('Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly.', 'sbs-portal'); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Current Environment', 'sbs-portal'); ?></th>
+                    <td>
+                        <strong><?php echo esc_html(strtoupper($settings['environment'])); ?></strong>
+                        <?php if ($settings['manual_override']): ?>
+                            <span style="color: orange; margin-left: 10px;">(<?php _e('Manual Override', 'sbs-portal'); ?>)</span>
+                        <?php else: ?>
+                            <span style="color: green; margin-left: 10px;">(<?php _e('Auto-detected', 'sbs-portal'); ?>)</span>
+                        <?php endif; ?>
+                        <p class="description">
+                            <?php if ($settings['manual_override']): ?>
+                                <?php _e('Manually set environment', 'sbs-portal'); ?>
+                            <?php else: ?>
+                                <?php _e('Automatically detected based on site URL', 'sbs-portal'); ?>
+                            <?php endif; ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('API URL', 'sbs-portal'); ?></th>
+                    <td>
+                        <code><?php echo esc_html($settings['api_url']); ?></code>
+                        <p class="description"><?php _e('The API endpoint where campaign data will be sent', 'sbs-portal'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Enable Email API', 'sbs-portal'); ?></th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="sbs_campaign_email_api_enabled" value="1" <?php checked($enabled); ?> />
+                            <?php _e('Send campaign data to email API when campaigns are published', 'sbs-portal'); ?>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+            <?php submit_button(); ?>
+        </form>
+
+        <h2><?php _e('Environment Detection', 'sbs-portal'); ?></h2>
+        <table class="widefat">
+            <thead>
+                <tr>
+                    <th><?php _e('Environment', 'sbs-portal'); ?></th>
+                    <th><?php _e('API URL', 'sbs-portal'); ?></th>
+                    <th><?php _e('Detection Rules', 'sbs-portal'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DEV</strong></td>
+                    <td><code>https://dev.sbs-ds.com/api/v1/campaigns</code></td>
+                    <td>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>URL contains: dev., development</li>
+                            <li>localhost, 127.0.0.1</li>
+                            <li>.local, .test domains</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>STG</strong></td>
+                    <td><code>https://stg.sbs-ds.com/api/v1/campaigns</code></td>
+                    <td>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>URL contains: stg., staging</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>PROD</strong></td>
+                    <td><code>https://sbs-ds.com/api/v1/campaigns</code></td>
+                    <td>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>URL contains: prod., production</li>
+                            <li>www. domains</li>
+                            <li>sbs-ds.com (main domain)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2><?php _e('How it works', 'sbs-portal'); ?></h2>
+        <ul>
+            <li><?php _e('When a campaign is published for the first time, it will be automatically sent to the email API', 'sbs-portal'); ?></li>
+            <li><?php _e('The API call is made in the background (using wp_cron) to avoid delays in the admin interface', 'sbs-portal'); ?></li>
+            <li><?php _e('You can manually resend campaigns using the "Send to Email API Now" button in the campaign edit screen', 'sbs-portal'); ?></li>
+            <li><?php _e('All API responses are logged and can be viewed in the "Email API Status" meta box', 'sbs-portal'); ?></li>
+        </ul>
+    </div>
+<?php
+}
 
 /**
  * Inserts CTA HTML into the middle of a content block.

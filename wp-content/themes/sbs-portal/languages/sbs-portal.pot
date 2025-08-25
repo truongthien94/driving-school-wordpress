@@ -557,3 +557,129 @@ msgstr ""
 
 msgid "Show More"
 msgstr ""
+
+msgid "Email API Status"
+msgstr ""
+
+msgid "Environment"
+msgstr ""
+
+msgid "API URL"
+msgstr ""
+
+msgid "API Status"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Last Sent"
+msgstr ""
+
+msgid "API Response"
+msgstr ""
+
+msgid "Not sent yet"
+msgstr ""
+
+msgid "Send to Email API Now"
+msgstr ""
+
+msgid "Sending..."
+msgstr ""
+
+msgid "AJAX Error"
+msgstr ""
+
+msgid "Security check failed"
+msgstr ""
+
+msgid "Insufficient permissions"
+msgstr ""
+
+msgid "Invalid campaign ID"
+msgstr ""
+
+msgid "Campaign Email API"
+msgstr ""
+
+msgid "Email API Settings"
+msgstr ""
+
+msgid "Settings saved."
+msgstr ""
+
+msgid "Campaign Email API Settings"
+msgstr ""
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Automatically detected based on site URL"
+msgstr ""
+
+msgid "The API endpoint where campaign data will be sent"
+msgstr ""
+
+msgid "Enable Email API"
+msgstr ""
+
+msgid "Send campaign data to email API when campaigns are published"
+msgstr ""
+
+msgid "How it works"
+msgstr ""
+
+msgid "When a campaign is published for the first time, it will be automatically sent to the email API"
+msgstr ""
+
+msgid "The API call is made in the background (using wp_cron) to avoid delays in the admin interface"
+msgstr ""
+
+msgid "You can manually resend campaigns using the \"Send to Email API Now\" button in the campaign edit screen"
+msgstr ""
+
+msgid "All API responses are logged and can be viewed in the \"Email API Status\" meta box"
+msgstr ""
+
+msgid "Environment Override"
+msgstr ""
+
+msgid "Auto-detect (Recommended)"
+msgstr ""
+
+msgid "Development (DEV)"
+msgstr ""
+
+msgid "Staging (STG)"
+msgstr ""
+
+msgid "Production (PROD)"
+msgstr ""
+
+msgid "Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly."
+msgstr ""
+
+msgid "Manual Override"
+msgstr ""
+
+msgid "Auto-detected"
+msgstr ""
+
+msgid "Manually set environment"
+msgstr ""
+
+msgid "Environment Detection"
+msgstr ""
+
+msgid "Environment"
+msgstr ""
+
+msgid "API URL"
+msgstr ""
+
+msgid "Detection Rules"
+msgstr ""

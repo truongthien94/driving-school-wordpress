@@ -520,3 +520,122 @@ msgstr "今すぐ申し込む"
 msgid "Show More"
 msgstr "もっと見る"
 
+msgid "Email API Status"
+msgstr "メールAPI状態"
+
+msgid "Environment"
+msgstr "環境"
+
+msgid "API URL"
+msgstr "API URL"
+
+msgid "API Status"
+msgstr "API状態"
+
+msgid "Enabled"
+msgstr "有効"
+
+msgid "Disabled"
+msgstr "無効"
+
+msgid "Last Sent"
+msgstr "最終送信"
+
+msgid "API Response"
+msgstr "APIレスポンス"
+
+msgid "Not sent yet"
+msgstr "まだ送信されていません"
+
+msgid "Send to Email API Now"
+msgstr "今すぐメールAPIに送信"
+
+msgid "Sending..."
+msgstr "送信中..."
+
+msgid "AJAX Error"
+msgstr "AJAXエラー"
+
+msgid "Security check failed"
+msgstr "セキュリティチェックに失敗しました"
+
+msgid "Insufficient permissions"
+msgstr "権限が不足しています"
+
+msgid "Invalid campaign ID"
+msgstr "無効なキャンペーンID"
+
+msgid "Campaign Email API"
+msgstr "キャンペーンメールAPI"
+
+msgid "Email API Settings"
+msgstr "メールAPI設定"
+
+msgid "Settings saved."
+msgstr "設定が保存されました。"
+
+msgid "Campaign Email API Settings"
+msgstr "キャンペーンメールAPI設定"
+
+msgid "Current Environment"
+msgstr "現在の環境"
+
+msgid "Automatically detected based on site URL"
+msgstr "サイトURLに基づいて自動検出"
+
+msgid "The API endpoint where campaign data will be sent"
+msgstr "キャンペーンデータが送信されるAPIエンドポイント"
+
+msgid "Enable Email API"
+msgstr "メールAPIを有効にする"
+
+msgid "Send campaign data to email API when campaigns are published"
+msgstr "キャンペーンが公開されたときにメールAPIにキャンペーンデータを送信"
+
+msgid "How it works"
+msgstr "動作原理"
+
+msgid "When a campaign is published for the first time, it will be automatically sent to the email API"
+msgstr "キャンペーンが初回公開されると、自動的にメールAPIに送信されます"
+
+msgid "The API call is made in the background (using wp_cron) to avoid delays in the admin interface"
+msgstr "管理画面の遅延を避けるため、API呼び出しはバックグラウンド（wp_cronを使用）で行われます"
+
+msgid "You can manually resend campaigns using the \"Send to Email API Now\" button in the campaign edit screen"
+msgstr "キャンペーン編集画面の\"今すぐメールAPIに送信\"ボタンを使用してキャンペーンを手動で再送信できます"
+
+msgid "All API responses are logged and can be viewed in the \"Email API Status\" meta box"
+msgstr "すべてのAPIレスポンスはログに記録され、\"メールAPI状態\"メタボックスで確認できます"
+
+msgid "Environment Override"
+msgstr "環境オーバーライド"
+
+msgid "Auto-detect (Recommended)"
+msgstr "自動検出（推奨）"
+
+msgid "Development (DEV)"
+msgstr "開発（DEV）"
+
+msgid "Staging (STG)"
+msgstr "ステージング（STG）"
+
+msgid "Production (PROD)"
+msgstr "本番（PROD）"
+
+msgid "Leave empty to auto-detect environment based on site URL. Use manual override for testing or when auto-detection is not working correctly."
+msgstr "サイトURLに基づいて環境を自動検出するには空のままにしてください。テスト時や自動検出が正しく動作しない場合は、手動オーバーライドを使用してください。"
+
+msgid "Manual Override"
+msgstr "手動オーバーライド"
+
+msgid "Auto-detected"
+msgstr "自動検出"
+
+msgid "Manually set environment"
+msgstr "手動で設定された環境"
+
+msgid "Environment Detection"
+msgstr "環境検出"
+
+
+
