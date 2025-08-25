@@ -517,3 +517,6 @@ msgstr "CTAプレビュー"
 msgid "今すぐ申し込む"
 msgstr "今すぐ申し込む"
 
+msgid "Show More"
+msgstr "もっと見る"
+

@@ -554,3 +554,6 @@ msgstr ""
 
 msgid "今すぐ申し込む"
 msgstr ""
+
+msgid "Show More"
+msgstr ""

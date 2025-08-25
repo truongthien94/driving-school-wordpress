@@ -133,48 +133,30 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
                             <div class="campaign-text-block">
                                 <?php
                                 if ($campaign_post) {
-                                    // If we have a real post object, set up post data and use the_content()
-                                    // which handles <!--more--> tag and other formatting correctly.
                                     setup_postdata($campaign_post);
+                                    $extended = get_extended($campaign_post->post_content);
 
-                                    // Force full content display, ignoring the <!--more--> tag for splitting
-                                    global $more;
-                                    $temp_more = $more;
-                                    $more = 1;
+                                    // Filter main content
+                                    $main_content_filtered = apply_filters('the_content', $extended['main']);
 
-                                    // Get content and potentially insert middle CTA
-                                    $content = get_the_content();
-                                    $content = apply_filters('the_content', $content);
-
-                                    // If middle CTA is enabled, try to insert it in the middle of content
-                                    if (sbs_should_show_cta_at_position($campaign_post->ID, 'middle')) {
-                                        $paragraphs = explode('</p>', $content);
-                                        $total_paragraphs = count($paragraphs);
-                                        $middle_position = intval($total_paragraphs / 2);
-
-                                        if ($total_paragraphs > 2) {
-                                            // Normal case: insert right in the middle
-                                            $before_middle = array_slice($paragraphs, 0, $middle_position);
-                                            $after_middle = array_slice($paragraphs, $middle_position);
-
-                                            echo implode('</p>', $before_middle) . '</p>';
-                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
-                                            echo implode('</p>', $after_middle);
-                                        } elseif ($total_paragraphs > 1) {
-                                            // Short content: insert after the first paragraph
-                                            echo $paragraphs[0] . '</p>';
-                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
-                                            echo implode('</p>', array_slice($paragraphs, 1));
-                                        } else {
-                                            // Edge case: content has 0-1 paragraph markup; show CTA after content
-                                            echo $content;
-                                            echo sbs_render_campaign_cta($campaign_post->ID, 'middle');
-                                        }
+                                    if (empty($extended['extended'])) {
+                                        // No "more" tag, process main content for middle CTA
+                                        echo sbs_insert_cta_in_content($main_content_filtered, $campaign_post->ID);
                                     } else {
-                                        echo $content;
+                                        // Has a "more" tag, display main content as is
+                                        echo $main_content_filtered;
+
+                                        // Prepare the hidden content
+                                        $more_content_filtered = apply_filters('the_content', $extended['extended']);
+                                        $more_content_with_cta = sbs_insert_cta_in_content($more_content_filtered, $campaign_post->ID);
+
+                                        // Display the "Show More" button and hidden container
+                                        echo '<div class="read-more-wrapper text-center">';
+                                        echo '<button type="button" class="read-more-btn">' . esc_html__('Show More', 'sbs-portal') . '</button>';
+                                        echo '<div class="more-content" style="display: none;">' . $more_content_with_cta . '</div>';
+                                        echo '</div>';
                                     }
 
-                                    $more = $temp_more;
                                     wp_reset_postdata();
                                 } else {
                                     // For mock data, we just apply the filter as before.

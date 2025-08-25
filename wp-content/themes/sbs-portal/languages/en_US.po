@@ -518,3 +518,6 @@ msgstr "CTA Preview"
 msgid "今すぐ申し込む"
 msgstr "Apply Now"
 
+msgid "Show More"
+msgstr "Show More"
+

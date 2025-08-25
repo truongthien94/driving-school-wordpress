@@ -1333,3 +1333,33 @@ Optimized for Bootstrap 5 integration
 .sbs-cta-button[data-cta-click]:active::after {
     background: rgba(255, 255, 255, 0.2);
 }
+
+/* Read More Button */
+.read-more-wrapper {
+    margin: 20px 0;
+}
+
+.read-more-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid #EAECEE;
+    background-color: #FFFFFF;
+    color: #262626;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.read-more-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #CFD4DA;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.more-content {
+    margin-top: 20px;
+    text-align: left;
+}

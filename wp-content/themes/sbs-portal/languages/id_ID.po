@@ -518,3 +518,6 @@ msgstr "Pratinjau CTA"
 msgid "今すぐ申し込む"
 msgstr "Daftar Sekarang"
 
+msgid "Show More"
+msgstr "Tampilkan Lebih Banyak"
+

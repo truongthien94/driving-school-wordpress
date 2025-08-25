@@ -23,6 +23,7 @@
         initFormValidation();
         initBannerCarousel();
         initCTATracking();
+        initReadMore();
 
         // Manual Bootstrap dropdown initialization if needed
         if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
@@ -666,6 +667,25 @@
 
         $(window).on('scroll', checkFadeIn);
         checkFadeIn(); // Check on load
+    }
+
+    /**
+     * Initialize "Read More" functionality for campaign content
+     */
+    function initReadMore() {
+        $('body').on('click', '.read-more-btn', function () {
+            var $this = $(this);
+            var $wrapper = $this.closest('.read-more-wrapper');
+            var $content = $wrapper.find('.more-content');
+
+            // Smoothly show the content
+            $content.slideDown(400);
+
+            // Fade out and remove the button
+            $this.fadeOut(300, function () {
+                $(this).remove();
+            });
+        });
     }
 
     /**

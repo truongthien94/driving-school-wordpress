@@ -5387,3 +5387,42 @@ function sbs_disable_intermediate_image_sizes($sizes)
     return [];
 }
 // add_filter('intermediate_image_sizes_advanced', 'sbs_disable_intermediate_image_sizes');
+
+/**
+ * Inserts CTA HTML into the middle of a content block.
+ * @param string $content HTML content string.
+ * @param int $campaign_id The campaign post ID.
+ * @return string The content with CTA inserted.
+ */
+function sbs_insert_cta_in_content($content, $campaign_id)
+{
+    if (!sbs_should_show_cta_at_position($campaign_id, 'middle')) {
+        return $content;
+    }
+
+    $cta_html = sbs_render_campaign_cta($campaign_id, 'middle');
+
+    // Split content by paragraph tags, keeping the tags
+    $paragraphs = preg_split('/(<\/p>)/', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    // Find non-empty paragraph text chunks to determine the middle
+    $text_chunks_indices = [];
+    for ($i = 0; $i < count($paragraphs); $i += 2) {
+        if (!empty(trim(strip_tags($paragraphs[$i])))) {
+            $text_chunks_indices[] = $i;
+        }
+    }
+
+    if (count($text_chunks_indices) < 2) {
+        return $content . $cta_html; // Not enough paragraphs, append at the end
+    }
+
+    // Calculate insertion point after the middle paragraph's closing </p> tag
+    $middle_chunk_array_index = floor((count($text_chunks_indices) - 1) / 2);
+    $middle_paragraph_index_in_paragraphs_array = $text_chunks_indices[$middle_chunk_array_index];
+    $insertion_point = $middle_paragraph_index_in_paragraphs_array + 2; // Insert after the text and after the </p>
+
+    array_splice($paragraphs, $insertion_point, 0, $cta_html);
+
+    return implode('', $paragraphs);
+}
